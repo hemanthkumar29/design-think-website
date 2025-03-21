@@ -88,6 +88,10 @@ const TeamDetail = () => {
                     src={team.leader.image} 
                     alt={team.leader.name} 
                     className="w-full h-auto object-cover aspect-[4/3]"
+                    onError={(e) => {
+                      // Fallback to a placeholder image if the image fails to load
+                      e.currentTarget.src = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80";
+                    }}
                   />
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
                     <h3 className="text-white font-bold text-xl">{team.leader.name}</h3>
@@ -124,14 +128,23 @@ const TeamDetail = () => {
               {[team.leader, ...team.members].map((member, index) => (
                 <div 
                   key={member.id} 
-                  className="glass-card rounded-lg overflow-hidden hover-scale opacity-0"
+                  className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 opacity-100 animate-fade-in"
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
                   <div className="aspect-square overflow-hidden">
                     <img 
                       src={member.image} 
                       alt={member.name} 
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                      onError={(e) => {
+                        const placeholders = [
+                          "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80",
+                          "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80",
+                          "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
+                        ];
+                        // Choose a consistent but random-looking placeholder based on member id
+                        e.currentTarget.src = placeholders[member.id % placeholders.length];
+                      }}
                     />
                   </div>
                   <div className="p-4">
@@ -159,13 +172,21 @@ const TeamDetail = () => {
               {team.projectImages.map((image, index) => (
                 <div 
                   key={index} 
-                  className="overflow-hidden rounded-lg shadow-lg hover-scale opacity-0"
+                  className="overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 opacity-100 animate-fade-in"
                   style={{ animationDelay: `${index * 200}ms` }}
                 >
                   <img 
                     src={image} 
                     alt={`Project image ${index + 1}`} 
-                    className="w-full h-auto aspect-video object-cover"
+                    className="w-full h-auto aspect-video object-cover transition-transform duration-300 hover:scale-105"
+                    onError={(e) => {
+                      const placeholders = [
+                        "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80",
+                        "https://images.unsplash.com/photo-1581056771107-24247a734e15?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
+                      ];
+                      // Choose a consistent but random-looking placeholder
+                      e.currentTarget.src = placeholders[index % placeholders.length];
+                    }}
                   />
                 </div>
               ))}
