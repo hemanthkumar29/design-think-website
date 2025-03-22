@@ -468,7 +468,7 @@ export const teamsData: Team[] = [
     name: "QuantumCompute",
     description: "Practical quantum computing algorithms",
     longDescription: "QuantumCompute is researching and developing practical quantum computing algorithms that can be implemented on existing quantum hardware platforms. Our team is creating software solutions that bridge the gap between theoretical quantum advantages and real-world applications in fields like materials science, pharmaceutical research, and financial modeling. We're particularly focused on error mitigation techniques that allow meaningful computation despite the limitations of current quantum processors, and on identifying specific computational problems where even imperfect quantum systems can outperform classical computers.",
-    progress: 30,
+    progress: 80,
     leader: {
       id: 44,
       name: "Hemanth Kumar",
