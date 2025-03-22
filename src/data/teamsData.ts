@@ -560,8 +560,8 @@ export const teamsData: Team[] = [
 
 // Information about the department mentor
 export const mentorData = {
-  name: "Dr. Elena Rodriguez",
-  title: "Department Head, Design Thinking & Innovation",
+  name: "Bugatha Ram Vara Prasad",
+  title: "Assistant Professor, Dept. Of EEE",
   image: "https://lendi.edu.in//cloud/2024/12/27/1735293134_cropped-image.jpg.jpg",
   bio: "Dr. Elena Rodriguez is a pioneer in integrating design thinking methodologies into engineering education. With over 15 years of experience in both industry and academia, she leads the Design Thinking & Innovation department with a passion for nurturing creative problem-solving skills in the next generation of engineers. Dr. Rodriguez has published extensively on innovation pedagogy and holds several patents in sustainable technology solutions."
 };
