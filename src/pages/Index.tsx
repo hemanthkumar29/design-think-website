@@ -98,9 +98,6 @@ const Index = () => {
                 <p className="text-muted-foreground leading-relaxed">{mentorData.bio}</p>
                 
                 <div className="pt-4">
-                  <Button variant="outline" className="border-blue-200 hover:bg-blue-50">
-                    View Department History
-                  </Button>
                 </div>
               </div>
             </div>
