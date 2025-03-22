@@ -78,7 +78,7 @@ const Index = () => {
                 <div className="absolute -inset-2 bg-gradient-to-r from-blue-100 to-indigo-100 rounded-lg blur opacity-50 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
                 <div className="relative overflow-hidden rounded-lg">
                   <img 
-                    src={mentorData.image} 
+                    src={https://lendi.edu.in//cloud/2024/12/27/1735293134_cropped-image.jpg.jpg} 
                     alt={mentorData.name} 
                     className="w-full h-auto rounded-lg object-cover transform transition-transform duration-500 group-hover:scale-105"
                   />
