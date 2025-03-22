@@ -37,6 +37,19 @@ const Index = () => {
           ></div>
           
           <div className="max-w-5xl mx-auto text-center animate-on-load opacity-0">
+            {/* College Logo */}
+            <div className="flex justify-center mb-8 animate-on-load opacity-0">
+              <img 
+                src="https://lendi.org/GRCL/logo.png" 
+                alt="College Logo" 
+                className="h-24 md:h-32 w-auto"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                }}
+              />
+            </div>
+            
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight tracking-tight">
               <span className="gradient-text">Design Thinking & Innovation</span>
               <br />
