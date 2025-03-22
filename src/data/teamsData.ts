@@ -1,4 +1,3 @@
-
 export interface TeamMember {
   id: number;
   name: string;
@@ -563,6 +562,6 @@ export const teamsData: Team[] = [
 export const mentorData = {
   name: "Dr. Elena Rodriguez",
   title: "Department Head, Design Thinking & Innovation",
-  image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1742&q=80",
+  image: "https://lendi.edu.in//cloud/2024/12/27/1735293134_cropped-image.jpg.jpg",
   bio: "Dr. Elena Rodriguez is a pioneer in integrating design thinking methodologies into engineering education. With over 15 years of experience in both industry and academia, she leads the Design Thinking & Innovation department with a passion for nurturing creative problem-solving skills in the next generation of engineers. Dr. Rodriguez has published extensively on innovation pedagogy and holds several patents in sustainable technology solutions."
 };
