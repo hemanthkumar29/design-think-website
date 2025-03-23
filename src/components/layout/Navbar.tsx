@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Info } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const Navbar: React.FC = () => {
@@ -41,6 +41,9 @@ const Navbar: React.FC = () => {
           <NavLink to="/teams" className={({ isActive }) => cn('nav-link', isActive && 'active')}>
             Teams
           </NavLink>
+          <NavLink to="/about" className={({ isActive }) => cn('nav-link', isActive && 'active')}>
+            About
+          </NavLink>
         </nav>
 
         <button
@@ -61,6 +64,9 @@ const Navbar: React.FC = () => {
             </NavLink>
             <NavLink to="/teams" className={({ isActive }) => cn('nav-link', isActive && 'active')}>
               Teams
+            </NavLink>
+            <NavLink to="/about" className={({ isActive }) => cn('nav-link', isActive && 'active')}>
+              About
             </NavLink>
           </nav>
         </div>
