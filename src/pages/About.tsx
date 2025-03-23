@@ -4,16 +4,16 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
 import { ExternalLink } from 'lucide-react';
-import { Helmet } from 'react-helmet-async';
+import PageSEO from '@/components/SEO/PageSEO';
 
 const About = () => {
   return (
     <div className="min-h-screen flex flex-col">
-      <Helmet>
-        <title>About Lendi Institute | Design Thinking & Innovation</title>
-        <meta name="description" content="Learn about Lendi Institute of Engineering and Technology, one of the premier engineering colleges in Vizianagaram, Andhra Pradesh, and our Design Thinking & Innovation program." />
-        <meta name="keywords" content="Lendi Institute, engineering college, Vizianagaram, Andhra Pradesh, EEE department, design thinking, innovation" />
-      </Helmet>
+      <PageSEO
+        title="About Lendi Institute"
+        description="Learn about Lendi Institute of Engineering and Technology, one of the premier engineering colleges in Vizianagaram, Andhra Pradesh, and our Design Thinking & Innovation program."
+        keywords="Lendi Institute, engineering college, Vizianagaram, Andhra Pradesh, EEE department, design thinking, innovation"
+      />
       
       <Navbar />
       

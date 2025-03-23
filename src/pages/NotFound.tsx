@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import PageSEO from '@/components/SEO/PageSEO';
 
 const NotFound = () => {
   const location = useLocation();
@@ -17,6 +18,12 @@ const NotFound = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
+      <PageSEO
+        title="Page Not Found"
+        description="Sorry, the page you are looking for does not exist. Please navigate back to our homepage."
+        keywords="404, not found, error page, missing page"
+      />
+      
       <Navbar />
       
       <main className="flex-grow flex items-center justify-center bg-gradient-to-r from-blue-50 to-indigo-50 py-20">

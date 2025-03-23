@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { ArrowLeft } from 'lucide-react';
+import PageSEO from '@/components/SEO/PageSEO';
 
 const TeamDetail = () => {
   const { id } = useParams();
@@ -45,6 +46,12 @@ const TeamDetail = () => {
   
   return (
     <div className="flex flex-col min-h-screen">
+      <PageSEO
+        title={`Team ${team.name}`} 
+        description={`Learn about Team ${team.name} and their innovative project: ${team.description}. See team members and project progress.`}
+        keywords={`${team.name}, design thinking project, engineering innovation, student team, Lendi Institute, ${team.leader.name}`}
+      />
+      
       <Navbar />
       
       <main className="flex-grow pt-24 pb-20">

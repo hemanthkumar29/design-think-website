@@ -4,6 +4,7 @@ import { teamsData } from '@/data/teamsData';
 import TeamCard from '@/components/ui/TeamCard';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import PageSEO from '@/components/SEO/PageSEO';
 
 const Teams = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -53,6 +54,12 @@ const Teams = () => {
   
   return (
     <div className="flex flex-col min-h-screen">
+      <PageSEO 
+        title="Teams"
+        description="Explore innovative teams and their projects from the Design Thinking & Innovation program at Lendi Institute of Engineering and Technology."
+        keywords="engineering teams, student projects, design thinking, innovation projects, EEE department, Lendi Institute"
+      />
+      
       <Navbar />
       
       <main className="flex-grow pt-24 pb-20 px-6">
