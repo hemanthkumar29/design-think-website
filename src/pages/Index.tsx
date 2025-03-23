@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { mentorData } from '@/data/teamsData';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import PageSEO from '@/components/SEO/PageSEO';
 
 const Index = () => {
   const navigate = useNavigate();
@@ -23,6 +24,12 @@ const Index = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
+      <PageSEO 
+        title="Home" 
+        description="Explore innovative solutions to engineering challenges through creative problem-solving and human-centered design at Lendi Institute's Design Thinking & Innovation program."
+        keywords="design thinking, innovation, electrical engineering, EEE, Lendi Institute, engineering projects, creative solutions"
+      />
+      
       <Navbar />
       
       <main className="flex-grow">
@@ -31,6 +38,7 @@ const Index = () => {
           <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-50 -z-10"></div>
           <div 
             className="absolute inset-0 opacity-20 -z-10 mask-image-blur"
+            aria-hidden="true"
             style={{
               backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%236366f1' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
             }}
@@ -41,8 +49,9 @@ const Index = () => {
             <div className="flex justify-center mb-8 animate-on-load opacity-0">
               <img 
                 src="https://lendi.org/GRCL/logo.png" 
-                alt="College Logo" 
+                alt="Lendi Institute of Engineering and Technology Logo" 
                 className="h-24 md:h-32 w-auto"
+                loading="eager"
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
                   target.style.display = 'none';
@@ -65,12 +74,13 @@ const Index = () => {
               size="lg" 
               onClick={() => navigate('/teams')} 
               className="animate-on-load opacity-0 bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg rounded-full transition-all duration-300 shadow-lg hover:shadow-xl"
+              aria-label="Explore teams and projects"
             >
               Get Started
             </Button>
           </div>
           
-          <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce opacity-70">
+          <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce opacity-70" aria-hidden="true">
             <div className="w-6 h-10 rounded-full border-2 border-gray-400 flex justify-center p-1">
               <div className="w-1 h-3 bg-gray-400 rounded-full animate-[pulse_2s_infinite]"></div>
             </div>
@@ -92,8 +102,9 @@ const Index = () => {
                 <div className="relative overflow-hidden rounded-lg">
                   <img 
                     src={mentorData.image} 
-                    alt={mentorData.name} 
+                    alt={`${mentorData.name} - ${mentorData.title}`} 
                     className="w-full h-auto rounded-lg object-cover transform transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
                       target.src = "https://lendi.edu.in//cloud/2024/12/27/1735293134_cropped-image.jpg.jpg";

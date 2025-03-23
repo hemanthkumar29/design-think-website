@@ -4,10 +4,17 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
 import { ExternalLink } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 
 const About = () => {
   return (
     <div className="min-h-screen flex flex-col">
+      <Helmet>
+        <title>About Lendi Institute | Design Thinking & Innovation</title>
+        <meta name="description" content="Learn about Lendi Institute of Engineering and Technology, one of the premier engineering colleges in Vizianagaram, Andhra Pradesh, and our Design Thinking & Innovation program." />
+        <meta name="keywords" content="Lendi Institute, engineering college, Vizianagaram, Andhra Pradesh, EEE department, design thinking, innovation" />
+      </Helmet>
+      
       <Navbar />
       
       <main className="flex-1 pt-24 pb-16">
@@ -36,7 +43,7 @@ const About = () => {
                 we prepare our students to become innovative engineers ready to contribute to society.
               </p>
               
-              <Button className="mt-4" onClick={() => window.open("https://lendi.edu.in/", "_blank")}>
+              <Button className="mt-4" onClick={() => window.open("https://lendi.edu.in/", "_blank")} aria-label="Visit Lendi College Website">
                 Visit College Website <ExternalLink className="ml-2" size={16} />
               </Button>
             </div>
@@ -44,8 +51,9 @@ const About = () => {
             <div className="rounded-lg overflow-hidden shadow-lg">
               <img 
                 src="https://lendi.org/GRCL/logo.png" 
-                alt="Lendi Institute of Engineering and Technology" 
+                alt="Lendi Institute of Engineering and Technology Campus" 
                 className="w-full h-auto object-cover"
+                loading="lazy"
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
                   target.src = "https://via.placeholder.com/800x600?text=Lendi+College";
