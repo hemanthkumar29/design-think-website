@@ -28,19 +28,25 @@ const About = () => {
             <div className="space-y-6">
               <h2 className="text-2xl font-bold text-primary">Lendi Institute of Engineering and Technology</h2>
               <p className="text-lg">
-                Lendi Institute of Engineering and Technology (LIET) is one of the premier engineering colleges 
-                located in Vizianagaram, Andhra Pradesh. Established with a vision to impart quality technical 
-                education, LIET has grown into a center of excellence.
+                Lendi Institute of Engineering and Technology is a premier institution dedicated to academic excellence, 
+                innovation, and holistic student development. With a strong commitment to fostering a culture of creativity 
+                and critical thinking, our college empowers students to become problem solvers and industry-ready professionals.
               </p>
               <p className="text-lg">
-                The Department of Electrical and Electronics Engineering is committed to providing 
-                students with both theoretical knowledge and practical skills needed to excel in the field. 
-                Through Design Thinking & Innovation courses, we encourage our students to develop creative 
-                solutions to real-world problems.
+                Our state-of-the-art infrastructure, experienced faculty, and research-driven approach create a dynamic 
+                learning environment that nurtures technical expertise and entrepreneurial spirit. We emphasize hands-on 
+                learning, interdisciplinary collaboration, and real-world applications to equip students with the skills 
+                required for the evolving global landscape.
               </p>
               <p className="text-lg">
-                With state-of-the-art laboratories, experienced faculty, and industry partnerships, 
-                we prepare our students to become innovative engineers ready to contribute to society.
+                Through various initiatives in design thinking and innovation, we encourage students to explore innovative 
+                solutions, participate in hackathons, and contribute to groundbreaking projects that address real-world 
+                challenges. Our institution serves as a hub for aspiring engineers, researchers, and entrepreneurs to 
+                turn ideas into reality and drive impactful change.
+              </p>
+              <p className="text-lg">
+                At Lendi Institute of Engineering and Technology, we are shaping the future by integrating education, 
+                technology, and creativity to inspire the next generation of innovators.
               </p>
               
               <Button className="mt-4" onClick={() => window.open("https://lendi.edu.in/", "_blank")} aria-label="Visit Lendi College Website">
