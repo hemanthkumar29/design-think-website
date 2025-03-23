@@ -63,7 +63,7 @@ const Index = () => {
               <span className="gradient-text">Design Thinking & Innovation</span>
               <br />
               <br></br>
-              <span className="text-foreground">II EEE A</span>
+              <span className="text-foreground">Dept. of EEE , Sec A</span>
             </h1>
             
             <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto animate-on-load opacity-0">
