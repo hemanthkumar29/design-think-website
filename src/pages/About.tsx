@@ -36,7 +36,7 @@ const About = () => {
                 we prepare our students to become innovative engineers ready to contribute to society.
               </p>
               
-              <Button className="mt-4" onClick={() => window.open("https://lendi.org", "_blank")}>
+              <Button className="mt-4" onClick={() => window.open("https://lendi.edu.in/", "_blank")}>
                 Visit College Website <ExternalLink className="ml-2" size={16} />
               </Button>
             </div>
