@@ -56,7 +56,7 @@ const About = () => {
             
             <div className="rounded-lg overflow-hidden shadow-lg">
               <img 
-                src="https://lendi.org/GRCL/logo.png" 
+                src="https://lendi.edu.in/cloud/lendi-institute.jpg" 
                 alt="Lendi Institute of Engineering and Technology Campus" 
                 className="w-full h-auto object-cover"
                 loading="lazy"
