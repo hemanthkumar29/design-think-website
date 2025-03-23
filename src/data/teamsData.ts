@@ -473,7 +473,7 @@ export const teamsData: Team[] = [
       id: 44,
       name: "Hemanth Kumar",
       role: "Team Leader",
-      image: "https://drive.google.com/file/d/1jscDZiAMkrbAuXiL9Yqu651q2INkfhz9/view?usp=sharing"
+      image: "https://github.com/hemanthkumar29/dtiassets/blob/main/team15/tmimages/Hemanth.jpg"
     },
     members: [
       {
