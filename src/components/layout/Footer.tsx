@@ -40,7 +40,10 @@ const Footer: React.FC = () => {
 
         <div className="mt-10 pt-6 border-t border-gray-200 text-center">
           <p className="text-sm text-muted-foreground">
-            © {currentYear} DT&I EEE A. All rights reserved.
+            © {currentYear} Hemanth Kumar Chandaka. All rights reserved.
+          </p>
+          <p>
+            Developed by Hemanth Kumar - Department of EEE - II Year
           </p>
         </div>
       </div>
