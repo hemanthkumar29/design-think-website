@@ -62,6 +62,7 @@ const Index = () => {
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight tracking-tight">
               <span className="gradient-text">Design Thinking & Innovation</span>
               <br />
+              <br></br>
               <span className="text-foreground">EEE-A</span>
             </h1>
             
