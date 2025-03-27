@@ -5,14 +5,10 @@ This folder contains images of team members for the DT&I EEE A website.
 
 ## Image Naming Convention
 
-Images follow this naming pattern:
-- `team{id}_leader.jpg` - For team leaders
-- `team{id}_member{number}.jpg` - For team members
+Images now follow this naming pattern:
+- Roll number based: `23KD1A0201.jpg`, `24KD5A0203.jpg`, etc.
 
-For example:
-- `team1_leader.jpg` - Team 1's leader
-- `team1_member1.jpg` - First member of Team 1
-- `team1_member2.jpg` - Second member of Team 1
+This naming convention directly uses the student's roll number as the filename, making it easier to identify and update images.
 
 ## Placeholder Images
 

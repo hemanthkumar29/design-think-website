@@ -1,4 +1,3 @@
-
 export interface TeamMember {
   id: number;
   name: string;
@@ -29,32 +28,32 @@ export const teamsData: Team[] = [
       id: 1,
       name: "A Divya Sri",
       role: "23KD1A0201",
-      image: "/team_images/team1_leader.jpg"
+      image: "/team_images/23KD1A0201.jpg"
     },
     members: [
       {
         id: 2,
         name: "A Rahul",
         role: "23KD1A0204",
-        image: "/team_images/team1_member1.jpg"
+        image: "/team_images/23KD1A0204.jpg"
       },
       {
         id: 3,
         name: "A Harshini",
         role: "23KD1A0202",
-        image: "/team_images/team1_member2.jpg"
+        image: "/team_images/23KD1A0202.jpg"
       },
       {
         id: 4,
         name: "Ch Sidhu",
         role: "23KD1A0223",
-        image: "/team_images/team1_member3.jpg"
+        image: "/team_images/23KD1A0223.jpg"
       },
       {
         id: 53,
         name: "B Veerendra Hanshith",
         role: "24KD5A0203",
-        image: "/team_images/team1_member4.jpg"
+        image: "/team_images/24KD5A0203.jpg"
       }
     ],
     projectImages: [
@@ -72,32 +71,32 @@ export const teamsData: Team[] = [
       id: 5,
       name: "B Sai Samanvitha",
       role: "23KD1A0214",
-      image: "/team_images/team2_leader.jpg"
+      image: "/team_images/23KD1A0214.jpg"
     },
     members: [
       {
         id: 6,
         name: "B Likitha",
         role: "23KD1A0206",
-        image: "/team_images/team2_member1.jpg"
+        image: "/team_images/23KD1A0206.jpg"
       },
       {
         id: 7,
         name: "G Sai",
         role: "23KD1A0243",
-        image: "/team_images/team2_member2.jpg"
+        image: "/team_images/23KD1A0243.jpg"
       },
       {
         id: 54,
         name: "Ch Mohan Sampath",
         role: "23KD1A0226",
-        image: "/team_images/team2_member3.jpg"
+        image: "/team_images/23KD1A0226.jpg"
       },
       {
         id: 55,
         name: "Ch Chaitanya",
         role: "23KD1A0228",
-        image: "/team_images/team2_member4.jpg"
+        image: "/team_images/23KD1A0228.jpg"
       }
     ],
     projectImages: [
@@ -115,30 +114,30 @@ export const teamsData: Team[] = [
       id: 8,
       name: "G Hyma",
       role: "23KD1A0234",
-      image: "/team_images/team3_leader.jpg"
+      image: "/team_images/23KD1A0234.jpg"
     },
     members: [
       {
         id: 9,
         name: "M Kavya Sri",
         role: "23KD1A0261",
-        image: "/team_images/team3_member1.jpg"
+        image: "/team_images/23KD1A0261.jpg"
       },
       {
         id: 10,
         name: "Ch Praveen Kumar",
         role: "23KD1A0227",
-        image: "/team_images/team3_member2.jpg"
+        image: "/team_images/23KD1A0227.jpg"
       },
       {
         id: 56,
         name: "K Rohith",
         role: "24KD5A0208",
-        image: "/team_images/team3_member3.jpg"
+        image: "/team_images/24KD5A0208.jpg"
       }
     ],
     projectImages: [
-      "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80",
+      "https://images.unsplash.com/photo-1485827404606-c3d57bc86b40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80",
       "https://images.unsplash.com/photo-1597662942557-4087855bfcfe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
     ]
   },
@@ -152,26 +151,26 @@ export const teamsData: Team[] = [
       id: 11,
       name: "K Ramya",
       role: "23KD1A0253",
-      image: "/team_images/team4_leader.jpg"
+      image: "/team_images/23KD1A0253.jpg"
     },
     members: [
       {
         id: 12,
         name: "D Koti",
         role: "23KD1A0255",
-        image: "/team_images/team4_member1.jpg"
+        image: "/team_images/23KD1A0255.jpg"
       },
       {
         id: 13,
         name: "B Chaitanya",
         role: "23KD1A0213",
-        image: "/team_images/team4_member2.jpg"
+        image: "/team_images/23KD1A0213.jpg"
       },
       {
         id: 57,
         name: "A Vaikunta Rao",
         role: "24KD5A0201",
-        image: "/team_images/team4_member3.jpg"
+        image: "/team_images/24KD5A0201.jpg"
       }
     ],
     projectImages: [
@@ -189,26 +188,26 @@ export const teamsData: Team[] = [
       id: 14,
       name: "G Pavani",
       role: "23KD1A0238",
-      image: "/team_images/team5_leader.jpg"
+      image: "/team_images/23KD1A0238.jpg"
     },
     members: [
       {
         id: 15,
         name: "K Sandhya Devi",
         role: "23KD1A0250",
-        image: "/team_images/team5_member1.jpg"
+        image: "/team_images/23KD1A0250.jpg"
       },
       {
         id: 16,
         name: "B Vyshnavi",
         role: "23KD1A0216",
-        image: "/team_images/team5_member2.jpg"
+        image: "/team_images/23KD1A0216.jpg"
       },
       {
         id: 58,
         name: "B Rajesh",
         role: "23KD1A0217",
-        image: "/team_images/team5_member3.jpg"
+        image: "/team_images/23KD1A0217.jpg"
       }
     ],
     projectImages: [
@@ -226,26 +225,26 @@ export const teamsData: Team[] = [
       id: 17,
       name: "J Gayatri",
       role: "23KD1A0246",
-      image: "/team_images/team6_leader.jpg"
+      image: "/team_images/23KD1A0246.jpg"
     },
     members: [
       {
         id: 18,
         name: "Ch Prasanna",
         role: "23KD1A0218",
-        image: "/team_images/team6_member1.jpg"
+        image: "/team_images/23KD1A0218.jpg"
       },
       {
         id: 19,
         name: "B Ramu",
         role: "23KD1A0215",
-        image: "/team_images/team6_member2.jpg"
+        image: "/team_images/23KD1A0215.jpg"
       },
       {
         id: 59,
         name: "G Hareesh",
         role: "24KD5A0207",
-        image: "/team_images/team6_member3.jpg"
+        image: "/team_images/24KD5A0207.jpg"
       }
     ],
     projectImages: [
@@ -263,26 +262,26 @@ export const teamsData: Team[] = [
       id: 20,
       name: "G Anjali",
       role: "23KD1A0233",
-      image: "/team_images/team7_leader.jpg"
+      image: "/team_images/23KD1A0233.jpg"
     },
     members: [
       {
         id: 21,
         name: "K Lathika",
         role: "23KD1A0249",
-        image: "/team_images/team7_member1.jpg"
+        image: "/team_images/23KD1A0249.jpg"
       },
       {
         id: 22,
         name: "B Ganesh",
         role: "23KD1A0210",
-        image: "/team_images/team7_member2.jpg"
+        image: "/team_images/23KD1A0210.jpg"
       },
       {
         id: 60,
         name: "L Tripathi Naidu",
         role: "23KD1A0258",
-        image: "/team_images/team7_member3.jpg"
+        image: "/team_images/23KD1A0258.jpg"
       }
     ],
     projectImages: [
@@ -300,26 +299,26 @@ export const teamsData: Team[] = [
       id: 23,
       name: "Ch Hemalatha",
       role: "23KD1A0224",
-      image: "/team_images/team8_leader.jpg"
+      image: "/team_images/23KD1A0224.jpg"
     },
     members: [
       {
         id: 24,
         name: "Ch Poornima",
         role: "23KD1A0235",
-        image: "/team_images/team8_member1.jpg"
+        image: "/team_images/23KD1A0235.jpg"
       },
       {
         id: 25,
         name: "B Venu",
         role: "23KD1A0209",
-        image: "/team_images/team8_member2.jpg"
+        image: "/team_images/23KD1A0209.jpg"
       },
       {
         id: 61,
         name: "Ch Prasad",
         role: "23KD1A0221",
-        image: "/team_images/team8_member3.jpg"
+        image: "/team_images/23KD1A0221.jpg"
       }
     ],
     projectImages: [
@@ -337,26 +336,26 @@ export const teamsData: Team[] = [
       id: 26,
       name: "K Vasavi",
       role: "23KD1A0251",
-      image: "/team_images/team9_leader.jpg"
+      image: "/team_images/23KD1A0251.jpg"
     },
     members: [
       {
         id: 27,
         name: "G Bhanu Prasad",
         role: "23KD1A0241",
-        image: "/team_images/team9_member1.jpg"
+        image: "/team_images/23KD1A0241.jpg"
       },
       {
         id: 28,
         name: "B Sivamani",
         role: "24KD5A0205",
-        image: "/team_images/team9_member2.jpg"
+        image: "/team_images/24KD5A0205.jpg"
       },
       {
         id: 62,
         name: "K Harsha Vardhini",
         role: "23KD1A0252",
-        image: "/team_images/team9_member3.jpg"
+        image: "/team_images/23KD1A0252.jpg"
       }
     ],
     projectImages: [
@@ -374,26 +373,26 @@ export const teamsData: Team[] = [
       id: 29,
       name: "Ch Pujitha",
       role: "23KD1A0222",
-      image: "/team_images/team10_leader.jpg"
+      image: "/team_images/23KD1A0222.jpg"
     },
     members: [
       {
         id: 30,
         name: "A Maharshi",
         role: "23KD1A0203",
-        image: "/team_images/team10_member1.jpg"
+        image: "/team_images/23KD1A0203.jpg"
       },
       {
         id: 31,
         name: "M Kali",
         role: "23KD1A0263",
-        image: "/team_images/team10_member2.jpg"
+        image: "/team_images/23KD1A0263.jpg"
       },
       {
         id: 63,
         name: "D Teja Krishna",
         role: "23KD1A0229",
-        image: "/team_images/team10_member3.jpg"
+        image: "/team_images/23KD1A0229.jpg"
       }
     ],
     projectImages: [
@@ -411,26 +410,26 @@ export const teamsData: Team[] = [
       id: 32,
       name: "A Rupa Rani",
       role: "24KD5A0202",
-      image: "/team_images/team11_leader.jpg"
+      image: "/team_images/24KD5A0202.jpg"
     },
     members: [
       {
         id: 33,
         name: "D Lasya",
         role: "23KD1A0230",
-        image: "/team_images/team11_member1.jpg"
+        image: "/team_images/23KD1A0230.jpg"
       },
       {
         id: 34,
         name: "M Prabhu Kumar",
         role: "23KD1A0262",
-        image: "/team_images/team11_member2.jpg"
+        image: "/team_images/23KD1A0262.jpg"
       },
       {
         id: 64,
         name: "K Venkata Lakshmi",
         role: "23KD1A0247",
-        image: "/team_images/team11_member3.jpg"
+        image: "/team_images/23KD1A0247.jpg"
       }
     ],
     projectImages: [
@@ -448,26 +447,26 @@ export const teamsData: Team[] = [
       id: 35,
       name: "G Tarun Sai",
       role: "23KD1A0237",
-      image: "/team_images/team12_leader.jpg"
+      image: "/team_images/23KD1A0237.jpg"
     },
     members: [
       {
         id: 36,
         name: "B Bhanu Prakash",
         role: "23KD1A0207",
-        image: "/team_images/team12_member1.jpg"
+        image: "/team_images/23KD1A0207.jpg"
       },
       {
         id: 37,
         name: "G Vasu",
         role: "23KD1A0242",
-        image: "/team_images/team12_member2.jpg"
+        image: "/team_images/23KD1A0242.jpg"
       },
       {
         id: 65,
         name: "B Varshitha",
         role: "23KD1A0208",
-        image: "/team_images/team12_member3.jpg"
+        image: "/team_images/23KD1A0208.jpg"
       }
     ],
     projectImages: [
@@ -485,26 +484,26 @@ export const teamsData: Team[] = [
       id: 38,
       name: "Ch Sohitha Sai",
       role: "23KD1A0219",
-      image: "/team_images/team13_leader.jpg"
+      image: "/team_images/23KD1A0219.jpg"
     },
     members: [
       {
         id: 39,
         name: "L Venkata Lakshmi",
         role: "23KD1A0260",
-        image: "/team_images/team13_member1.jpg"
+        image: "/team_images/23KD1A0260.jpg"
       },
       {
         id: 40,
         name: "B Ramu",
         role: "23KD1A0212",
-        image: "/team_images/team13_member2.jpg"
+        image: "/team_images/23KD1A0212.jpg"
       },
       {
         id: 66,
         name: "I Sai Vamsi",
         role: "23KD1A0245",
-        image: "/team_images/team13_member3.jpg"
+        image: "/team_images/23KD1A0245.jpg"
       }
     ],
     projectImages: [
@@ -522,26 +521,26 @@ export const teamsData: Team[] = [
       id: 41,
       name: "K Sandeep Babu",
       role: "23KD1A0257",
-      image: "/team_images/team14_leader.jpg"
+      image: "/team_images/23KD1A0257.jpg"
     },
     members: [
       {
         id: 42,
         name: "D Reshma",
         role: "23KD1A0232",
-        image: "/team_images/team14_member1.jpg"
+        image: "/team_images/23KD1A0232.jpg"
       },
       {
         id: 43,
         name: "K Bhavani",
         role: "23KD1A0254",
-        image: "/team_images/team14_member2.jpg"
+        image: "/team_images/23KD1A0254.jpg"
       },
       {
         id: 67,
         name: "B Leela Jyotshna",
         role: "23KD1A0211",
-        image: "/team_images/team14_member3.jpg"
+        image: "/team_images/23KD1A0211.jpg"
       }
     ],
     projectImages: [
@@ -559,26 +558,26 @@ export const teamsData: Team[] = [
       id: 44,
       name: "Ch Hemanth Kumar",
       role: "23KD1A0220",
-      image: "/team_images/team15_leader.jpg"
+      image: "/team_images/23KD1A0220.jpg"
     },
     members: [
       {
         id: 45,
         name: "G Sirisha",
         role: "23KD1A0244",
-        image: "/team_images/team15_member1.jpg"
+        image: "/team_images/23KD1A0244.jpg"
       },
       {
         id: 46,
         name: "K Tejesh Naidu",
         role: "23KD1A0248",
-        image: "/team_images/team15_member2.jpg"
+        image: "/team_images/23KD1A0248.jpg"
       },
       {
         id: 68,
         name: "D Manasa",
         role: "24KD5A0206",
-        image: "/team_images/team15_member3.jpg"
+        image: "/team_images/24KD5A0206.jpg"
       }
     ],
     projectImages: [
@@ -596,26 +595,26 @@ export const teamsData: Team[] = [
       id: 47,
       name: "G Kavitha",
       role: "23KD1A0239",
-      image: "/team_images/team16_leader.jpg"
+      image: "/team_images/23KD1A0239.jpg"
     },
     members: [
       {
         id: 48,
         name: "G Sandhya",
         role: "23KD1A0236",
-        image: "/team_images/team16_member1.jpg"
+        image: "/team_images/23KD1A0236.jpg"
       },
       {
         id: 49,
         name: "K Lakshman Kumar",
         role: "23KD1A0256",
-        image: "/team_images/team16_member2.jpg"
+        image: "/team_images/23KD1A0256.jpg"
       },
       {
         id: 69,
         name: "A Sai Mounika",
         role: "23KD1A0205",
-        image: "/team_images/team16_member3.jpg"
+        image: "/team_images/23KD1A0205.jpg"
       }
     ],
     projectImages: [
@@ -633,26 +632,26 @@ export const teamsData: Team[] = [
       id: 50,
       name: "M Adhi Lakshmi",
       role: "23KD1A0264",
-      image: "/team_images/team17_leader.jpg"
+      image: "/team_images/23KD1A0264.jpg"
     },
     members: [
       {
         id: 51,
         name: "L Neeharika",
         role: "23KD1A0259",
-        image: "/team_images/team17_member1.jpg"
+        image: "/team_images/23KD1A0259.jpg"
       },
       {
         id: 52,
         name: "Ch Ravi Teja",
         role: "23KD1A0225",
-        image: "/team_images/team17_member2.jpg"
+        image: "/team_images/23KD1A0225.jpg"
       },
       {
         id: 70,
         name: "B Harsha Vardhan",
         role: "24KD5A0204",
-        image: "/team_images/team17_member3.jpg"
+        image: "/team_images/24KD5A0204.jpg"
       }
     ],
     projectImages: [
