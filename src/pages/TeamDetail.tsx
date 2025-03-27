@@ -8,6 +8,7 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { ArrowLeft } from 'lucide-react';
 import PageSEO from '@/components/SEO/PageSEO';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 
 const TeamDetail = () => {
   const { id } = useParams();
@@ -46,6 +47,15 @@ const TeamDetail = () => {
   
   // Combine leader and members into a single array for display
   const allTeamMembers = [team.leader, ...team.members];
+  
+  // Helper function to get initials for avatar fallback
+  const getInitials = (name) => {
+    return name
+      .split(' ')
+      .map(part => part[0])
+      .join('')
+      .toUpperCase();
+  };
   
   return (
     <div className="flex flex-col min-h-screen">
@@ -94,15 +104,16 @@ const TeamDetail = () => {
               <div className="relative group animate-slide-left">
                 <div className="absolute -inset-2 bg-gradient-to-r from-blue-200 to-indigo-200 rounded-lg blur opacity-50 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
                 <div className="relative overflow-hidden rounded-lg shadow-lg">
-                  <img 
-                    src={team.leader.image} 
-                    alt={team.leader.name} 
-                    className="w-full h-auto object-cover aspect-[4/3]"
-                    onError={(e) => {
-                      // Fallback to a placeholder image if the image fails to load
-                      e.currentTarget.src = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80";
-                    }}
-                  />
+                  <Avatar className="w-full h-auto object-cover aspect-[4/3]">
+                    <AvatarImage 
+                      src={team.leader.image} 
+                      alt={team.leader.name}
+                      className="w-full h-auto aspect-[4/3] object-cover"
+                    />
+                    <AvatarFallback className="w-full h-auto aspect-[4/3] text-5xl bg-gradient-to-r from-blue-100 to-indigo-100">
+                      {getInitials(team.leader.name)}
+                    </AvatarFallback>
+                  </Avatar>
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
                     <h3 className="text-white font-bold text-xl">{team.leader.name}</h3>
                     <p className="text-white/80">{team.leader.role}</p>
@@ -142,20 +153,16 @@ const TeamDetail = () => {
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
                   <div className="aspect-square overflow-hidden">
-                    <img 
-                      src={member.image} 
-                      alt={member.name} 
-                      className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                      onError={(e) => {
-                        const placeholders = [
-                          "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80",
-                          "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80",
-                          "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
-                        ];
-                        // Choose a consistent but random-looking placeholder based on member id
-                        e.currentTarget.src = placeholders[member.id % placeholders.length];
-                      }}
-                    />
+                    <Avatar className="w-full h-full">
+                      <AvatarImage 
+                        src={member.image} 
+                        alt={member.name} 
+                        className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                      />
+                      <AvatarFallback className="w-full h-full text-3xl bg-gradient-to-r from-blue-100 to-indigo-100">
+                        {getInitials(member.name)}
+                      </AvatarFallback>
+                    </Avatar>
                   </div>
                   <div className="p-4">
                     <h3 className="font-medium text-lg">{member.name}</h3>

@@ -17,7 +17,7 @@ export interface Team {
   projectImages: string[];
 }
 
-// For now, we'll use placeholder data
+// Team data updated with local image paths
 export const teamsData: Team[] = [
   {
     id: 1,
@@ -29,32 +29,32 @@ export const teamsData: Team[] = [
       id: 1,
       name: "Alex Johnson",
       role: "Team Leader",
-      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
+      image: "/team_images/team1_leader.jpg"
     },
     members: [
       {
         id: 2,
         name: "Sarah Williams",
         role: "Hardware Engineer",
-        image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
+        image: "/team_images/team1_member1.jpg"
       },
       {
         id: 3,
         name: "Michael Chen",
         role: "Software Developer",
-        image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
+        image: "/team_images/team1_member2.jpg"
       },
       {
         id: 4,
         name: "Emily Davis",
         role: "UX Designer",
-        image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
+        image: "/team_images/team1_member3.jpg"
       },
       {
         id: 53,
         name: "Daniel Lee",
         role: "Systems Analyst",
-        image: "https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1760&q=80"
+        image: "/team_images/team1_member4.jpg"
       }
     ],
     projectImages: [
@@ -72,32 +72,32 @@ export const teamsData: Team[] = [
       id: 5,
       name: "David Kim",
       role: "Team Leader",
-      image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
+      image: "/team_images/team2_leader.jpg"
     },
     members: [
       {
         id: 6,
         name: "Jessica Patel",
         role: "Biomedical Engineer",
-        image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1742&q=80"
+        image: "/team_images/team2_member1.jpg"
       },
       {
         id: 7,
         name: "Ryan Nguyen",
         role: "Electronics Specialist",
-        image: "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
+        image: "/team_images/team2_member2.jpg"
       },
       {
         id: 54,
         name: "Lisa Wang",
         role: "Data Scientist",
-        image: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
+        image: "/team_images/team2_member3.jpg"
       },
       {
         id: 55,
         name: "Marcus Thompson",
         role: "Health Informatics Specialist",
-        image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
+        image: "/team_images/team2_member4.jpg"
       }
     ],
     projectImages: [
@@ -115,26 +115,26 @@ export const teamsData: Team[] = [
       id: 8,
       name: "Olivia Martinez",
       role: "Team Leader",
-      image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1742&q=80"
+      image: "/team_images/team3_leader.jpg"
     },
     members: [
       {
         id: 9,
         name: "James Wilson",
         role: "Robotics Engineer",
-        image: "https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1760&q=80"
+        image: "/team_images/team3_member1.jpg"
       },
       {
         id: 10,
         name: "Sophia Lee",
         role: "Computer Vision Specialist",
-        image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1064&q=80"
+        image: "/team_images/team3_member2.jpg"
       },
       {
         id: 56,
         name: "Victor Lopez",
         role: "Machine Learning Engineer",
-        image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
+        image: "/team_images/team3_member3.jpg"
       }
     ],
     projectImages: [
@@ -142,7 +142,7 @@ export const teamsData: Team[] = [
       "https://images.unsplash.com/photo-1597662942557-4087855bfcfe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
     ]
   },
-  // Teams 4-17 follow the same pattern, adding placeholder teams to reach 17 total
+  // Teams 4-17 follow the same pattern
   {
     id: 4,
     name: "AudioSpace",
@@ -153,26 +153,26 @@ export const teamsData: Team[] = [
       id: 11,
       name: "Daniel Brown",
       role: "Team Leader",
-      image: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1748&q=80"
+      image: "/team_images/team4_leader.jpg"
     },
     members: [
       {
         id: 12,
         name: "Natalie Garcia",
         role: "Audio Engineer",
-        image: "https://images.unsplash.com/photo-1535468157133-d9e318bd1d2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1064&q=80"
+        image: "/team_images/team4_member1.jpg"
       },
       {
         id: 13,
         name: "Kevin Taylor",
         role: "DSP Programmer",
-        image: "https://images.unsplash.com/photo-1504257432389-52343af06ae3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
+        image: "/team_images/team4_member2.jpg"
       },
       {
         id: 57,
         name: "Amanda Wright",
         role: "Product Manager",
-        image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
+        image: "/team_images/team4_member3.jpg"
       }
     ],
     projectImages: [
@@ -190,26 +190,26 @@ export const teamsData: Team[] = [
       id: 14,
       name: "Emma Rodriguez",
       role: "Team Leader",
-      image: "https://images.unsplash.com/photo-1496360166961-10a51d5f367a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
+      image: "/team_images/team5_leader.jpg"
     },
     members: [
       {
         id: 15,
         name: "Luis Hernandez",
         role: "IoT Specialist",
-        image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
+        image: "/team_images/team5_member1.jpg"
       },
       {
         id: 16,
         name: "Aisha Patel",
         role: "Agricultural Engineer",
-        image: "https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=772&q=80"
+        image: "/team_images/team5_member2.jpg"
       },
       {
         id: 58,
         name: "Carlos Mendez",
         role: "Data Analyst",
-        image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
+        image: "/team_images/team5_member3.jpg"
       }
     ],
     projectImages: [
@@ -217,7 +217,7 @@ export const teamsData: Team[] = [
       "https://images.unsplash.com/photo-1500651230702-0e2d8a49d4ad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
     ]
   },
-  // Teams 6-17, continue with similar pattern but different focus areas
+  // Teams 6-17
   {
     id: 6,
     name: "NeuroLearn",
@@ -228,26 +228,26 @@ export const teamsData: Team[] = [
       id: 17,
       name: "Thomas White",
       role: "Team Leader",
-      image: "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1752&q=80"
+      image: "/team_images/team6_leader.jpg"
     },
     members: [
       {
         id: 18,
         name: "Grace Liu",
         role: "AI Researcher",
-        image: "https://images.unsplash.com/photo-1499952127939-9bbf5af6c51c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1752&q=80"
+        image: "/team_images/team6_member1.jpg"
       },
       {
         id: 19,
         name: "Marcus Johnson",
         role: "Educational Technology Specialist",
-        image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
+        image: "/team_images/team6_member2.jpg"
       },
       {
         id: 59,
         name: "Rachel Kim",
         role: "UX Designer",
-        image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
+        image: "/team_images/team6_member3.jpg"
       }
     ],
     projectImages: [
@@ -265,26 +265,26 @@ export const teamsData: Team[] = [
       id: 20,
       name: "Sophia Clark",
       role: "Team Leader",
-      image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=776&q=80"
+      image: "/team_images/team7_leader.jpg"
     },
     members: [
       {
         id: 21,
         name: "Noah Robinson",
         role: "Environmental Engineer",
-        image: "https://images.unsplash.com/photo-1504257432389-52343af06ae3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
+        image: "/team_images/team7_member1.jpg"
       },
       {
         id: 22,
         name: "Isabella Nguyen",
         role: "Data Scientist",
-        image: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
+        image: "/team_images/team7_member2.jpg"
       },
       {
         id: 60,
         name: "Julian Barnes",
         role: "IoT Engineer",
-        image: "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
+        image: "/team_images/team7_member3.jpg"
       }
     ],
     projectImages: [
@@ -292,7 +292,7 @@ export const teamsData: Team[] = [
       "https://images.unsplash.com/photo-1611284446314-60a58ac0deb9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
     ]
   },
-  // Add remaining teams with placeholder data
+  // Continue with remaining teams
   {
     id: 8,
     name: "CyberShield",
@@ -303,26 +303,26 @@ export const teamsData: Team[] = [
       id: 23,
       name: "Ethan Morris",
       role: "Team Leader",
-      image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
+      image: "/team_images/team8_leader.jpg"
     },
     members: [
       {
         id: 24,
         name: "Maya Patel",
         role: "Security Architect",
-        image: "https://images.unsplash.com/photo-1548142813-c348350df52b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=778&q=80"
+        image: "/team_images/team8_member1.jpg"
       },
       {
         id: 25,
         name: "Jordan Lee",
         role: "Embedded Systems Developer",
-        image: "https://images.unsplash.com/photo-1552058544-f2b08422138a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=798&q=80"
+        image: "/team_images/team8_member2.jpg"
       },
       {
         id: 61,
         name: "Alex Wright",
         role: "Security Analyst",
-        image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
+        image: "/team_images/team8_member3.jpg"
       }
     ],
     projectImages: [
@@ -340,26 +340,26 @@ export const teamsData: Team[] = [
       id: 26,
       name: "Rebecca Singh",
       role: "Team Leader",
-      image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1742&q=80"
+      image: "/team_images/team9_leader.jpg"
     },
     members: [
       {
         id: 27,
         name: "Caleb Williams",
         role: "Medical Informatics Specialist",
-        image: "https://images.unsplash.com/photo-1500048993953-d23a436266cf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1738&q=80"
+        image: "/team_images/team9_member1.jpg"
       },
       {
         id: 28,
         name: "Hannah Kim",
         role: "Healthcare UI/UX Designer",
-        image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=776&q=80"
+        image: "/team_images/team9_member2.jpg"
       },
       {
         id: 62,
         name: "Samantha Chen",
         role: "Health Data Analyst",
-        image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=776&q=80"
+        image: "/team_images/team9_member3.jpg"
       }
     ],
     projectImages: [
@@ -378,26 +378,26 @@ export const teamsData: Team[] = [
       id: 29,
       name: "Andrew Thomas",
       role: "Team Leader",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
+      image: "/team_images/team10_leader.jpg"
     },
     members: [
       {
         id: 30,
         name: "Olivia Parker",
         role: "Urban Planning Specialist",
-        image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=776&q=80"
+        image: "/team_images/team10_member1.jpg"
       },
       {
         id: 31,
         name: "Victor Mendez",
         role: "Computer Vision Engineer",
-        image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
+        image: "/team_images/team10_member2.jpg"
       },
       {
         id: 63,
         name: "Priya Sharma",
         role: "Data Scientist",
-        image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=776&q=80"
+        image: "/team_images/team10_member3.jpg"
       }
     ],
     projectImages: [
@@ -405,7 +405,7 @@ export const teamsData: Team[] = [
       "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
     ]
   },
-  // Add more teams to reach 17 total with similar structure but different details
+  // Add more teams (11-17)
   {
     id: 11,
     name: "AquaPure",
@@ -416,26 +416,26 @@ export const teamsData: Team[] = [
       id: 32,
       name: "Lily Zhang",
       role: "Team Leader",
-      image: "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1752&q=80"
+      image: "/team_images/team11_leader.jpg"
     },
     members: [
       {
         id: 33,
         name: "Samuel Jackson",
         role: "Water Treatment Specialist",
-        image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
+        image: "/team_images/team11_member1.jpg"
       },
       {
         id: 34,
         name: "Zoe Wilson",
         role: "Chemical Engineer",
-        image: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
+        image: "/team_images/team11_member2.jpg"
       },
       {
         id: 64,
         name: "Ryan Cooper",
         role: "IoT Systems Engineer",
-        image: "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
+        image: "/team_images/team11_member3.jpg"
       }
     ],
     projectImages: [
@@ -453,26 +453,26 @@ export const teamsData: Team[] = [
       id: 35,
       name: "Rohan Patel",
       role: "Team Leader",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
+      image: "/team_images/team12_leader.jpg"
     },
     members: [
       {
         id: 36,
         name: "Madison Chen",
         role: "Material Scientist",
-        image: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
+        image: "/team_images/team12_member1.jpg"
       },
       {
         id: 37,
         name: "Ethan Baker",
         role: "Renewable Energy Engineer",
-        image: "https://images.unsplash.com/photo-1541271696563-3be2f555fc4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
+        image: "/team_images/team12_member2.jpg"
       },
       {
         id: 65,
         name: "Layla Edwards",
         role: "Product Design Engineer",
-        image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=776&q=80"
+        image: "/team_images/team12_member3.jpg"
       }
     ],
     projectImages: [
@@ -490,26 +490,26 @@ export const teamsData: Team[] = [
       id: 38,
       name: "Caroline Hughes",
       role: "Team Leader",
-      image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1742&q=80"
+      image: "/team_images/team13_leader.jpg"
     },
     members: [
       {
         id: 39,
         name: "Jason Morris",
         role: "Textile Engineer",
-        image: "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
+        image: "/team_images/team13_member1.jpg"
       },
       {
         id: 40,
         name: "Priya Sharma",
         role: "Biochemist",
-        image: "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
+        image: "/team_images/team13_member2.jpg"
       },
       {
         id: 66,
         name: "Noor Malik",
         role: "Sustainable Materials Specialist",
-        image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=776&q=80"
+        image: "/team_images/team13_member3.jpg"
       }
     ],
     projectImages: [
@@ -527,26 +527,26 @@ export const teamsData: Team[] = [
       id: 41,
       name: "Nathan Green",
       role: "Team Leader",
-      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
+      image: "/team_images/team14_leader.jpg"
     },
     members: [
       {
         id: 42,
         name: "Linda Torres",
         role: "Agricultural Technologist",
-        image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=776&q=80"
+        image: "/team_images/team14_member1.jpg"
       },
       {
         id: 43,
         name: "Derek Zhang",
         role: "Automation Engineer",
-        image: "https://images.unsplash.com/photo-1504257432389-52343af06ae3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
+        image: "/team_images/team14_member2.jpg"
       },
       {
         id: 67,
         name: "Sophia Rivera",
         role: "Sustainability Consultant",
-        image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
+        image: "/team_images/team14_member3.jpg"
       }
     ],
     projectImages: [
@@ -564,26 +564,26 @@ export const teamsData: Team[] = [
       id: 44,
       name: "Hemanth Kumar",
       role: "Team Leader",
-      image: "https://github.com/hemanthkumar29/dtiassets/blob/main/team15/tmimages/Hemanth.jpg"
+      image: "/team_images/team15_leader.jpg"
     },
     members: [
       {
         id: 45,
         name: "Sophia Williams",
         role: "Quantum Algorithm Developer",
-        image: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
+        image: "/team_images/team15_member1.jpg"
       },
       {
         id: 46,
         name: "Robert Chen",
         role: "Theoretical Physicist",
-        image: "https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1068&q=80"
+        image: "/team_images/team15_member2.jpg"
       },
       {
         id: 68,
         name: "Emily Foster",
         role: "Database Administrator",
-        image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
+        image: "/team_images/team15_member3.jpg"
       }
     ],
     projectImages: [
@@ -601,26 +601,26 @@ export const teamsData: Team[] = [
       id: 47,
       name: "Eliza Montgomery",
       role: "Team Leader",
-      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=776&q=80"
+      image: "/team_images/team16_leader.jpg"
     },
     members: [
       {
         id: 48,
         name: "Maxwell Powell",
         role: "Neural Engineer",
-        image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
+        image: "/team_images/team16_member1.jpg"
       },
       {
         id: 49,
         name: "Jasmine Washington",
         role: "Biomedical Engineer",
-        image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=776&q=80"
+        image: "/team_images/team16_member2.jpg"
       },
       {
         id: 69,
         name: "Ravi Patel",
         role: "Signal Processing Specialist",
-        image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
+        image: "/team_images/team16_member3.jpg"
       }
     ],
     projectImages: [
@@ -638,26 +638,26 @@ export const teamsData: Team[] = [
       id: 50,
       name: "Marcus Rivera",
       role: "Team Leader",
-      image: "https://images.unsplash.com/photo-1557862921-37829c790f19?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1742&q=80"
+      image: "/team_images/team17_leader.jpg"
     },
     members: [
       {
         id: 51,
         name: "Leila Smith",
         role: "Meteorologist",
-        image: "https://images.unsplash.com/photo-1553514029-1318c9127859?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2064&q=80"
+        image: "/team_images/team17_member1.jpg"
       },
       {
         id: 52,
         name: "Tyler Mitchell",
         role: "Machine Learning Engineer",
-        image: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
+        image: "/team_images/team17_member2.jpg"
       },
       {
         id: 70,
         name: "Jordan Brooks",
         role: "Data Visualization Specialist",
-        image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
+        image: "/team_images/team17_member3.jpg"
       }
     ],
     projectImages: [
@@ -671,6 +671,6 @@ export const teamsData: Team[] = [
 export const mentorData = {
   name: "Bugatha Ram Vara Prasad",
   title: "Assistant Professor, Dept. Of EEE",
-  image: "https://lendi.edu.in//cloud/2024/12/27/1735293134_cropped-image.jpg.jpg",
+  image: "/team_images/mentor.jpg",
   bio: "Ram Vara Prasad Bugatha is an Assistant Professor in the Department of Electrical and Electronics Engineering (EEE) with over four years of experience in academia. His expertise lies in Power and Industrial Drives, and he holds an M.Tech degree, currently pursuing a Ph.D. Passionate about technological advancements, he has actively participated in numerous Faculty Development Programs (FDPs) and workshops on Industrial Automation, IoT, Embedded Systems, and Power Systems.An accomplished researcher, he has published extensively in reputed journals and conferences, focusing on Smart Electric Vehicles, Renewable Energy Applications, Power Quality Enhancement, and Advanced Motor Control Strategies. He has also presented his work at national and international conferences, contributing to the discourse on sustainable and efficient energy solutions.Beyond research, he has guided several student projects, including IoT-based home automation, smart electric vehicles, and solar-powered charging stations for EVs. A dedicated mentor, he holds multiple NPTEL certifications and actively engages in professional bodies such as ISTE, IAENG, and IFERP, fostering academic excellence and innovation in electrical engineering."
 };
