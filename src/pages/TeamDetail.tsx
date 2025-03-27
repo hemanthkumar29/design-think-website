@@ -44,6 +44,9 @@ const TeamDetail = () => {
     );
   }
   
+  // Combine leader and members into a single array for display
+  const allTeamMembers = [team.leader, ...team.members];
+  
   return (
     <div className="flex flex-col min-h-screen">
       <PageSEO
@@ -132,7 +135,7 @@ const TeamDetail = () => {
             </h2>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-              {[team.leader, ...team.members].map((member, index) => (
+              {allTeamMembers.map((member, index) => (
                 <div 
                   key={member.id} 
                   className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 opacity-100 animate-fade-in"
