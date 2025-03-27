@@ -550,7 +550,7 @@ export const teamsData: Team[] = [
   },
   {
     id: 15,
-    name: "Smart Leave Management",
+    name: "Tech Squad",
     description: "Smart Leave Management System",
     longDescription: "A Smart Leave Management System for colleges is an automated platform that simplifies leave applications, approvals, and tracking for students, faculty, and staff. It eliminates manual paperwork, reduces errors, and ensures adherence to institutional policies. Students can apply for leave online, faculty can approve/reject requests, and administration can maintain records efficiently. Features include real-time leave balance tracking, automated notifications, customizable policies, and seamless integration with attendance management systems.",
     progress: 80,
