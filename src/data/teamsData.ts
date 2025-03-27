@@ -17,7 +17,7 @@ export interface Team {
   projectImages: string[];
 }
 
-// Team data updated with local image paths
+// Team data updated with classmate names and roll numbers
 export const teamsData: Team[] = [
   {
     id: 1,
@@ -27,33 +27,33 @@ export const teamsData: Team[] = [
     progress: 85,
     leader: {
       id: 1,
-      name: "Alex Johnson",
-      role: "Team Leader",
+      name: "A Divya Sri",
+      role: "23KD1A0201",
       image: "/team_images/team1_leader.jpg"
     },
     members: [
       {
         id: 2,
-        name: "Sarah Williams",
-        role: "Hardware Engineer",
+        name: "A Rahul",
+        role: "23KD1A0204",
         image: "/team_images/team1_member1.jpg"
       },
       {
         id: 3,
-        name: "Michael Chen",
-        role: "Software Developer",
+        name: "A Harshini",
+        role: "23KD1A0202",
         image: "/team_images/team1_member2.jpg"
       },
       {
         id: 4,
-        name: "Emily Davis",
-        role: "UX Designer",
+        name: "Ch Sidhu",
+        role: "23KD1A0223",
         image: "/team_images/team1_member3.jpg"
       },
       {
         id: 53,
-        name: "Daniel Lee",
-        role: "Systems Analyst",
+        name: "B Veerendra Hanshith",
+        role: "24KD5A0203",
         image: "/team_images/team1_member4.jpg"
       }
     ],
@@ -70,33 +70,33 @@ export const teamsData: Team[] = [
     progress: 72,
     leader: {
       id: 5,
-      name: "David Kim",
-      role: "Team Leader",
+      name: "B Sai Samanvitha",
+      role: "23KD1A0214",
       image: "/team_images/team2_leader.jpg"
     },
     members: [
       {
         id: 6,
-        name: "Jessica Patel",
-        role: "Biomedical Engineer",
+        name: "B Likitha",
+        role: "23KD1A0206",
         image: "/team_images/team2_member1.jpg"
       },
       {
         id: 7,
-        name: "Ryan Nguyen",
-        role: "Electronics Specialist",
+        name: "G Sai",
+        role: "23KD1A0243",
         image: "/team_images/team2_member2.jpg"
       },
       {
         id: 54,
-        name: "Lisa Wang",
-        role: "Data Scientist",
+        name: "Ch Mohan Sampath",
+        role: "23KD1A0226",
         image: "/team_images/team2_member3.jpg"
       },
       {
         id: 55,
-        name: "Marcus Thompson",
-        role: "Health Informatics Specialist",
+        name: "Ch Chaitanya",
+        role: "23KD1A0228",
         image: "/team_images/team2_member4.jpg"
       }
     ],
@@ -113,27 +113,27 @@ export const teamsData: Team[] = [
     progress: 60,
     leader: {
       id: 8,
-      name: "Olivia Martinez",
-      role: "Team Leader",
+      name: "G Hyma",
+      role: "23KD1A0234",
       image: "/team_images/team3_leader.jpg"
     },
     members: [
       {
         id: 9,
-        name: "James Wilson",
-        role: "Robotics Engineer",
+        name: "M Kavya Sri",
+        role: "23KD1A0261",
         image: "/team_images/team3_member1.jpg"
       },
       {
         id: 10,
-        name: "Sophia Lee",
-        role: "Computer Vision Specialist",
+        name: "Ch Praveen Kumar",
+        role: "23KD1A0227",
         image: "/team_images/team3_member2.jpg"
       },
       {
         id: 56,
-        name: "Victor Lopez",
-        role: "Machine Learning Engineer",
+        name: "K Rohith",
+        role: "24KD5A0208",
         image: "/team_images/team3_member3.jpg"
       }
     ],
@@ -142,7 +142,6 @@ export const teamsData: Team[] = [
       "https://images.unsplash.com/photo-1597662942557-4087855bfcfe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
     ]
   },
-  // Teams 4-17 follow the same pattern
   {
     id: 4,
     name: "AudioSpace",
@@ -151,27 +150,27 @@ export const teamsData: Team[] = [
     progress: 45,
     leader: {
       id: 11,
-      name: "Daniel Brown",
-      role: "Team Leader",
+      name: "K Ramya",
+      role: "23KD1A0253",
       image: "/team_images/team4_leader.jpg"
     },
     members: [
       {
         id: 12,
-        name: "Natalie Garcia",
-        role: "Audio Engineer",
+        name: "D Koti",
+        role: "23KD1A0255",
         image: "/team_images/team4_member1.jpg"
       },
       {
         id: 13,
-        name: "Kevin Taylor",
-        role: "DSP Programmer",
+        name: "B Chaitanya",
+        role: "23KD1A0213",
         image: "/team_images/team4_member2.jpg"
       },
       {
         id: 57,
-        name: "Amanda Wright",
-        role: "Product Manager",
+        name: "A Vaikunta Rao",
+        role: "24KD5A0201",
         image: "/team_images/team4_member3.jpg"
       }
     ],
@@ -188,27 +187,27 @@ export const teamsData: Team[] = [
     progress: 65,
     leader: {
       id: 14,
-      name: "Emma Rodriguez",
-      role: "Team Leader",
+      name: "G Pavani",
+      role: "23KD1A0238",
       image: "/team_images/team5_leader.jpg"
     },
     members: [
       {
         id: 15,
-        name: "Luis Hernandez",
-        role: "IoT Specialist",
+        name: "K Sandhya Devi",
+        role: "23KD1A0250",
         image: "/team_images/team5_member1.jpg"
       },
       {
         id: 16,
-        name: "Aisha Patel",
-        role: "Agricultural Engineer",
+        name: "B Vyshnavi",
+        role: "23KD1A0216",
         image: "/team_images/team5_member2.jpg"
       },
       {
         id: 58,
-        name: "Carlos Mendez",
-        role: "Data Analyst",
+        name: "B Rajesh",
+        role: "23KD1A0217",
         image: "/team_images/team5_member3.jpg"
       }
     ],
@@ -217,7 +216,6 @@ export const teamsData: Team[] = [
       "https://images.unsplash.com/photo-1500651230702-0e2d8a49d4ad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
     ]
   },
-  // Teams 6-17
   {
     id: 6,
     name: "NeuroLearn",
@@ -226,27 +224,27 @@ export const teamsData: Team[] = [
     progress: 55,
     leader: {
       id: 17,
-      name: "Thomas White",
-      role: "Team Leader",
+      name: "J Gayatri",
+      role: "23KD1A0246",
       image: "/team_images/team6_leader.jpg"
     },
     members: [
       {
         id: 18,
-        name: "Grace Liu",
-        role: "AI Researcher",
+        name: "Ch Prasanna",
+        role: "23KD1A0218",
         image: "/team_images/team6_member1.jpg"
       },
       {
         id: 19,
-        name: "Marcus Johnson",
-        role: "Educational Technology Specialist",
+        name: "B Ramu",
+        role: "23KD1A0215",
         image: "/team_images/team6_member2.jpg"
       },
       {
         id: 59,
-        name: "Rachel Kim",
-        role: "UX Designer",
+        name: "G Hareesh",
+        role: "24KD5A0207",
         image: "/team_images/team6_member3.jpg"
       }
     ],
@@ -263,27 +261,27 @@ export const teamsData: Team[] = [
     progress: 80,
     leader: {
       id: 20,
-      name: "Sophia Clark",
-      role: "Team Leader",
+      name: "G Anjali",
+      role: "23KD1A0233",
       image: "/team_images/team7_leader.jpg"
     },
     members: [
       {
         id: 21,
-        name: "Noah Robinson",
-        role: "Environmental Engineer",
+        name: "K Lathika",
+        role: "23KD1A0249",
         image: "/team_images/team7_member1.jpg"
       },
       {
         id: 22,
-        name: "Isabella Nguyen",
-        role: "Data Scientist",
+        name: "B Ganesh",
+        role: "23KD1A0210",
         image: "/team_images/team7_member2.jpg"
       },
       {
         id: 60,
-        name: "Julian Barnes",
-        role: "IoT Engineer",
+        name: "L Tripathi Naidu",
+        role: "23KD1A0258",
         image: "/team_images/team7_member3.jpg"
       }
     ],
@@ -292,7 +290,6 @@ export const teamsData: Team[] = [
       "https://images.unsplash.com/photo-1611284446314-60a58ac0deb9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
     ]
   },
-  // Continue with remaining teams
   {
     id: 8,
     name: "CyberShield",
@@ -301,27 +298,27 @@ export const teamsData: Team[] = [
     progress: 62,
     leader: {
       id: 23,
-      name: "Ethan Morris",
-      role: "Team Leader",
+      name: "Ch Hemalatha",
+      role: "23KD1A0224",
       image: "/team_images/team8_leader.jpg"
     },
     members: [
       {
         id: 24,
-        name: "Maya Patel",
-        role: "Security Architect",
+        name: "Ch Poornima",
+        role: "23KD1A0235",
         image: "/team_images/team8_member1.jpg"
       },
       {
         id: 25,
-        name: "Jordan Lee",
-        role: "Embedded Systems Developer",
+        name: "B Venu",
+        role: "23KD1A0209",
         image: "/team_images/team8_member2.jpg"
       },
       {
         id: 61,
-        name: "Alex Wright",
-        role: "Security Analyst",
+        name: "Ch Prasad",
+        role: "23KD1A0221",
         image: "/team_images/team8_member3.jpg"
       }
     ],
@@ -338,27 +335,27 @@ export const teamsData: Team[] = [
     progress: 48,
     leader: {
       id: 26,
-      name: "Rebecca Singh",
-      role: "Team Leader",
+      name: "K Vasavi",
+      role: "23KD1A0251",
       image: "/team_images/team9_leader.jpg"
     },
     members: [
       {
         id: 27,
-        name: "Caleb Williams",
-        role: "Medical Informatics Specialist",
+        name: "G Bhanu Prasad",
+        role: "23KD1A0241",
         image: "/team_images/team9_member1.jpg"
       },
       {
         id: 28,
-        name: "Hannah Kim",
-        role: "Healthcare UI/UX Designer",
+        name: "B Sivamani",
+        role: "24KD5A0205",
         image: "/team_images/team9_member2.jpg"
       },
       {
         id: 62,
-        name: "Samantha Chen",
-        role: "Health Data Analyst",
+        name: "K Harsha Vardhini",
+        role: "23KD1A0252",
         image: "/team_images/team9_member3.jpg"
       }
     ],
@@ -367,7 +364,6 @@ export const teamsData: Team[] = [
       "https://images.unsplash.com/photo-1581056771107-24247a734e15?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
     ]
   },
-  // Continue with teams 10-17...
   {
     id: 10,
     name: "TrafficSense",
@@ -376,27 +372,27 @@ export const teamsData: Team[] = [
     progress: 70,
     leader: {
       id: 29,
-      name: "Andrew Thomas",
-      role: "Team Leader",
+      name: "Ch Pujitha",
+      role: "23KD1A0222",
       image: "/team_images/team10_leader.jpg"
     },
     members: [
       {
         id: 30,
-        name: "Olivia Parker",
-        role: "Urban Planning Specialist",
+        name: "A Maharshi",
+        role: "23KD1A0203",
         image: "/team_images/team10_member1.jpg"
       },
       {
         id: 31,
-        name: "Victor Mendez",
-        role: "Computer Vision Engineer",
+        name: "M Kali",
+        role: "23KD1A0263",
         image: "/team_images/team10_member2.jpg"
       },
       {
         id: 63,
-        name: "Priya Sharma",
-        role: "Data Scientist",
+        name: "D Teja Krishna",
+        role: "23KD1A0229",
         image: "/team_images/team10_member3.jpg"
       }
     ],
@@ -405,7 +401,6 @@ export const teamsData: Team[] = [
       "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
     ]
   },
-  // Add more teams (11-17)
   {
     id: 11,
     name: "AquaPure",
@@ -414,27 +409,27 @@ export const teamsData: Team[] = [
     progress: 35,
     leader: {
       id: 32,
-      name: "Lily Zhang",
-      role: "Team Leader",
+      name: "A Rupa Rani",
+      role: "24KD5A0202",
       image: "/team_images/team11_leader.jpg"
     },
     members: [
       {
         id: 33,
-        name: "Samuel Jackson",
-        role: "Water Treatment Specialist",
+        name: "D Lasya",
+        role: "23KD1A0230",
         image: "/team_images/team11_member1.jpg"
       },
       {
         id: 34,
-        name: "Zoe Wilson",
-        role: "Chemical Engineer",
+        name: "M Prabhu Kumar",
+        role: "23KD1A0262",
         image: "/team_images/team11_member2.jpg"
       },
       {
         id: 64,
-        name: "Ryan Cooper",
-        role: "IoT Systems Engineer",
+        name: "K Venkata Lakshmi",
+        role: "23KD1A0247",
         image: "/team_images/team11_member3.jpg"
       }
     ],
@@ -451,27 +446,27 @@ export const teamsData: Team[] = [
     progress: 55,
     leader: {
       id: 35,
-      name: "Rohan Patel",
-      role: "Team Leader",
+      name: "G Tarun Sai",
+      role: "23KD1A0237",
       image: "/team_images/team12_leader.jpg"
     },
     members: [
       {
         id: 36,
-        name: "Madison Chen",
-        role: "Material Scientist",
+        name: "B Bhanu Prakash",
+        role: "23KD1A0207",
         image: "/team_images/team12_member1.jpg"
       },
       {
         id: 37,
-        name: "Ethan Baker",
-        role: "Renewable Energy Engineer",
+        name: "G Vasu",
+        role: "23KD1A0242",
         image: "/team_images/team12_member2.jpg"
       },
       {
         id: 65,
-        name: "Layla Edwards",
-        role: "Product Design Engineer",
+        name: "B Varshitha",
+        role: "23KD1A0208",
         image: "/team_images/team12_member3.jpg"
       }
     ],
@@ -488,27 +483,27 @@ export const teamsData: Team[] = [
     progress: 40,
     leader: {
       id: 38,
-      name: "Caroline Hughes",
-      role: "Team Leader",
+      name: "Ch Sohitha Sai",
+      role: "23KD1A0219",
       image: "/team_images/team13_leader.jpg"
     },
     members: [
       {
         id: 39,
-        name: "Jason Morris",
-        role: "Textile Engineer",
+        name: "L Venkata Lakshmi",
+        role: "23KD1A0260",
         image: "/team_images/team13_member1.jpg"
       },
       {
         id: 40,
-        name: "Priya Sharma",
-        role: "Biochemist",
+        name: "B Ramu",
+        role: "23KD1A0212",
         image: "/team_images/team13_member2.jpg"
       },
       {
         id: 66,
-        name: "Noor Malik",
-        role: "Sustainable Materials Specialist",
+        name: "I Sai Vamsi",
+        role: "23KD1A0245",
         image: "/team_images/team13_member3.jpg"
       }
     ],
@@ -525,27 +520,27 @@ export const teamsData: Team[] = [
     progress: 75,
     leader: {
       id: 41,
-      name: "Nathan Green",
-      role: "Team Leader",
+      name: "K Sandeep Babu",
+      role: "23KD1A0257",
       image: "/team_images/team14_leader.jpg"
     },
     members: [
       {
         id: 42,
-        name: "Linda Torres",
-        role: "Agricultural Technologist",
+        name: "D Reshma",
+        role: "23KD1A0232",
         image: "/team_images/team14_member1.jpg"
       },
       {
         id: 43,
-        name: "Derek Zhang",
-        role: "Automation Engineer",
+        name: "K Bhavani",
+        role: "23KD1A0254",
         image: "/team_images/team14_member2.jpg"
       },
       {
         id: 67,
-        name: "Sophia Rivera",
-        role: "Sustainability Consultant",
+        name: "B Leela Jyotshna",
+        role: "23KD1A0211",
         image: "/team_images/team14_member3.jpg"
       }
     ],
@@ -556,33 +551,33 @@ export const teamsData: Team[] = [
   },
   {
     id: 15,
-    name: "Hemanth & Team",
+    name: "Smart Leave Management",
     description: "Smart Leave Management System",
     longDescription: "A Smart Leave Management System for colleges is an automated platform that simplifies leave applications, approvals, and tracking for students, faculty, and staff. It eliminates manual paperwork, reduces errors, and ensures adherence to institutional policies. Students can apply for leave online, faculty can approve/reject requests, and administration can maintain records efficiently. Features include real-time leave balance tracking, automated notifications, customizable policies, and seamless integration with attendance management systems.",
     progress: 80,
     leader: {
       id: 44,
-      name: "Hemanth Kumar",
-      role: "Team Leader",
+      name: "Ch Hemanth Kumar",
+      role: "23KD1A0220",
       image: "/team_images/team15_leader.jpg"
     },
     members: [
       {
         id: 45,
-        name: "Sophia Williams",
-        role: "Quantum Algorithm Developer",
+        name: "G Sirisha",
+        role: "23KD1A0244",
         image: "/team_images/team15_member1.jpg"
       },
       {
         id: 46,
-        name: "Robert Chen",
-        role: "Theoretical Physicist",
+        name: "K Tejesh Naidu",
+        role: "23KD1A0248",
         image: "/team_images/team15_member2.jpg"
       },
       {
         id: 68,
-        name: "Emily Foster",
-        role: "Database Administrator",
+        name: "D Manasa",
+        role: "24KD5A0206",
         image: "/team_images/team15_member3.jpg"
       }
     ],
@@ -599,27 +594,27 @@ export const teamsData: Team[] = [
     progress: 42,
     leader: {
       id: 47,
-      name: "Eliza Montgomery",
-      role: "Team Leader",
+      name: "G Kavitha",
+      role: "23KD1A0239",
       image: "/team_images/team16_leader.jpg"
     },
     members: [
       {
         id: 48,
-        name: "Maxwell Powell",
-        role: "Neural Engineer",
+        name: "G Sandhya",
+        role: "23KD1A0236",
         image: "/team_images/team16_member1.jpg"
       },
       {
         id: 49,
-        name: "Jasmine Washington",
-        role: "Biomedical Engineer",
+        name: "K Lakshman Kumar",
+        role: "23KD1A0256",
         image: "/team_images/team16_member2.jpg"
       },
       {
         id: 69,
-        name: "Ravi Patel",
-        role: "Signal Processing Specialist",
+        name: "A Sai Mounika",
+        role: "23KD1A0205",
         image: "/team_images/team16_member3.jpg"
       }
     ],
@@ -636,27 +631,27 @@ export const teamsData: Team[] = [
     progress: 65,
     leader: {
       id: 50,
-      name: "Marcus Rivera",
-      role: "Team Leader",
+      name: "M Adhi Lakshmi",
+      role: "23KD1A0264",
       image: "/team_images/team17_leader.jpg"
     },
     members: [
       {
         id: 51,
-        name: "Leila Smith",
-        role: "Meteorologist",
+        name: "L Neeharika",
+        role: "23KD1A0259",
         image: "/team_images/team17_member1.jpg"
       },
       {
         id: 52,
-        name: "Tyler Mitchell",
-        role: "Machine Learning Engineer",
+        name: "Ch Ravi Teja",
+        role: "23KD1A0225",
         image: "/team_images/team17_member2.jpg"
       },
       {
         id: 70,
-        name: "Jordan Brooks",
-        role: "Data Visualization Specialist",
+        name: "B Harsha Vardhan",
+        role: "24KD5A0204",
         image: "/team_images/team17_member3.jpg"
       }
     ],

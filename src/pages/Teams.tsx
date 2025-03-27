@@ -21,7 +21,11 @@ const Teams = () => {
   // Filter teams based on search query and progress
   const filteredTeams = teamsData.filter(team => {
     const matchesSearch = team.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          team.description.toLowerCase().includes(searchQuery.toLowerCase());
+                          team.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          team.leader.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          team.members.some(member => member.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
+                          team.leader.role.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          team.members.some(member => member.role.toLowerCase().includes(searchQuery.toLowerCase()));
     
     let matchesProgress = true;
     if (selectedProgress === 'low') {
@@ -80,7 +84,7 @@ const Teams = () => {
               <div className="flex-grow">
                 <input
                   type="text"
-                  placeholder="Search teams..."
+                  placeholder="Search teams, members, or roll numbers..."
                   className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}

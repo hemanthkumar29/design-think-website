@@ -6,9 +6,10 @@ import ProgressBar from '@/components/ui/ProgressBar';
 import { Button } from '@/components/ui/button';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Award } from 'lucide-react';
 import PageSEO from '@/components/SEO/PageSEO';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
 
 const TeamDetail = () => {
   const { id } = useParams();
@@ -44,9 +45,6 @@ const TeamDetail = () => {
       </div>
     );
   }
-  
-  // Combine leader and members into a single array for display
-  const allTeamMembers = [team.leader, ...team.members];
   
   // Helper function to get initials for avatar fallback
   const getInitials = (name) => {
@@ -115,6 +113,12 @@ const TeamDetail = () => {
                     </AvatarFallback>
                   </Avatar>
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
+                    <div className="flex items-center gap-2 mb-1">
+                      <Award className="text-yellow-400" size={18} />
+                      <Badge variant="secondary" className="bg-yellow-400/20 text-yellow-600 border-yellow-400/30">
+                        Team Leader
+                      </Badge>
+                    </div>
                     <h3 className="text-white font-bold text-xl">{team.leader.name}</h3>
                     <p className="text-white/80">{team.leader.role}</p>
                   </div>
@@ -146,11 +150,39 @@ const TeamDetail = () => {
             </h2>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-              {allTeamMembers.map((member, index) => (
+              {/* Team Leader Card with Highlight */}
+              <div 
+                className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border-2 border-yellow-400 animate-fade-in"
+              >
+                <div className="aspect-square overflow-hidden relative">
+                  <Avatar className="w-full h-full">
+                    <AvatarImage 
+                      src={team.leader.image} 
+                      alt={team.leader.name} 
+                      className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                    />
+                    <AvatarFallback className="w-full h-full text-3xl bg-gradient-to-r from-yellow-100 to-amber-100">
+                      {getInitials(team.leader.name)}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="absolute top-2 right-2">
+                    <Badge variant="secondary" className="bg-yellow-400 text-yellow-900">
+                      <Award className="mr-1 h-3 w-3" /> Leader
+                    </Badge>
+                  </div>
+                </div>
+                <div className="p-4">
+                  <h3 className="font-bold text-lg">{team.leader.name}</h3>
+                  <p className="text-sm text-muted-foreground">{team.leader.role}</p>
+                </div>
+              </div>
+              
+              {/* Regular Team Member Cards */}
+              {team.members.map((member, index) => (
                 <div 
                   key={member.id} 
                   className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 opacity-100 animate-fade-in"
-                  style={{ animationDelay: `${index * 100}ms` }}
+                  style={{ animationDelay: `${(index + 1) * 100}ms` }}
                 >
                   <div className="aspect-square overflow-hidden">
                     <Avatar className="w-full h-full">
