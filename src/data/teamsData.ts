@@ -63,9 +63,9 @@ export const teamsData: Team[] = [
   },
   {
     id: 2,
-    name: "Smart Health Monitor",
-    description: "Wearable device for continuous health tracking",
-    longDescription: "The Smart Health Monitor is a revolutionary wearable device that provides continuous health tracking with medical-grade accuracy. Unlike conventional fitness trackers, our device monitors vital health parameters including heart rate variability, blood oxygen levels, and stress indicators to provide a comprehensive health assessment. The team is focused on developing algorithms that can detect early warning signs of potential health issues and provide actionable recommendations.",
+    name: "Door Ai",
+    description: "Smart Doorbell",
+    longDescription: "Smart Doorbell with Visitor Notifications is an innovative IoT-based security solution that enhances home safety and convenience. It features a smart doorbell equipped with a camera,and real-time notification capabilities. When a visitor arrives, the system captures their presence and instantly sends alerts to the homeowner’s smartphone. It also integrates AI for facial recognition and cloud storage for visitor logs. With remote access and smart integration, this solution ensures better security and seamless communication. Designed for modern homes, it offers a smarter way to monitor and manage visitors efficiently.",
     progress: 72,
     leader: {
       id: 5,
