@@ -291,10 +291,10 @@ export const teamsData: Team[] = [
   },
   {
     id: 8,
-    name: "CyberShield",
-    description: "Advanced cybersecurity for IoT networks",
+    name: "Smart Creators",
+    description: "Road Accident Prevention System",
     longDescription: "CyberShield is creating a comprehensive security solution for IoT networks that protects against emerging threats without compromising device performance. Our approach combines lightweight encryption algorithms, behavioral anomaly detection, and a distributed security architecture that can scale from small home networks to large industrial installations. As IoT devices become increasingly integrated into critical infrastructure, CyberShield aims to establish new standards for secure connectivity while maintaining the ease of use that consumers expect.",
-    progress: 62,
+    progress: 30,
     leader: {
       id: 23,
       name: "Ch Hemalatha",
