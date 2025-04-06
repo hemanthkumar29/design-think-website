@@ -52,7 +52,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
           )}
         </div>
       )}
-      <div className={cn('w-full bg-gray-200 rounded-full overflow-hidden', sizeClasses[size])}>
+      <div className={cn('w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden', sizeClasses[size])}>
         <div
           className={cn(
             'transition-all duration-1000 ease-out rounded-full',
