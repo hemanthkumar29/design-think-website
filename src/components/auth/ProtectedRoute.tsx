@@ -16,7 +16,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
     if (!isAuthenticated) {
       toast({
         title: 'Authentication required',
-        description: 'Please login to access this page',
+        description: 'Please login with admin credentials to access this page',
         variant: 'destructive',
       });
     }

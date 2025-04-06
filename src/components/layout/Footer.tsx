@@ -1,12 +1,13 @@
 
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import FooterAdminLink from '../FooterAdminLink';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="w-full bg-white border-t border-gray-200 py-10 px-6">
+    <footer className="w-full bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 py-10 px-6">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="space-y-4">
@@ -27,6 +28,9 @@ const Footer: React.FC = () => {
               <NavLink to="/teams" className="text-sm text-foreground/80 hover:text-foreground transition-colors">
                 Teams
               </NavLink>
+              <NavLink to="/about" className="text-sm text-foreground/80 hover:text-foreground transition-colors">
+                About
+              </NavLink>
             </nav>
           </div>
 
@@ -38,13 +42,14 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div className="mt-10 pt-6 border-t border-gray-200 text-center">
+        <div className="mt-10 pt-6 border-t border-gray-200 dark:border-gray-800 text-center">
           <p className="text-sm text-muted-foreground">
             © {currentYear} Hemanth Kumar Chandaka. All rights reserved.
           </p>
-          <p>
+          <p className="text-sm text-muted-foreground">
             Developed by Hemanth Kumar - Department of EEE - II Year
           </p>
+          <FooterAdminLink />
         </div>
       </div>
     </footer>
