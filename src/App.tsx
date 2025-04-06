@@ -11,6 +11,10 @@ import Teams from "./pages/Teams";
 import TeamDetail from "./pages/TeamDetail";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
+import Admin from "./pages/Admin";
+import AdminDashboard from "./pages/AdminDashboard";
+import { AdminProvider } from "./context/AdminContext";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 // Create a client outside of the render function
 const queryClient = new QueryClient();
@@ -21,19 +25,30 @@ function App() {
     <React.StrictMode>
       <QueryClientProvider client={queryClient}>
         <HelmetProvider>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/teams" element={<Teams />} />
-                <Route path="/team/:id" element={<TeamDetail />} />
-                <Route path="/about" element={<About />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </BrowserRouter>
-          </TooltipProvider>
+          <AdminProvider>
+            <TooltipProvider>
+              <Toaster />
+              <Sonner />
+              <BrowserRouter>
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/teams" element={<Teams />} />
+                  <Route path="/team/:id" element={<TeamDetail />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/admin" element={<Admin />} />
+                  <Route 
+                    path="/admin/dashboard" 
+                    element={
+                      <ProtectedRoute>
+                        <AdminDashboard />
+                      </ProtectedRoute>
+                    } 
+                  />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </BrowserRouter>
+            </TooltipProvider>
+          </AdminProvider>
         </HelmetProvider>
       </QueryClientProvider>
     </React.StrictMode>

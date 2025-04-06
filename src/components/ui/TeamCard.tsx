@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import ProgressBar from './ProgressBar';
 import { Button } from '@/components/ui/button';
-import { teamsData } from '@/data/teamsData';
+import { getTeams } from '@/services/teamService';
 import { Award } from 'lucide-react';
 
 interface TeamCardProps {
@@ -16,7 +16,8 @@ interface TeamCardProps {
 
 const TeamCard: React.FC<TeamCardProps> = ({ id, name, progress, className }) => {
   const navigate = useNavigate();
-  const team = teamsData.find(t => t.id === id);
+  const teams = getTeams();
+  const team = teams.find(t => t.id === id);
 
   return (
     <div 

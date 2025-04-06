@@ -1,7 +1,5 @@
-
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { teamsData } from '@/data/teamsData';
 import ProgressBar from '@/components/ui/ProgressBar';
 import { Button } from '@/components/ui/button';
 import Navbar from '@/components/layout/Navbar';
@@ -10,25 +8,27 @@ import { ArrowLeft, Award } from 'lucide-react';
 import PageSEO from '@/components/SEO/PageSEO';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
+import { getTeamById } from '@/services/teamService';
 
 const TeamDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
-  
-  // Find the team data based on the id parameter
-  const team = teamsData.find(t => t.id.toString() === id);
+  const [team, setTeam] = useState(null);
   
   useEffect(() => {
-    // Simulate loading to show animations
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
-    
-    return () => clearTimeout(timer);
-  }, []);
+    if (id) {
+      const teamData = getTeamById(id);
+      if (teamData) {
+        setTeam(teamData);
+      }
+      const timer = setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [id]);
   
-  // Redirect to Teams page if team not found
   useEffect(() => {
     if (!team && !isLoading) {
       navigate('/teams');
@@ -46,7 +46,6 @@ const TeamDetail = () => {
     );
   }
   
-  // Helper function to get initials for avatar fallback
   const getInitials = (name) => {
     return name
       .split(' ')
@@ -66,7 +65,6 @@ const TeamDetail = () => {
       <Navbar />
       
       <main className="flex-grow pt-24 pb-20">
-        {/* Hero Section */}
         <section className="relative px-6 py-20 overflow-hidden bg-gradient-to-r from-blue-50 to-indigo-50">
           <div className="max-w-7xl mx-auto">
             <Button
@@ -128,7 +126,6 @@ const TeamDetail = () => {
           </div>
         </section>
         
-        {/* Project Description */}
         <section className="py-16 px-6 bg-white">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-2xl md:text-3xl font-bold mb-8 animate-fade-in">Project Overview</h2>
@@ -138,7 +135,6 @@ const TeamDetail = () => {
           </div>
         </section>
         
-        {/* Team Members */}
         <section className="py-16 px-6 bg-gray-50">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center animate-fade-in">
@@ -150,7 +146,6 @@ const TeamDetail = () => {
             </h2>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-              {/* Team Leader Card with Highlight */}
               <div 
                 className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border-2 border-yellow-400 animate-fade-in"
               >
@@ -177,7 +172,6 @@ const TeamDetail = () => {
                 </div>
               </div>
               
-              {/* Regular Team Member Cards */}
               {team.members.map((member, index) => (
                 <div 
                   key={member.id} 
@@ -206,7 +200,6 @@ const TeamDetail = () => {
           </div>
         </section>
         
-        {/* Project Images */}
         <section className="py-16 px-6 bg-white">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center animate-fade-in">
@@ -233,7 +226,6 @@ const TeamDetail = () => {
                         "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80",
                         "https://images.unsplash.com/photo-1581056771107-24247a734e15?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
                       ];
-                      // Choose a consistent but random-looking placeholder
                       e.currentTarget.src = placeholders[index % placeholders.length];
                     }}
                   />
