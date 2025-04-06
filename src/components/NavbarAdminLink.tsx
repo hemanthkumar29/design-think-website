@@ -17,34 +17,19 @@ const NavbarAdminLink = () => {
       return;
     }
 
-    // Set up a key sequence detector (Alt+A+D+M+I+N)
-    const secretCode = ['Alt', 'a', 'd', 'm', 'i', 'n'];
-    let keySequence: string[] = [];
-    
-    const keyHandler = (event: KeyboardEvent) => {
-      // Add the key to the sequence
-      if (event.key === 'Alt') {
-        keySequence = ['Alt'];
-      } else if (keySequence.length > 0) {
-        keySequence.push(event.key.toLowerCase());
-        
-        // Check if the full sequence has been entered
-        const isFullSequenceMatch = 
-          keySequence.length === secretCode.length &&
-          keySequence.every((key, index) => key === secretCode[index]);
-          
-        if (isFullSequenceMatch) {
-          setShowAdminLink(true);
-          sessionStorage.setItem('adminLinkActivated', 'true');
-        }
-      }
-    };
-    
-    window.addEventListener('keydown', keyHandler);
-    
-    return () => {
-      window.removeEventListener('keydown', keyHandler);
-    };
+    // Check for session storage setting
+    const adminLinkActivated = sessionStorage.getItem('adminLinkActivated');
+    if (adminLinkActivated === 'true') {
+      setShowAdminLink(true);
+      return;
+    }
+
+    // Simple tap/click counter for activation (5 rapid clicks on the footer copyright text)
+    const activationCounter = parseInt(sessionStorage.getItem('adminClickCounter') || '0', 10);
+    if (activationCounter >= 5) {
+      setShowAdminLink(true);
+      sessionStorage.setItem('adminLinkActivated', 'true');
+    }
   }, [isAuthenticated]);
   
   if (!showAdminLink) return null;

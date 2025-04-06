@@ -15,7 +15,14 @@ const FooterAdminLink = () => {
       return;
     }
 
-    // Check if the NavbarAdminLink has been activated
+    // Check if the admin link has been activated already
+    const adminLinkActivated = sessionStorage.getItem('adminLinkActivated');
+    if (adminLinkActivated === 'true') {
+      setShowAdminLink(true);
+      return;
+    }
+
+    // Check at component mount
     const checkAdminLinkInterval = setInterval(() => {
       const adminLinkActivated = sessionStorage.getItem('adminLinkActivated');
       if (adminLinkActivated === 'true') {
@@ -27,13 +34,41 @@ const FooterAdminLink = () => {
     return () => clearInterval(checkAdminLinkInterval);
   }, [isAuthenticated]);
 
-  if (!showAdminLink) return null;
+  const handleCopyrightClick = () => {
+    // Increment the click counter
+    const currentClicks = parseInt(sessionStorage.getItem('adminClickCounter') || '0', 10);
+    const newClickCount = currentClicks + 1;
+    sessionStorage.setItem('adminClickCounter', newClickCount.toString());
+    
+    // Check if we've reached the threshold (5 clicks)
+    if (newClickCount >= 5) {
+      setShowAdminLink(true);
+      sessionStorage.setItem('adminLinkActivated', 'true');
+    }
+    
+    // Reset counter after 3 seconds of inactivity
+    setTimeout(() => {
+      if (parseInt(sessionStorage.getItem('adminClickCounter') || '0', 10) === newClickCount) {
+        sessionStorage.setItem('adminClickCounter', '0');
+      }
+    }, 3000);
+  };
 
   return (
     <div className="text-sm text-center text-muted-foreground mt-6">
-      <Link to={adminPath} className="hover:text-foreground transition-colors">
-        {adminLabel}
-      </Link>
+      {showAdminLink ? (
+        <Link to={adminPath} className="hover:text-foreground transition-colors">
+          {adminLabel}
+        </Link>
+      ) : null}
+      {/* Hidden trigger element */}
+      <span 
+        className="cursor-default inline-block" 
+        onClick={handleCopyrightClick}
+        aria-hidden="true"
+      >
+        {/* This is an invisible element that responds to clicks */}
+      </span>
     </div>
   );
 };

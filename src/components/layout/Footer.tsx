@@ -6,6 +6,21 @@ import FooterAdminLink from '../FooterAdminLink';
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
+  // Handler for copyright text clicks to activate admin link
+  const handleCopyrightClick = () => {
+    // Increment the click counter
+    const currentClicks = parseInt(sessionStorage.getItem('adminClickCounter') || '0', 10);
+    const newClickCount = currentClicks + 1;
+    sessionStorage.setItem('adminClickCounter', newClickCount.toString());
+    
+    // Reset counter after 3 seconds of inactivity
+    setTimeout(() => {
+      if (parseInt(sessionStorage.getItem('adminClickCounter') || '0', 10) === newClickCount) {
+        sessionStorage.setItem('adminClickCounter', '0');
+      }
+    }, 3000);
+  };
+
   return (
     <footer className="w-full bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 py-10 px-6">
       <div className="max-w-7xl mx-auto">
@@ -43,7 +58,10 @@ const Footer: React.FC = () => {
         </div>
 
         <div className="mt-10 pt-6 border-t border-gray-200 dark:border-gray-800 text-center">
-          <p className="text-sm text-muted-foreground">
+          <p 
+            className="text-sm text-muted-foreground cursor-default" 
+            onClick={handleCopyrightClick}
+          >
             © {currentYear} Hemanth Kumar Chandaka. All rights reserved.
           </p>
           <p className="text-sm text-muted-foreground">
