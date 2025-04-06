@@ -70,9 +70,7 @@ const Navbar: React.FC = () => {
             <NavLink to="/about" className={({ isActive }) => cn('nav-link', isActive && 'active')}>
               About
             </NavLink>
-            <NavLink to="/admin" className="nav-link">
-              Admin
-            </NavLink>
+            {/* Admin link removed from mobile menu */}
           </nav>
         </div>
       )}

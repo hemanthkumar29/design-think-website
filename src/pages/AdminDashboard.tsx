@@ -11,7 +11,7 @@ import { teamsData } from '@/data/teamsData';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Award, Save } from 'lucide-react';
+import { Award, Save, Percent } from 'lucide-react';
 
 const AdminDashboard = () => {
   const [teams, setTeams] = useState(teamsData);
@@ -131,13 +131,24 @@ const AdminDashboard = () => {
                     </TableCell>
                     <TableCell>{team.progress}%</TableCell>
                     <TableCell className="w-64">
-                      <Slider
-                        defaultValue={[team.progress]}
-                        value={[progressValues[team.id]]} 
-                        max={100}
-                        step={1}
-                        onValueChange={(value) => handleProgressChange(team.id, value)}
-                      />
+                      <div className="flex flex-col space-y-1">
+                        <div className="flex w-full justify-between items-center text-xs text-muted-foreground">
+                          <span>0%</span>
+                          <span>50%</span>
+                          <span>100%</span>
+                        </div>
+                        <Slider
+                          defaultValue={[team.progress]}
+                          value={[progressValues[team.id]]}
+                          max={100}
+                          step={1}
+                          onValueChange={(value) => handleProgressChange(team.id, value)}
+                        />
+                        <div className="flex items-center justify-center mt-1">
+                          <Percent size={14} className="mr-1" />
+                          <span className="text-sm font-medium">{progressValues[team.id]}</span>
+                        </div>
+                      </div>
                     </TableCell>
                     <TableCell>
                       <Button
