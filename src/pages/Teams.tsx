@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { teamsData } from '@/data/teamsData';
+import { getTeams, subscribeToTeamsUpdates } from '@/services/teamService';
 import TeamCard from '@/components/ui/TeamCard';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -10,6 +10,7 @@ const Teams = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedProgress, setSelectedProgress] = useState<string>('all');
   const [animationComplete, setAnimationComplete] = useState(false);
+  const [teams, setTeams] = useState(() => getTeams());
   
   const progressOptions = [
     { value: 'all', label: 'All Progress' },
@@ -18,8 +19,20 @@ const Teams = () => {
     { value: 'high', label: 'Advanced (71-100%)' },
   ];
   
+  useEffect(() => {
+    // Set initial teams data
+    setTeams(getTeams());
+    
+    // Subscribe to teams data updates
+    const unsubscribe = subscribeToTeamsUpdates(() => {
+      setTeams(getTeams());
+    });
+    
+    return () => unsubscribe();
+  }, []);
+  
   // Filter teams based on search query and progress
-  const filteredTeams = teamsData.filter(team => {
+  const filteredTeams = teams.filter(team => {
     const matchesSearch = team.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           team.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           team.leader.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -129,7 +142,7 @@ const Teams = () => {
           
           {/* Team Count */}
           <div className="mt-8 text-center text-sm text-muted-foreground animate-fade-in">
-            Showing {filteredTeams.length} of {teamsData.length} teams
+            Showing {filteredTeams.length} of {teams.length} teams
           </div>
         </div>
       </main>

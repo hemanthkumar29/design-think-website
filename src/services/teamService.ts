@@ -1,6 +1,9 @@
 
 import { Team, teamsData as initialTeamsData } from '@/data/teamsData';
 
+// Custom event for team data updates
+const TEAMS_UPDATED_EVENT = 'teamsDataUpdated';
+
 // Get teams data with localStorage fallback
 export const getTeams = (): Team[] => {
   try {
@@ -21,6 +24,10 @@ export const updateTeamProgress = (teamId: number, newProgress: number): Team[] 
   
   // Persist to localStorage
   localStorage.setItem('teamsData', JSON.stringify(updatedTeams));
+  
+  // Dispatch custom event to notify components about the update
+  window.dispatchEvent(new CustomEvent(TEAMS_UPDATED_EVENT));
+  
   return updatedTeams;
 };
 
@@ -28,4 +35,13 @@ export const updateTeamProgress = (teamId: number, newProgress: number): Team[] 
 export const getTeamById = (id: number | string): Team | undefined => {
   const teams = getTeams();
   return teams.find(team => team.id.toString() === id.toString());
+};
+
+// Subscribe to teams data updates
+export const subscribeToTeamsUpdates = (callback: () => void): () => void => {
+  const handler = () => callback();
+  window.addEventListener(TEAMS_UPDATED_EVENT, handler);
+  
+  // Return unsubscribe function
+  return () => window.removeEventListener(TEAMS_UPDATED_EVENT, handler);
 };

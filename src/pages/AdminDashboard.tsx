@@ -6,14 +6,14 @@ import { Slider } from '@/components/ui/slider';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useToast } from '@/components/ui/use-toast';
-import { teamsData } from '@/data/teamsData';
+import { getTeams, updateTeamProgress } from '@/services/teamService';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Award, Save, Percent } from 'lucide-react';
 
 const AdminDashboard = () => {
-  const [teams, setTeams] = useState(teamsData);
+  const [teams, setTeams] = useState(() => getTeams());
   const [progressValues, setProgressValues] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -51,12 +51,9 @@ const AdminDashboard = () => {
   const handleSave = (teamId) => {
     setIsLoading(true);
     
-    // Update team progress in local state
-    const updatedTeams = teams.map(team => 
-      team.id === teamId ? { ...team, progress: progressValues[teamId] } : team
-    );
+    // Use the team service to update progress
+    const updatedTeams = updateTeamProgress(teamId, progressValues[teamId]);
     
-    // In a real application, this would make an API call to update the database
     setTimeout(() => {
       setTeams(updatedTeams);
       setIsLoading(false);
@@ -65,10 +62,7 @@ const AdminDashboard = () => {
         description: `Team ${teamId}'s progress has been updated to ${progressValues[teamId]}%`,
         variant: 'default',
       });
-      
-      // Save to localStorage to persist between page refreshes
-      localStorage.setItem('teamsData', JSON.stringify(updatedTeams));
-    }, 500);
+    }, 300);
   };
 
   const handleLogout = () => {
