@@ -1,10 +1,10 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import ProgressBar from './ProgressBar';
 import { Button } from '@/components/ui/button';
-import { getTeamById } from '@/services/teamService';
+import { getTeamById, subscribeToTeamsUpdates } from '@/services/teamService';
 import { Award } from 'lucide-react';
 
 interface TeamCardProps {
@@ -14,9 +14,28 @@ interface TeamCardProps {
   className?: string;
 }
 
-const TeamCard: React.FC<TeamCardProps> = ({ id, name, progress, className }) => {
+const TeamCard: React.FC<TeamCardProps> = ({ id, name, progress: initialProgress, className }) => {
   const navigate = useNavigate();
-  const team = getTeamById(id);
+  const [progress, setProgress] = useState(initialProgress);
+  const [team, setTeam] = useState(() => getTeamById(id));
+  
+  // Subscribe to team updates
+  useEffect(() => {
+    const updateTeam = () => {
+      const updatedTeam = getTeamById(id);
+      if (updatedTeam) {
+        setTeam(updatedTeam);
+        setProgress(updatedTeam.progress);
+      }
+    };
+    
+    // Subscribe to updates
+    const unsubscribe = subscribeToTeamsUpdates(updateTeam);
+    
+    return () => {
+      unsubscribe();
+    };
+  }, [id]);
 
   return (
     <div 
@@ -45,9 +64,9 @@ const TeamCard: React.FC<TeamCardProps> = ({ id, name, progress, className }) =>
         )}
         
         <ProgressBar 
-          progress={team?.progress || progress} 
+          progress={progress} 
           size="sm" 
-          color={team?.progress > 75 ? 'success' : team?.progress > 25 ? 'default' : 'warning'} 
+          color={progress > 75 ? 'success' : progress > 25 ? 'default' : 'warning'} 
         />
         
         <Button 

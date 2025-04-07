@@ -15,6 +15,7 @@ import Admin from "./pages/Admin";
 import AdminDashboard from "./pages/AdminDashboard";
 import { AdminProvider } from "./context/AdminContext";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
+import SecretAdminAccess from "./components/SecretAdminAccess";
 
 // Create a client outside of the render function
 const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ function App() {
               <Toaster />
               <Sonner />
               <BrowserRouter>
+                <SecretAdminAccess />
                 <Routes>
                   <Route path="/" element={<Index />} />
                   <Route path="/teams" element={<Teams />} />
