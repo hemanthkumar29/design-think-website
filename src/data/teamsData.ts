@@ -587,7 +587,7 @@ export const teamsData: Team[] = [
   },
   {
     id: 16,
-    name: "NeuroProsthetics",
+    name: "Innovators",
     description: "Advanced neural interface for prosthetics",
     longDescription: "NeuroProsthetics is developing a breakthrough neural interface system that creates more intuitive control of prosthetic limbs. Our technology combines non-invasive neural sensing with advanced signal processing algorithms to interpret intended movements with greater accuracy and lower latency than existing solutions. The system also provides sensory feedback to users, creating a two-way communication channel that significantly improves prosthetic functionality and user experience. This project aims to transform prosthetic technology from basic mobility aids to truly integrated body extensions.",
     progress: 42,
