@@ -20,7 +20,7 @@ export interface Team {
 export const teamsData: Team[] = [
   {
     id: 1,
-    name: "Eco Power Solutions",
+    name: "Team 01",
     description: "Solar Power Bank",
     longDescription: "Eco Power Solutions is developing an innovative energy management system that optimizes household electricity usage by integrating with renewable energy sources. The system uses AI algorithms to predict energy consumption patterns and automatically adjusts power distribution to maximize efficiency and reduce carbon footprint. The project focuses on making sustainable energy solutions accessible to average households at an affordable price point.",
     progress: 85,
@@ -63,7 +63,7 @@ export const teamsData: Team[] = [
   },
   {
     id: 2,
-    name: "Door Ai",
+    name: "Team 02",
     description: "Smart Doorbell",
     longDescription: "Smart Doorbell with Visitor Notifications is an innovative IoT-based security solution that enhances home safety and convenience. It features a smart doorbell equipped with a camera,and real-time notification capabilities. When a visitor arrives, the system captures their presence and instantly sends alerts to the homeowner’s smartphone. It also integrates AI for facial recognition and cloud storage for visitor logs. With remote access and smart integration, this solution ensures better security and seamless communication. Designed for modern homes, it offers a smarter way to monitor and manage visitors efficiently.",
     progress: 72,
@@ -106,8 +106,8 @@ export const teamsData: Team[] = [
   },
   {
     id: 3,
-    name: "AutoNav Robotics",
-    description: "Autonomous navigation system for indoor robots",
+    name: "Team 03",
+    description: "Smart Water Leakage Detector Using IOT",
     longDescription: "AutoNav Robotics is developing a groundbreaking autonomous navigation system for indoor robots that doesn't rely on GPS signals. Using a combination of computer vision, LiDAR, and proprietary SLAM (Simultaneous Localization and Mapping) algorithms, our robots can navigate complex indoor environments with centimeter-level precision. Applications include warehouse logistics, hospital supply delivery, and security surveillance in commercial buildings.",
     progress: 60,
     leader: {
@@ -143,8 +143,8 @@ export const teamsData: Team[] = [
   },
   {
     id: 4,
-    name: "AudioSpace",
-    description: "Next-generation spatial audio technology",
+    name: "Team 04",
+    description: "Train Accident Prevention",
     longDescription: "AudioSpace is revolutionizing the way we experience sound through innovative spatial audio technology. Our system creates immersive 3D soundscapes that can be customized for various environments without requiring specialized headphones or equipment. The technology has applications in virtual reality, home entertainment systems, and public spaces where directional sound can enhance user experience while reducing overall noise pollution.",
     progress: 45,
     leader: {
@@ -180,8 +180,8 @@ export const teamsData: Team[] = [
   },
   {
     id: 5,
-    name: "AgroSense",
-    description: "Precision agriculture through IoT sensors",
+    name: "Team 05",
+    description: "Smart Dustbin Using Bluetooth Module",
     longDescription: "AgroSense is transforming traditional farming practices through an interconnected network of IoT sensors that provide real-time data about soil conditions, crop health, and environmental factors. Our system enables farmers to make data-driven decisions about irrigation, fertilization, and pest control, leading to increased yields while reducing water and chemical usage. The technology is designed to be affordable and accessible for farms of all sizes, with a particular focus on helping small-scale farmers in developing regions.",
     progress: 65,
     leader: {
@@ -217,8 +217,8 @@ export const teamsData: Team[] = [
   },
   {
     id: 6,
-    name: "NeuroLearn",
-    description: "AI-enhanced adaptive learning platform",
+    name: "Team 06",
+    description: "Transmission Line Fault Detection",
     longDescription: "NeuroLearn is pioneering an adaptive learning platform that uses AI to personalize educational content based on each student's learning style, pace, and preferences. Our system continuously analyzes student performance and engagement to dynamically adjust content difficulty and presentation methods. This project aims to make quality education more accessible and effective by addressing the individual needs of learners, particularly benefiting students with different learning styles or those who struggle in traditional classroom settings.",
     progress: 55,
     leader: {
@@ -254,8 +254,8 @@ export const teamsData: Team[] = [
   },
   {
     id: 7,
-    name: "WasteZero",
-    description: "Smart waste management solutions",
+    name: "Team 07",
+    description: "Automatic Plant Watering System Using Solar Panel",
     longDescription: "WasteZero is developing an integrated waste management system that combines IoT-enabled smart bins with an efficient collection network and recycling analytics platform. Our smart bins use sensors to monitor fill levels and waste composition, optimizing collection routes and schedules. The analytics platform provides insights into waste patterns, helping communities and businesses implement effective recycling programs and reduce landfill waste. This holistic approach aims to transform waste management from a linear process to a circular economy model.",
     progress: 80,
     leader: {
@@ -291,8 +291,8 @@ export const teamsData: Team[] = [
   },
   {
     id: 8,
-    name: "Smart Creators",
-    description: "Road Accident Prevention System",
+    name: "Team 08",
+    description: "Road Accident Prevention in Hilly Areas",
     longDescription: "CyberShield is creating a comprehensive security solution for IoT networks that protects against emerging threats without compromising device performance. Our approach combines lightweight encryption algorithms, behavioral anomaly detection, and a distributed security architecture that can scale from small home networks to large industrial installations. As IoT devices become increasingly integrated into critical infrastructure, CyberShield aims to establish new standards for secure connectivity while maintaining the ease of use that consumers expect.",
     progress: 30,
     leader: {
@@ -328,8 +328,8 @@ export const teamsData: Team[] = [
   },
   {
     id: 9,
-    name: "MediSync",
-    description: "Integrated healthcare monitoring platform",
+    name: "Team 09",
+    description: "Home Automation",
     longDescription: "MediSync is building a comprehensive healthcare monitoring platform that connects patients, healthcare providers, and medical devices through a secure, unified interface. The system allows for remote monitoring of chronic conditions, automated medication management, and early detection of health deterioration through trend analysis. By centralizing patient data while maintaining strict privacy controls, MediSync improves care coordination and empowers patients to take a more active role in managing their health conditions.",
     progress: 48,
     leader: {
@@ -365,8 +365,8 @@ export const teamsData: Team[] = [
   },
   {
     id: 10,
-    name: "TrafficSense",
-    description: "Smart traffic management system",
+    name: "Team 10",
+    description: "IOT Based Battery Monitoring System",
     longDescription: "TrafficSense is developing an intelligent traffic management system that reduces congestion and improves safety in urban environments. Using a network of sensors, cameras, and edge computing devices, our system can detect traffic patterns, predict congestion points, and dynamically adjust traffic signal timing to optimize flow. The project also incorporates pedestrian and cyclist detection for improved safety at intersections, and integrates with navigation apps to provide drivers with real-time routing recommendations.",
     progress: 70,
     leader: {
@@ -402,8 +402,8 @@ export const teamsData: Team[] = [
   },
   {
     id: 11,
-    name: "AquaPure",
-    description: "Advanced water purification technology",
+    name: "Team 11",
+    description: "Alcohol Detector and Engine Locking System",
     longDescription: "AquaPure is creating a revolutionary water purification system that combines advanced filtration technology with real-time monitoring capabilities. Our solution addresses both industrial and household water treatment needs, with a special focus on removing emerging contaminants that conventional systems miss. The modular design allows for customization based on local water quality issues, while the integrated sensor network continuously monitors water quality parameters to ensure safety and optimize filter replacement scheduling.",
     progress: 35,
     leader: {
@@ -439,8 +439,8 @@ export const teamsData: Team[] = [
   },
   {
     id: 12,
-    name: "SolarFlex",
-    description: "Flexible solar panels for diverse applications",
+    name: "Team 12",
+    description: "Smart Energy Meter",
     longDescription: "SolarFlex is developing highly efficient, flexible solar panels that can be integrated into a wide range of surfaces and applications. Unlike conventional rigid panels, our technology can conform to curved surfaces, be incorporated into clothing, or applied to vehicle exteriors. The project focuses on improving the durability and efficiency of flexible photovoltaic materials while developing novel manufacturing techniques to reduce production costs. This versatile approach to solar energy aims to expand renewable energy adoption beyond traditional rooftop and ground-mounted installations.",
     progress: 55,
     leader: {
@@ -476,8 +476,8 @@ export const teamsData: Team[] = [
   },
   {
     id: 13,
-    name: "BioFabric",
-    description: "Sustainable textiles with integrated tech",
+    name: "Team 13",
+    description: "Wet and Dry Waste Segregation",
     longDescription: "BioFabric is pioneering a new generation of sustainable textiles that combine biodegradable materials with integrated technology for enhanced functionality. Our fabrics are produced using environmentally friendly processes and incorporate features like moisture management, temperature regulation, and antimicrobial properties. We're also developing specialized variations with embedded sensors for healthcare monitoring applications, while maintaining comfort, durability, and end-of-life biodegradability. This project represents a significant step toward reducing the environmental impact of the textile industry.",
     progress: 40,
     leader: {
@@ -513,8 +513,8 @@ export const teamsData: Team[] = [
   },
   {
     id: 14,
-    name: "UrbanFarm",
-    description: "Vertical farming solutions for urban areas",
+    name: "Team 14",
+    description: "Solar Power Irrigation System",
     longDescription: "UrbanFarm is developing compact, efficient vertical farming systems specifically designed for urban environments. Our modular hydroponic units can be installed in various spaces from residential buildings to unused urban lots, enabling local food production with minimal water and energy usage. The system incorporates automated climate control, nutrient delivery, and lighting to optimize plant growth while requiring minimal maintenance. This project addresses challenges in urban food security, reduces the carbon footprint of food transportation, and creates green spaces in densely populated areas.",
     progress: 75,
     leader: {
@@ -550,7 +550,7 @@ export const teamsData: Team[] = [
   },
   {
     id: 15,
-    name: "Tech Squad",
+    name: "Team 15",
     description: "Smart Leave Management System",
     longDescription: "A Smart Leave Management System for colleges is an automated platform that simplifies leave applications, approvals, and tracking for students, faculty, and staff. It eliminates manual paperwork, reduces errors, and ensures adherence to institutional policies. Students can apply for leave online, faculty can approve/reject requests, and administration can maintain records efficiently. Features include real-time leave balance tracking, automated notifications, customizable policies, and seamless integration with attendance management systems.",
     progress: 80,
@@ -587,8 +587,8 @@ export const teamsData: Team[] = [
   },
   {
     id: 16,
-    name: "Innovators",
-    description: "Advanced neural interface for prosthetics",
+    name: "Team 16",
+    description: "Smart Parking System",
     longDescription: "NeuroProsthetics is developing a breakthrough neural interface system that creates more intuitive control of prosthetic limbs. Our technology combines non-invasive neural sensing with advanced signal processing algorithms to interpret intended movements with greater accuracy and lower latency than existing solutions. The system also provides sensory feedback to users, creating a two-way communication channel that significantly improves prosthetic functionality and user experience. This project aims to transform prosthetic technology from basic mobility aids to truly integrated body extensions.",
     progress: 42,
     leader: {
@@ -624,8 +624,8 @@ export const teamsData: Team[] = [
   },
   {
     id: 17,
-    name: "CloudCast",
-    description: "Hyperlocal weather prediction system",
+    name: "Team 17",
+    description: "Smart Blind Stick",
     longDescription: "CloudCast is creating a hyperlocal weather prediction system that provides precise forecasts for small geographic areas. By combining data from distributed weather sensors, satellite imagery, and machine learning algorithms, our system can predict microclimate variations that traditional forecasting methods miss. The technology is particularly valuable for agriculture, outdoor event planning, and emergency management during severe weather events. We're also developing specialized applications for renewable energy production forecasting to help optimize solar and wind farm operations.",
     progress: 65,
     leader: {
