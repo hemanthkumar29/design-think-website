@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -33,7 +32,6 @@ const Index = () => {
       <Navbar />
       
       <main className="flex-grow">
-        {/* Hero Section with enhanced visual design */}
         <section className="relative min-h-[90vh] flex items-center justify-center px-6 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-blue-50/80 via-indigo-50/60 to-white -z-10"></div>
           <div 
@@ -45,7 +43,6 @@ const Index = () => {
           ></div>
           
           <div className="max-w-5xl mx-auto text-center space-y-8">
-            {/* College Logo with enhanced animation */}
             <div className="flex justify-center mb-8 animate-on-load opacity-0 transform transition-all duration-700 hover:scale-105">
               <img 
                 src="https://lendi.org/GRCL/logo.png" 
@@ -87,7 +84,6 @@ const Index = () => {
           </div>
         </section>
         
-        {/* Mentor Section with enhanced visual design */}
         <section className="py-20 px-6 bg-gradient-to-b from-white to-blue-50/30">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold mb-16 text-center">
@@ -101,11 +97,11 @@ const Index = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
               <div className="relative group animate-on-load opacity-0">
                 <div className="absolute -inset-2 bg-gradient-to-r from-blue-100 to-indigo-100 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
-                <div className="relative overflow-hidden rounded-lg">
+                <div className="relative overflow-hidden rounded-lg max-w-[400px] max-h-[500px] mx-auto">
                   <img 
                     src={mentorData.image} 
                     alt={`${mentorData.name} - ${mentorData.title}`} 
-                    className="w-full h-auto rounded-lg object-cover transform transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-full object-cover rounded-lg transform transition-transform duration-700 group-hover:scale-105"
                     loading="lazy"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
