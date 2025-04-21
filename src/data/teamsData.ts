@@ -21,7 +21,7 @@ export const teamsData: Team[] = [
   {
     id: 1,
     name: "Eco Power Solutions",
-    description: "Sustainable energy management system for residential use",
+    description: "Solar Power Bank",
     longDescription: "Eco Power Solutions is developing an innovative energy management system that optimizes household electricity usage by integrating with renewable energy sources. The system uses AI algorithms to predict energy consumption patterns and automatically adjusts power distribution to maximize efficiency and reduce carbon footprint. The project focuses on making sustainable energy solutions accessible to average households at an affordable price point.",
     progress: 85,
     leader: {
