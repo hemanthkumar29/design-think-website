@@ -58,7 +58,7 @@ const TeamCard: React.FC<TeamCardProps> = ({ id, name, progress: initialProgress
               <span className="font-medium">{team.leader.name}</span>
               <span className="text-xs opacity-70">({team.leader.role})</span>
             </div>
-            {team.leader.rating > 0 && (
+            {team.leader.rating && team.leader.rating > 0 && (
               <div className="ml-5 mt-1">
                 <StarRating rating={team.leader.rating} size="sm" interactive={false} />
               </div>
@@ -74,7 +74,7 @@ const TeamCard: React.FC<TeamCardProps> = ({ id, name, progress: initialProgress
                   {team.members.map((member) => (
                     <li key={member.id} className="truncate flex items-center justify-between">
                       <span>{member.name}</span>
-                      {member.rating > 0 && (
+                      {member.rating && member.rating > 0 && (
                         <StarRating rating={member.rating} size="sm" interactive={false} />
                       )}
                     </li>

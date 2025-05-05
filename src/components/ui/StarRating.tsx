@@ -13,7 +13,7 @@ interface StarRatingProps {
 }
 
 const StarRating: React.FC<StarRatingProps> = ({
-  rating,
+  rating = 0,
   maxStars = 5,
   onChange,
   size = 'md',

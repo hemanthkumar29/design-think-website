@@ -3,6 +3,7 @@ export interface TeamMember {
   name: string;
   role: string;
   image: string;
+  rating?: number;
 }
 
 export interface Team {
