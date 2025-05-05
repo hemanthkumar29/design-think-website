@@ -10,6 +10,7 @@ import PageSEO from '@/components/SEO/PageSEO';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { getTeamById } from '@/services/teamService';
+import StarRating from '@/components/ui/StarRating';
 
 const TeamDetail = () => {
   const { id } = useParams();
@@ -57,6 +58,13 @@ const TeamDetail = () => {
   
   // Video URL based on team ID
   const videoUrl = `/team_videos/team_${team.id}.mp4`;
+
+  // Project image URLs based on team ID
+  const projectImageUrls = [
+    `/project_images/team_${team.id}_1.jpg`,
+    `/project_images/team_${team.id}_2.jpg`,
+    `/project_images/team_${team.id}_3.jpg`,
+  ];
   
   return (
     <div className="flex flex-col min-h-screen">
@@ -123,6 +131,11 @@ const TeamDetail = () => {
                     </div>
                     <h3 className="text-white font-bold text-xl">{team.leader.name}</h3>
                     <p className="text-white/80">{team.leader.role}</p>
+                    {team.leader.rating > 0 && (
+                      <div className="mt-1">
+                        <StarRating rating={team.leader.rating} size="md" interactive={false} />
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -144,7 +157,7 @@ const TeamDetail = () => {
                 <video 
                   controls
                   className="w-full h-full object-contain"
-                  poster={team.projectImages[0]}
+                  poster={projectImageUrls[0]}
                   onError={(e) => {
                     const el = e.currentTarget;
                     el.onerror = null; 
@@ -200,6 +213,11 @@ const TeamDetail = () => {
                 <div className="p-4">
                   <h3 className="font-bold text-lg">{team.leader.name}</h3>
                   <p className="text-sm text-muted-foreground">{team.leader.role}</p>
+                  {team.leader.rating > 0 && (
+                    <div className="mt-2">
+                      <StarRating rating={team.leader.rating} size="sm" interactive={false} />
+                    </div>
+                  )}
                 </div>
               </div>
               
@@ -224,6 +242,11 @@ const TeamDetail = () => {
                   <div className="p-4">
                     <h3 className="font-medium text-lg">{member.name}</h3>
                     <p className="text-sm text-muted-foreground">{member.role}</p>
+                    {member.rating > 0 && (
+                      <div className="mt-2">
+                        <StarRating rating={member.rating} size="sm" interactive={false} />
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}
@@ -241,8 +264,8 @@ const TeamDetail = () => {
               Project Showcase
             </h2>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {team.projectImages.map((image, index) => (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {projectImageUrls.map((image, index) => (
                 <div 
                   key={index} 
                   className="overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 opacity-100 animate-fade-in"
@@ -250,12 +273,13 @@ const TeamDetail = () => {
                 >
                   <img 
                     src={image} 
-                    alt={`Project image ${index + 1}`} 
+                    alt={`Project image ${index + 1} for Team ${team.id}`} 
                     className="w-full h-auto aspect-video object-cover transition-transform duration-300 hover:scale-105"
                     onError={(e) => {
                       const placeholders = [
-                        "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80",
-                        "https://images.unsplash.com/photo-1581056771107-24247a734e15?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
+                        "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80",
+                        "https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80",
+                        "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
                       ];
                       e.currentTarget.src = placeholders[index % placeholders.length];
                     }}

@@ -1,4 +1,3 @@
-
 import { Team, teamsData as initialTeamsData } from '@/data/teamsData';
 
 // Custom event for team data updates
@@ -21,6 +20,46 @@ export const updateTeamProgress = (teamId: number, newProgress: number): Team[] 
   const updatedTeams = currentTeams.map(team => 
     team.id === teamId ? { ...team, progress: newProgress } : team
   );
+  
+  // Persist to localStorage
+  localStorage.setItem('teamsData', JSON.stringify(updatedTeams));
+  
+  // Dispatch custom event to notify components about the update
+  window.dispatchEvent(new CustomEvent(TEAMS_UPDATED_EVENT));
+  
+  return updatedTeams;
+};
+
+// Update a team member's rating
+export const updateMemberRating = (teamId: number, memberId: number, rating: number): Team[] => {
+  const currentTeams = getTeams();
+  
+  const updatedTeams = currentTeams.map(team => {
+    if (team.id === teamId) {
+      // Check if the member is the team leader
+      if (team.leader.id === memberId) {
+        return {
+          ...team,
+          leader: {
+            ...team.leader,
+            rating
+          }
+        };
+      }
+      
+      // Otherwise, update the member in the members array
+      const updatedMembers = team.members.map(member => 
+        member.id === memberId ? { ...member, rating } : member
+      );
+      
+      return {
+        ...team,
+        members: updatedMembers
+      };
+    }
+    
+    return team;
+  });
   
   // Persist to localStorage
   localStorage.setItem('teamsData', JSON.stringify(updatedTeams));
