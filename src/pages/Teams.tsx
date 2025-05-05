@@ -85,9 +85,9 @@ const Teams = () => {
             <span className="inline-block py-1 px-3 bg-blue-50 text-blue-600 rounded-lg text-sm font-medium">
               Projects
             </span>
-            <h1 className="text-4xl md:text-5xl font-bold">Innovative Teams</h1>
+            <h1 className="text-4xl md:text-5xl font-bold">Design Thinking & Innovation Teams</h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Explore the diverse projects our teams are developing, from concept to implementation.
+              Explore the diverse projects which our teams are developing, from concept to implementation.
             </p>
           </div>
           
