@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 import ProgressBar from './ProgressBar';
 import { Button } from '@/components/ui/button';
 import { getTeamById, subscribeToTeamsUpdates } from '@/services/teamService';
-import { Award } from 'lucide-react';
+import { Award, Users } from 'lucide-react';
 
 interface TeamCardProps {
   id: number;
@@ -57,9 +57,22 @@ const TeamCard: React.FC<TeamCardProps> = ({ id, name, progress: initialProgress
               <span className="font-medium">{team.leader.name}</span>
               <span className="text-xs opacity-70">({team.leader.role})</span>
             </div>
-            <div className="mt-1 text-xs opacity-70">
-              {team.members.length} team members
-            </div>
+            
+            {team.members.length > 0 && (
+              <div className="mt-2">
+                <div className="flex items-center gap-1 mb-1">
+                  <Users size={14} className="text-blue-500" />
+                  <span className="text-xs font-medium">Team Members:</span>
+                </div>
+                <ul className="text-xs opacity-70 space-y-0.5 pl-4">
+                  {team.members.map((member, index) => (
+                    <li key={member.id} className="truncate">
+                      {member.name}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         )}
         

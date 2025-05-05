@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import ProgressBar from '@/components/ui/ProgressBar';
@@ -53,6 +54,9 @@ const TeamDetail = () => {
       .join('')
       .toUpperCase();
   };
+  
+  // Video URL based on team ID
+  const videoUrl = `/team_videos/team_${team.id}.mp4`;
   
   return (
     <div className="flex flex-col min-h-screen">
@@ -131,6 +135,33 @@ const TeamDetail = () => {
             <h2 className="text-2xl md:text-3xl font-bold mb-8 animate-fade-in">Project Overview</h2>
             <div className="prose prose-lg max-w-none animate-fade-in">
               <p className="leading-relaxed text-muted-foreground">{team.longDescription}</p>
+            </div>
+            
+            {/* Project Video Section */}
+            <div className="mt-12">
+              <h3 className="text-xl md:text-2xl font-bold mb-6 animate-fade-in">Project Presentation</h3>
+              <div className="relative w-full overflow-hidden rounded-lg shadow-lg bg-black aspect-video animate-fade-in">
+                <video 
+                  controls
+                  className="w-full h-full object-contain"
+                  poster={team.projectImages[0]}
+                  onError={(e) => {
+                    const el = e.currentTarget;
+                    el.onerror = null; 
+                    // Set fallback content
+                    el.parentElement.innerHTML = `
+                      <div class="flex flex-col items-center justify-center w-full h-full text-white p-8 text-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-4 opacity-60"><path d="M2 16V8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2z"/><path d="m10 9 5 3-5 3z"/></svg>
+                        <p class="text-lg font-medium opacity-80">Video presentation coming soon</p>
+                        <p class="text-sm opacity-60 mt-2">The team is currently preparing their video presentation</p>
+                      </div>
+                    `;
+                  }}
+                >
+                  <source src={videoUrl} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
             </div>
           </div>
         </section>

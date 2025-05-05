@@ -119,7 +119,7 @@ const Teams = () => {
             </div>
           </div>
           
-          {/* Teams Grid */}
+          {/* Teams Grid - adjusted for taller cards due to additional member info */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredTeams.length > 0 ? (
               filteredTeams.map(team => (
