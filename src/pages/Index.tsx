@@ -61,7 +61,7 @@ const Index = () => {
                 Design Thinking & Innovation
               </span>
               <br />
-              <span className="text-foreground mt-4 block text-3xl md:text-4xl">EEE-A</span>
+              <span className="text-foreground mt-4 block text-3xl md:text-4xl"> EEE-A (2023-27) </span>
             </h1>
             
             <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto animate-on-load opacity-0">
