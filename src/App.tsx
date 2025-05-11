@@ -9,6 +9,7 @@ import { HelmetProvider } from "react-helmet-async";
 import Index from "./pages/Index";
 import Teams from "./pages/Teams";
 import TeamDetail from "./pages/TeamDetail";
+import Presentations from "./pages/Presentations";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 import Admin from "./pages/Admin";
@@ -36,6 +37,7 @@ function App() {
                   <Route path="/" element={<Index />} />
                   <Route path="/teams" element={<Teams />} />
                   <Route path="/team/:id" element={<TeamDetail />} />
+                  <Route path="/presentations" element={<Presentations />} />
                   <Route path="/about" element={<About />} />
                   <Route path="/admin" element={<Admin />} />
                   <Route 

@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import ProgressBar from '@/components/ui/ProgressBar';
@@ -11,6 +10,7 @@ import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { getTeamById } from '@/services/teamService';
 import StarRating from '@/components/ui/StarRating';
+import PresentationViewer from '@/components/presentations/PresentationViewer';
 
 const TeamDetail = () => {
   const { id } = useParams();
@@ -175,6 +175,11 @@ const TeamDetail = () => {
                   Your browser does not support the video tag.
                 </video>
               </div>
+            </div>
+            
+            {/* Presentation Section */}
+            <div className="mt-16 pt-8 border-t border-gray-100">
+              <PresentationViewer teamId={team.id} teamName={team.name} />
             </div>
           </div>
         </section>
