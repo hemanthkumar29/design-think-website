@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Download, FilePresentation } from 'lucide-react';
+import { Download, Presentation } from 'lucide-react';
 
 interface PresentationViewerProps {
   teamId: number;

@@ -6,7 +6,7 @@ import Footer from '@/components/layout/Footer';
 import PageSEO from '@/components/SEO/PageSEO';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Download, FilePresentation } from 'lucide-react';
+import { Download, Presentation } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const Presentations = () => {
@@ -85,7 +85,7 @@ const Presentations = () => {
                   >
                     <div className="bg-blue-50 p-4 flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <FilePresentation className="text-blue-600" size={20} />
+                        <Presentation className="text-blue-600" size={20} />
                         <Badge variant="outline" className="bg-blue-100 text-blue-600 border-blue-200">
                           Team {team.id}
                         </Badge>
