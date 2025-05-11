@@ -70,7 +70,7 @@ const Teams = () => {
   }, [searchQuery, selectedProgress]);
   
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen institute-bg">
       <PageSEO 
         title="Teams"
         description="Explore innovative teams and their projects from the Design Thinking & Innovation program at Lendi Institute of Engineering and Technology."
@@ -79,7 +79,7 @@ const Teams = () => {
       
       <Navbar />
       
-      <main className="flex-grow pt-24 pb-20 px-6">
+      <main className="flex-grow pt-24 pb-20 px-6 institute-bg-overlay">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 space-y-4 animate-slide-down">
             <span className="inline-block py-1 px-3 bg-blue-50 text-blue-600 rounded-lg text-sm font-medium">

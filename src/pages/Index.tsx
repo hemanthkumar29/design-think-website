@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -22,7 +23,7 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen institute-bg">
       <PageSEO 
         title="Home" 
         description="Explore innovative solutions to engineering challenges through creative problem-solving and human-centered design at Lendi Institute's Design Thinking & Innovation program."
@@ -31,17 +32,8 @@ const Index = () => {
       
       <Navbar />
       
-      <main className="flex-grow">
+      <main className="flex-grow institute-bg-overlay">
         <section className="relative min-h-[90vh] flex items-center justify-center px-6 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-50/80 via-indigo-50/60 to-white -z-10"></div>
-          <div 
-            className="absolute inset-0 opacity-10 -z-10 mask-image-blur"
-            aria-hidden="true"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%236366f1' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-            }}
-          ></div>
-          
           <div className="max-w-5xl mx-auto text-center space-y-8">
             <div className="flex justify-center mb-8 animate-on-load opacity-0 transform transition-all duration-700 hover:scale-105">
               <img 
@@ -84,7 +76,7 @@ const Index = () => {
           </div>
         </section>
         
-        <section className="py-20 px-6 bg-gradient-to-b from-white to-blue-50/30">
+        <section className="py-20 px-6 bg-white">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold mb-16 text-center">
               <span className="inline-block py-1 px-3 bg-blue-50 text-blue-600 rounded-lg text-sm font-medium mb-2">
