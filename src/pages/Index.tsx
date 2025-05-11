@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -6,7 +5,7 @@ import { mentorData } from '@/data/teamsData';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import PageSEO from '@/components/SEO/PageSEO';
-import { ChevronRight, PresentationIcon } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 
 const Index = () => {
   const navigate = useNavigate();
@@ -34,14 +33,14 @@ const Index = () => {
       
       <main className="flex-grow">
         <section className="relative min-h-[90vh] flex items-center justify-center px-6 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/90 via-indigo-900/80 to-black/70 -z-10"></div>
-          <div className="absolute inset-0 -z-20">
-            <img 
-              src="https://lendi.edu.in/assets/img/lendi-institute.jpg" 
-              alt="Lendi Institute" 
-              className="w-full h-full object-cover"
-            />
-          </div>
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-50/80 via-indigo-50/60 to-white -z-10"></div>
+          <div 
+            className="absolute inset-0 opacity-10 -z-10 mask-image-blur"
+            aria-hidden="true"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%236366f1' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+            }}
+          ></div>
           
           <div className="max-w-5xl mx-auto text-center space-y-8">
             <div className="flex justify-center mb-8 animate-on-load opacity-0 transform transition-all duration-700 hover:scale-105">
@@ -57,47 +56,31 @@ const Index = () => {
               />
             </div>
             
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight tracking-tight animate-on-load opacity-0 text-white">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-300 via-indigo-200 to-purple-200">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight tracking-tight animate-on-load opacity-0">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600">
                 Design Thinking & Innovation
               </span>
               <br />
-              <span className="text-white/90 mt-4 block text-3xl md:text-4xl"> EEE-A (2023-27) </span>
+              <span className="text-foreground mt-4 block text-3xl md:text-4xl"> EEE-A (2023-27) </span>
             </h1>
             
-            <p className="text-lg md:text-xl text-blue-100/90 mb-10 max-w-2xl mx-auto animate-on-load opacity-0">
+            <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto animate-on-load opacity-0">
               Exploring innovative solutions to engineering challenges through 
               creative problem-solving and human-centered design.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-on-load opacity-0">
-              <Button 
-                size="lg" 
-                onClick={() => navigate('/teams')} 
-                className="group relative overflow-hidden px-8 py-6 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
-                aria-label="Explore teams and projects"
-              >
-                <span className="relative z-10 flex items-center gap-2">
-                  Explore Teams
-                  <ChevronRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" />
-                </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-700 to-indigo-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </Button>
-
-              <Button 
-                size="lg" 
-                variant="outline" 
-                onClick={() => navigate('/presentations')} 
-                className="group relative overflow-hidden px-8 py-6 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 border-blue-300 text-blue-100 hover:text-white hover:border-blue-200"
-                aria-label="View team presentations"
-              >
-                <span className="relative z-10 flex items-center gap-2">
-                  <PresentationIcon className="w-5 h-5" />
-                  Team Presentations
-                </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-600/60 to-indigo-600/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </Button>
-            </div>
+            <Button 
+              size="lg" 
+              onClick={() => navigate('/teams')} 
+              className="animate-on-load opacity-0 group relative overflow-hidden px-8 py-6 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
+              aria-label="Explore teams and projects"
+            >
+              <span className="relative z-10 flex items-center gap-2">
+                Explore Teams
+                <ChevronRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" />
+              </span>
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-700 to-indigo-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </Button>
           </div>
         </section>
         
