@@ -49,14 +49,14 @@ const Index = () => {
             </div>
             
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight tracking-tight animate-on-load opacity-0">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600">
+              <span className="text-white">
                 Design Thinking & Innovation
               </span>
               <br />
-              <span className="text-foreground mt-4 block text-3xl md:text-4xl"> EEE-A (2023-27) </span>
+              <span className="text-white mt-4 block text-3xl md:text-4xl"> EEE-A (2023-27) </span>
             </h1>
             
-            <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto animate-on-load opacity-0">
+            <p className="text-lg md:text-xl text-white/90 mb-10 max-w-2xl mx-auto animate-on-load opacity-0">
               Exploring innovative solutions to engineering challenges through 
               creative problem-solving and human-centered design.
             </p>

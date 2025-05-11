@@ -85,8 +85,8 @@ const Teams = () => {
             <span className="inline-block py-1 px-3 bg-blue-50 text-blue-600 rounded-lg text-sm font-medium">
               Projects
             </span>
-            <h1 className="text-4xl md:text-5xl font-bold">Design Thinking & Innovation Teams</h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <h1 className="text-4xl md:text-5xl font-bold text-white">Design Thinking & Innovation Teams</h1>
+            <p className="text-lg text-white/90 max-w-2xl mx-auto">
               Explore the diverse projects which our teams are developing, from concept to implementation.
             </p>
           </div>
@@ -133,7 +133,7 @@ const Teams = () => {
               ))
             ) : (
               <div className="col-span-full text-center py-20">
-                <p className="text-xl text-muted-foreground">
+                <p className="text-xl text-white">
                   No teams match your search criteria.
                 </p>
               </div>
@@ -141,7 +141,7 @@ const Teams = () => {
           </div>
           
           {/* Team Count */}
-          <div className="mt-8 text-center text-sm text-muted-foreground animate-fade-in">
+          <div className="mt-8 text-center text-sm text-white/80 animate-fade-in">
             Showing {filteredTeams.length} of {teams.length} teams
           </div>
         </div>
