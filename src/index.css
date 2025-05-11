@@ -106,27 +106,4 @@
   .nav-link.active:after {
     @apply scale-x-100;
   }
-  
-  .institute-bg {
-    background-image: url('https://lendi.edu.in/assets/img/lendi-institute.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-  }
-  
-  .institute-bg-overlay {
-    @apply relative;
-  }
-  
-  .institute-bg-overlay::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.55));
-    z-index: -1;
-  }
 }
