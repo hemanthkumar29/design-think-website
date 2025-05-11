@@ -106,4 +106,33 @@
   .nav-link.active:after {
     @apply scale-x-100;
   }
+  
+  .institute-bg {
+    @apply absolute inset-0 -z-20;
+    background-image: url('https://lendi.edu.in/assets/img/lendi-institute.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  
+  .institute-bg-overlay {
+    @apply absolute inset-0 -z-10;
+    background: linear-gradient(to bottom right, rgba(30, 58, 138, 0.9), rgba(55, 48, 163, 0.85), rgba(0, 0, 0, 0.75));
+  }
+  
+  .presentation-card {
+    @apply bg-white rounded-lg overflow-hidden shadow-md border border-gray-100 hover:shadow-lg transition-all duration-200;
+  }
+  
+  .presentation-card-header {
+    @apply h-36 flex items-center justify-center bg-gradient-to-r from-blue-50 to-indigo-50;
+  }
+  
+  .presentation-card-content {
+    @apply p-5;
+  }
+  
+  .presentation-card-footer {
+    @apply px-5 py-3 border-t border-gray-100 flex items-center justify-between;
+  }
 }

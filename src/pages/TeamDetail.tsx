@@ -11,6 +11,7 @@ import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { getTeamById } from '@/services/teamService';
 import StarRating from '@/components/ui/StarRating';
+import PresentationViewer from '@/components/ui/PresentationViewer';
 
 const TeamDetail = () => {
   const { id } = useParams();
@@ -77,11 +78,19 @@ const TeamDetail = () => {
       <Navbar />
       
       <main className="flex-grow pt-24 pb-20">
-        <section className="relative px-6 py-20 overflow-hidden bg-gradient-to-r from-blue-50 to-indigo-50">
+        <section className="relative px-6 py-20 overflow-hidden bg-gradient-to-r from-blue-900/90 to-indigo-900/90">
+          <div className="absolute inset-0 -z-10">
+            <img 
+              src="https://lendi.edu.in/assets/img/lendi-institute.jpg" 
+              alt="Lendi Institute" 
+              className="w-full h-full object-cover opacity-20"
+            />
+          </div>
+          
           <div className="max-w-7xl mx-auto">
             <Button
               variant="ghost"
-              className="mb-8 flex items-center gap-2 text-muted-foreground hover:text-foreground"
+              className="mb-8 flex items-center gap-2 text-blue-100 hover:text-white hover:bg-white/10"
               onClick={() => navigate('/teams')}
             >
               <ArrowLeft size={16} />
@@ -91,13 +100,13 @@ const TeamDetail = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div className="space-y-6 animate-slide-right">
                 <div>
-                  <span className="inline-block py-1 px-3 bg-blue-100 text-blue-600 rounded-lg text-sm font-medium mb-2">
+                  <span className="inline-block py-1 px-3 bg-blue-100/20 text-blue-100 rounded-lg text-sm font-medium mb-2">
                     Team {team.id}
                   </span>
-                  <h1 className="text-3xl md:text-5xl font-bold">{team.name}</h1>
+                  <h1 className="text-3xl md:text-5xl font-bold text-white">{team.name}</h1>
                 </div>
                 
-                <p className="text-xl text-muted-foreground">{team.description}</p>
+                <p className="text-xl text-blue-100/90">{team.description}</p>
                 
                 <div className="pt-4">
                   <ProgressBar 
@@ -148,6 +157,11 @@ const TeamDetail = () => {
             <h2 className="text-2xl md:text-3xl font-bold mb-8 animate-fade-in">Project Overview</h2>
             <div className="prose prose-lg max-w-none animate-fade-in">
               <p className="leading-relaxed text-muted-foreground">{team.longDescription}</p>
+            </div>
+            
+            {/* Presentation Viewer Section */}
+            <div className="mt-16 mb-16">
+              <PresentationViewer teamId={team.id} teamName={team.name} />
             </div>
             
             {/* Project Video Section */}

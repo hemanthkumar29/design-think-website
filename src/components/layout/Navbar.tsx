@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, PresentationIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import NavbarAdminLink from '../NavbarAdminLink';
 
@@ -42,6 +42,12 @@ const Navbar: React.FC = () => {
           <NavLink to="/teams" className={({ isActive }) => cn('nav-link', isActive && 'active')}>
             Teams
           </NavLink>
+          <NavLink to="/presentations" className={({ isActive }) => cn('nav-link', isActive && 'active')}>
+            <div className="flex items-center gap-1">
+              <PresentationIcon size={16} />
+              <span>Presentations</span>
+            </div>
+          </NavLink>
           <NavLink to="/about" className={({ isActive }) => cn('nav-link', isActive && 'active')}>
             About
           </NavLink>
@@ -66,6 +72,12 @@ const Navbar: React.FC = () => {
             </NavLink>
             <NavLink to="/teams" className={({ isActive }) => cn('nav-link', isActive && 'active')}>
               Teams
+            </NavLink>
+            <NavLink to="/presentations" className={({ isActive }) => cn('nav-link', isActive && 'active')}>
+              <div className="flex items-center gap-1">
+                <PresentationIcon size={16} />
+                <span>Presentations</span>
+              </div>
             </NavLink>
             <NavLink to="/about" className={({ isActive }) => cn('nav-link', isActive && 'active')}>
               About
