@@ -109,7 +109,7 @@ export const teamsData: Team[] = [
     id: 3,
     name: "Team 03",
     description: "Smart Water Leakage Detector Using IOT",
-    longDescription: "AutoNav Robotics is developing a groundbreaking autonomous navigation system for indoor robots that doesn't rely on GPS signals. Using a combination of computer vision, LiDAR, and proprietary SLAM (Simultaneous Localization and Mapping) algorithms, our robots can navigate complex indoor environments with centimeter-level precision. Applications include warehouse logistics, hospital supply delivery, and security surveillance in commercial buildings.",
+    longDescription: "This project presents an IoT based water leakage detection system utilizes sensors to monitor water flow and pressure in real time. The system employs anomaly detection algorithms to identify potential leaks, triggering alerts to authorities via SMS or mobile app , now enabling prompt response to leaks, the system minimizes a water leakage, reduce damage and optimizes maintainance, supporting, sustainable resource management and enhanced water conservation efforts.",
     progress: 60,
     leader: {
       id: 8,
