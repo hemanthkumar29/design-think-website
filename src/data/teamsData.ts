@@ -442,7 +442,7 @@ export const teamsData: Team[] = [
     id: 12,
     name: "Team 12",
     description: "Smart Energy Meter",
-    longDescription: "SolarFlex is developing highly efficient, flexible solar panels that can be integrated into a wide range of surfaces and applications. Unlike conventional rigid panels, our technology can conform to curved surfaces, be incorporated into clothing, or applied to vehicle exteriors. The project focuses on improving the durability and efficiency of flexible photovoltaic materials while developing novel manufacturing techniques to reduce production costs. This versatile approach to solar energy aims to expand renewable energy adoption beyond traditional rooftop and ground-mounted installations.",
+    longDescription: "This project presents the design and implementation of a Smart Energy Meter using an ESP32 microcontroller, ACS712 current sensor, ZMPT101B voltage sensor, and a 16x2 LCD display. The aim is to monitor and display real-time electrical energy consumption of household appliances. By measuring current and voltage accurately, the system calculates power consumption and displays it on the LCD. The ESP32 acts as the brain of the system, processing sensor data and providing future options for IoT-based energy tracking. This low-cost and compact setup helps users become more energy-aware and supports smart energy management in households.",
     progress: 55,
     leader: {
       id: 35,
