@@ -477,7 +477,7 @@ export const teamsData: Team[] = [
   },
   {
     id: 13,
-    name: "Team 13",
+    name: "EcoSort Squad",
     description: "Wet and Dry Waste Segregation",
     longDescription: "Our project focuses on efficient segregation of wet and dry waste to promote sustainable waste management. By implementing smart sorting mechanisms, we aim to reduce environmental pollution and improve recycling efficiency. This system encourages responsible disposal practices, helping communities maintain cleaner surroundings while supporting eco-friendly habits and reducing landfill burden through automated or manual separation techniques.",
     progress: 40,
