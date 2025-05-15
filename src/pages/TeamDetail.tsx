@@ -59,11 +59,11 @@ const TeamDetail = () => {
   // Video URL based on team ID
   const videoUrl = `/team_videos/team_${team.id}.mp4`;
 
-  // Project image URLs based on team ID
+  // Updated project image URLs using the new folder structure
   const projectImageUrls = [
-    `/project_images/team_${team.id}_1.jpg`,
-    `/project_images/team_${team.id}_2.jpg`,
-    `/project_images/team_${team.id}_3.jpg`,
+    `/project-images/team${team.id}/project1.jpg`,
+    `/project-images/team${team.id}/project2.jpg`,
+    `/project-images/team${team.id}/project3.jpg`,
   ];
   
   return (
