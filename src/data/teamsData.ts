@@ -183,7 +183,7 @@ export const teamsData: Team[] = [
     id: 5,
     name: "Team 05",
     description: "Smart Dustbin Using Bluetooth Module",
-    longDescription: "AgroSense is transforming traditional farming practices through an interconnected network of IoT sensors that provide real-time data about soil conditions, crop health, and environmental factors. Our system enables farmers to make data-driven decisions about irrigation, fertilization, and pest control, leading to increased yields while reducing water and chemical usage. The technology is designed to be affordable and accessible for farms of all sizes, with a particular focus on helping small-scale farmers in developing regions.",
+    longDescription: "The Line Follower Smart Dustbin is an innovative solution aimed at enhancing waste management systems through automation and robotics. This smart dustbin is designed to autonomously navigate along a predefined path using line-following technology, guided by infrared or optical sensors. Equipped with a microcontroller, motor drivers, and obstacle detection sensors, the dustbin can follow black or white lines on the floor to reach specific waste collection points or return to its charging station. The automation helps in reducing human effort in large facilities like hospitals, offices, and shopping malls, thereby promoting hygiene and operational efficiency. The integration of smart technologies in this project demonstrates a cost-effective and scalable approach to modern waste disposal and collection.",
     progress: 65,
     leader: {
       id: 14,
