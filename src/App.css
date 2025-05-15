@@ -13,10 +13,10 @@
   transition: filter 300ms;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 2em rgba(97, 113, 255, 0.7));
+  filter: drop-shadow(0 0 2em rgba(79, 70, 229, 0.7));
 }
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em rgba(97, 218, 251, 0.7));
+  filter: drop-shadow(0 0 2em rgba(111, 76, 255, 0.7));
 }
 
 @keyframes logo-spin {
@@ -42,7 +42,7 @@
 }
 .card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.08);
 }
 
 .read-the-docs {
