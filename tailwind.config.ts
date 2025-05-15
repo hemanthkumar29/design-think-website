@@ -109,6 +109,10 @@ export default {
 				'pulse-slow': {
 					'0%, 100%': { opacity: '1' },
 					'50%': { opacity: '0.8' }
+				},
+				'shimmer': {
+					'0%': { backgroundPosition: '-200% 0' },
+					'100%': { backgroundPosition: '200% 0' }
 				}
 			},
 			animation: {
@@ -121,11 +125,12 @@ export default {
 				'slide-down': 'slide-down 0.6s ease-out',
 				'slide-left': 'slide-left 0.6s ease-out',
 				'slide-right': 'slide-right 0.6s ease-out',
-				'pulse-slow': 'pulse-slow 3s infinite'
+				'pulse-slow': 'pulse-slow 3s infinite',
+				'shimmer': 'shimmer 2s linear infinite'
 			},
 			fontFamily: {
-				sans: ['Inter', 'sans-serif'],
-				display: ['Manrope', 'sans-serif']
+				sans: ['Plus Jakarta Sans', 'sans-serif'],
+				display: ['Outfit', 'sans-serif']
 			}
 		}
 	},
