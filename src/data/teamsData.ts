@@ -479,7 +479,7 @@ export const teamsData: Team[] = [
     id: 13,
     name: "Team 13",
     description: "Wet and Dry Waste Segregation",
-    longDescription: "BioFabric is pioneering a new generation of sustainable textiles that combine biodegradable materials with integrated technology for enhanced functionality. Our fabrics are produced using environmentally friendly processes and incorporate features like moisture management, temperature regulation, and antimicrobial properties. We're also developing specialized variations with embedded sensors for healthcare monitoring applications, while maintaining comfort, durability, and end-of-life biodegradability. This project represents a significant step toward reducing the environmental impact of the textile industry.",
+    longDescription: "Our project focuses on efficient segregation of wet and dry waste to promote sustainable waste management. By implementing smart sorting mechanisms, we aim to reduce environmental pollution and improve recycling efficiency. This system encourages responsible disposal practices, helping communities maintain cleaner surroundings while supporting eco-friendly habits and reducing landfill burden through automated or manual separation techniques.",
     progress: 40,
     leader: {
       id: 38,
