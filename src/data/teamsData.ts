@@ -23,7 +23,7 @@ export const teamsData: Team[] = [
     id: 1,
     name: "Team 01",
     description: "Solar Power Bank",
-    longDescription: "Eco Power Solutions is developing an innovative energy management system that optimizes household electricity usage by integrating with renewable energy sources. The system uses AI algorithms to predict energy consumption patterns and automatically adjusts power distribution to maximize efficiency and reduce carbon footprint. The project focuses on making sustainable energy solutions accessible to average households at an affordable price point.",
+    longDescription: "This project presents the design and development of a solar power bank, a portable device that harness solar energy to charge electronic gadgets such as smartphones, tablets, and other USB-powered devices. With the increasing demand for sustainable energy solutions and mobile charging options, the solar power bank offers a convenient and eco-friendly alternative to conventional electricity-dependent chargers. The system integrates photovoltaic (PV) panels to convert sunlight into electrical energy, which is stored in rechargeable lithium-ion batteries. A charge controller regulates the input to ensure safe and efficient charging, while USB output ports provide compatibility with various devices. The power bank is equipped with  dual charging modes: solar and USB input. This project demonstrates the potential of solar energy in addressing power needs in off-grid locations, during travel, or in emergency situations, promoting clean energy use and reducing reliance on non-renewable sources.",
     progress: 85,
     leader: {
       id: 1,
