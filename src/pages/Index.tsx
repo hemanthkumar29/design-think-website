@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -33,16 +34,29 @@ const Index = () => {
       
       <main className="flex-grow">
         <section className="relative min-h-[90vh] flex items-center justify-center px-6 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-50/80 via-indigo-50/60 to-white -z-10"></div>
+          {/* Background image with overlay */}
           <div 
-            className="absolute inset-0 opacity-10 -z-10 mask-image-blur"
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat -z-20"
+            style={{ 
+              backgroundImage: `url('/innovation-bg.webp')`,
+              backgroundPosition: "center"
+            }}
+            aria-hidden="true"
+          ></div>
+          
+          {/* Gradient overlay for better text readability */}
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-600/70 via-indigo-600/40 to-purple-700/50 backdrop-blur-[2px] -z-10"></div>
+
+          {/* Pattern overlay for added visual interest */}
+          <div 
+            className="absolute inset-0 opacity-5 -z-10 mask-image-blur"
             aria-hidden="true"
             style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%236366f1' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
             }}
           ></div>
           
-          <div className="max-w-5xl mx-auto text-center space-y-8">
+          <div className="max-w-5xl mx-auto text-center space-y-8 z-10">
             <div className="flex justify-center mb-8 animate-on-load opacity-0 transform transition-all duration-700 hover:scale-105">
               <img 
                 src="https://lendi.org/GRCL/logo.png" 
@@ -57,14 +71,14 @@ const Index = () => {
             </div>
             
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight tracking-tight animate-on-load opacity-0">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-100">
                 Design Thinking & Innovation
               </span>
               <br />
-              <span className="text-foreground mt-4 block text-3xl md:text-4xl"> EEE-A (2023-27) </span>
+              <span className="text-white mt-4 block text-3xl md:text-4xl"> EEE-A (2023-27) </span>
             </h1>
             
-            <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto animate-on-load opacity-0">
+            <p className="text-lg md:text-xl text-white mb-10 max-w-2xl mx-auto animate-on-load opacity-0">
               Exploring innovative solutions to engineering challenges through 
               creative problem-solving and human-centered design.
             </p>
@@ -72,14 +86,14 @@ const Index = () => {
             <Button 
               size="lg" 
               onClick={() => navigate('/teams')} 
-              className="animate-on-load opacity-0 group relative overflow-hidden px-8 py-6 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
+              className="animate-on-load opacity-0 group relative overflow-hidden px-8 py-6 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 bg-white text-blue-600 hover:bg-white/90"
               aria-label="Explore teams and projects"
             >
               <span className="relative z-10 flex items-center gap-2">
                 Explore Teams
                 <ChevronRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" />
               </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-700 to-indigo-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
             </Button>
           </div>
         </section>
