@@ -16,9 +16,21 @@ import Admin from "./pages/Admin";
 import AdminDashboard from "./pages/AdminDashboard";
 import { AdminProvider } from "./context/AdminContext";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
+import CacheBuster from "./components/ui/CacheBuster";
+
+// App version - update when making changes
+const APP_VERSION = '1.0.0';
 
 // Create a client outside of the render function
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      // Add cache busting to API queries by default
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      cacheTime: 10 * 60 * 1000, // 10 minutes
+    },
+  },
+});
 
 // Define App as a proper React function component
 function App() {
@@ -30,6 +42,7 @@ function App() {
             <TooltipProvider>
               <Toaster />
               <Sonner />
+              <CacheBuster version={APP_VERSION} />
               <BrowserRouter>
                 <Routes>
                   <Route path="/" element={<Index />} />

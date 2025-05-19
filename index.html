@@ -4,6 +4,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <title>Design Thinking & Innovation - EEE A | Lendi Institute of Engineering and Technology</title>
     <meta name="description" content="Explore innovative projects by Design Thinking & Innovation teams from the Electrical & Electronics Engineering Department at Lendi Institute of Engineering and Technology, Vizianagaram." />
     <meta name="keywords" content="design thinking, innovation, EEE, electrical engineering, Lendi Institute, engineering projects, Vizianagaram, Andhra Pradesh" />
@@ -61,5 +64,27 @@
     <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      // Add timestamp to force reload of scripts and stylesheets
+      (function() {
+        var scripts = document.getElementsByTagName('script');
+        var links = document.getElementsByTagName('link');
+        var timestamp = new Date().getTime();
+        
+        // Add timestamp to scripts
+        for (var i = 0; i < scripts.length; i++) {
+          if (scripts[i].src && !scripts[i].src.includes('cdn.gpteng.co')) {
+            scripts[i].src = scripts[i].src + (scripts[i].src.includes('?') ? '&' : '?') + 'v=' + timestamp;
+          }
+        }
+        
+        // Add timestamp to stylesheets
+        for (var j = 0; j < links.length; j++) {
+          if (links[j].rel === 'stylesheet') {
+            links[j].href = links[j].href + (links[j].href.includes('?') ? '&' : '?') + 'v=' + timestamp;
+          }
+        }
+      })();
+    </script>
   </body>
 </html>
