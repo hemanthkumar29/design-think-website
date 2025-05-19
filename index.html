@@ -30,12 +30,23 @@
     <meta name="twitter:description" content="Explore innovative projects by Design Thinking & Innovation teams from the Electrical & Electronics Engineering Department at Lendi Institute." />
     <meta name="twitter:image" content="https://icdsai2023.iaasse.org/images/lendi.jpg" />
     
-    <!-- Favicon -->
+    <!-- Favicon with preload -->
+    <link rel="preload" href="/favicon.ico" as="image" type="image/x-icon" />
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1069342369442645"
-     crossorigin="anonymous"></script>
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Font optimization - load critical fonts first -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&display=swap"></noscript>
+
+    <!-- Defer non-critical scripts -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1069342369442645" crossorigin="anonymous"></script>
+    
     <!-- Structured Data -->
     <script type="application/ld+json">
       {
@@ -57,6 +68,9 @@
         }
       }
     </script>
+    
+    <!-- Non-critical fonts loaded later -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500&display=swap" media="print" onload="this.media='all'">
   </head>
 
   <body>
@@ -65,24 +79,45 @@
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script type="module" src="/src/main.tsx"></script>
     <script>
-      // Add timestamp to force reload of scripts and stylesheets
+      // Add timestamp to force reload of scripts and stylesheets with improved implementation
       (function() {
-        var scripts = document.getElementsByTagName('script');
-        var links = document.getElementsByTagName('link');
-        var timestamp = new Date().getTime();
+        // Define version for local development cache busting
+        const buildVersion = '1.0.1'; 
         
-        // Add timestamp to scripts
-        for (var i = 0; i < scripts.length; i++) {
-          if (scripts[i].src && !scripts[i].src.includes('cdn.gpteng.co')) {
-            scripts[i].src = scripts[i].src + (scripts[i].src.includes('?') ? '&' : '?') + 'v=' + timestamp;
+        // Use requestIdleCallback for better performance
+        const updateResourceVersions = () => {
+          var scripts = document.getElementsByTagName('script');
+          var links = document.getElementsByTagName('link');
+          var timestamp = new Date().getTime();
+          
+          // Add version to scripts
+          for (var i = 0; i < scripts.length; i++) {
+            if (scripts[i].src && !scripts[i].src.includes('cdn.gpteng.co')) {
+              scripts[i].setAttribute('src', 
+                scripts[i].src.split('?')[0] + 
+                (scripts[i].src.includes('?') ? '&' : '?') + 
+                'v=' + buildVersion + '.' + timestamp
+              );
+            }
           }
-        }
+          
+          // Add version to stylesheets
+          for (var j = 0; j < links.length; j++) {
+            if (links[j].rel === 'stylesheet' && links[j].href) {
+              links[j].setAttribute('href',
+                links[j].href.split('?')[0] + 
+                (links[j].href.includes('?') ? '&' : '?') + 
+                'v=' + buildVersion + '.' + timestamp
+              );
+            }
+          }
+        };
         
-        // Add timestamp to stylesheets
-        for (var j = 0; j < links.length; j++) {
-          if (links[j].rel === 'stylesheet') {
-            links[j].href = links[j].href + (links[j].href.includes('?') ? '&' : '?') + 'v=' + timestamp;
-          }
+        // Use requestIdleCallback if available, otherwise use setTimeout
+        if (window.requestIdleCallback) {
+          window.requestIdleCallback(updateResourceVersions);
+        } else {
+          setTimeout(updateResourceVersions, 10);
         }
       })();
     </script>

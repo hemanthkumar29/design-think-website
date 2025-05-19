@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import ProgressBar from './ProgressBar';
@@ -15,7 +15,8 @@ interface TeamCardProps {
   className?: string;
 }
 
-const TeamCard: React.FC<TeamCardProps> = ({ id, name, progress: initialProgress, className }) => {
+// Memoize the TeamCard component to prevent unnecessary re-renders
+const TeamCard: React.FC<TeamCardProps> = memo(({ id, name, progress: initialProgress, className }) => {
   const navigate = useNavigate();
   const [progress, setProgress] = useState(initialProgress);
   const [team, setTeam] = useState(() => getTeamById(id));
@@ -38,13 +39,18 @@ const TeamCard: React.FC<TeamCardProps> = ({ id, name, progress: initialProgress
     };
   }, [id]);
 
+  // Optimize click handler to prevent unnecessary re-renders
+  const handleCardClick = React.useCallback(() => {
+    navigate(`/team/${id}`);
+  }, [navigate, id]);
+
   return (
     <div 
       className={cn(
-        'glass-card p-6 rounded-xl hover-scale group cursor-pointer',
+        'glass-card p-6 rounded-xl hover-scale group cursor-pointer transform-gpu',
         className
       )}
-      onClick={() => navigate(`/team/${id}`)}
+      onClick={handleCardClick}
     >
       <div className="space-y-4">
         <div className="min-h-[40px] flex items-start">
@@ -100,6 +106,8 @@ const TeamCard: React.FC<TeamCardProps> = ({ id, name, progress: initialProgress
       </div>
     </div>
   );
-};
+});
+
+TeamCard.displayName = 'TeamCard';
 
 export default TeamCard;

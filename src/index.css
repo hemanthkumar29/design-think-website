@@ -94,15 +94,34 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-display font-bold tracking-tight;
   }
+  
+  /* Performance optimizations */
+  img, video {
+    @apply max-w-full h-auto;
+  }
+  
+  /* Apply hardware acceleration where needed */
+  .transform-gpu {
+    @apply transform-gpu;
+  }
+  
+  /* Optimize animations */
+  .will-change-transform {
+    will-change: transform;
+  }
+  
+  .will-change-opacity {
+    will-change: opacity;
+  }
 }
 
 @layer components {
   .glass-card {
-    @apply bg-white/90 backdrop-blur-md border border-white/30 shadow-md;
+    @apply bg-white/90 backdrop-blur-md border border-white/30 shadow-md transform-gpu;
   }
   
   .hover-scale {
-    @apply transition-transform duration-300 hover:scale-[1.02];
+    @apply transition-transform duration-300 hover:scale-[1.02] transform-gpu;
   }
   
   .page-transition-enter {
@@ -138,10 +157,15 @@
   }
   
   .card-hover {
-    @apply transition-all duration-300 hover:shadow-lg hover:border-accent/20;
+    @apply transition-all duration-300 hover:shadow-lg hover:border-accent/20 transform-gpu;
   }
   
   .btn-hover {
-    @apply relative overflow-hidden transition-all duration-300 after:absolute after:inset-0 after:bg-white/10 after:opacity-0 hover:after:opacity-100 after:transition-opacity;
+    @apply relative overflow-hidden transition-all duration-300 after:absolute after:inset-0 after:bg-white/10 after:opacity-0 hover:after:opacity-100 after:transition-opacity transform-gpu;
+  }
+  
+  /* Optimize animation performance */
+  .animation-gpu {
+    @apply transform-gpu;
   }
 }

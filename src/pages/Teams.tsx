@@ -1,16 +1,21 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { getTeams, subscribeToTeamsUpdates } from '@/services/teamService';
 import TeamCard from '@/components/ui/TeamCard';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import PageSEO from '@/components/SEO/PageSEO';
+import { Skeleton } from '@/components/ui/skeleton';
+
+// Lazy load components that aren't immediately visible
+const TeamCard = lazy(() => import('@/components/ui/TeamCard'));
 
 const Teams = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedProgress, setSelectedProgress] = useState<string>('all');
   const [animationComplete, setAnimationComplete] = useState(false);
   const [teams, setTeams] = useState(() => getTeams());
+  const [loading, setLoading] = useState(true);
   
   const progressOptions = [
     { value: 'all', label: 'All Progress' },
@@ -21,53 +26,72 @@ const Teams = () => {
   
   useEffect(() => {
     // Set initial teams data
-    setTeams(getTeams());
+    const initialTeams = getTeams();
+    setTeams(initialTeams);
+    setLoading(false);
     
     // Subscribe to teams data updates
     const unsubscribe = subscribeToTeamsUpdates(() => {
-      setTeams(getTeams());
+      const updatedTeams = getTeams();
+      setTeams(updatedTeams);
     });
     
     return () => unsubscribe();
   }, []);
   
-  // Filter teams based on search query and progress
-  const filteredTeams = teams.filter(team => {
-    const matchesSearch = team.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          team.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          team.leader.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          team.members.some(member => member.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
-                          team.leader.role.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          team.members.some(member => member.role.toLowerCase().includes(searchQuery.toLowerCase()));
-    
-    let matchesProgress = true;
-    if (selectedProgress === 'low') {
-      matchesProgress = team.progress <= 30;
-    } else if (selectedProgress === 'medium') {
-      matchesProgress = team.progress > 30 && team.progress <= 70;
-    } else if (selectedProgress === 'high') {
-      matchesProgress = team.progress > 70;
-    }
-    
-    return matchesSearch && matchesProgress;
-  });
+  // Filter teams based on search query and progress - memoize for performance
+  const filteredTeams = React.useMemo(() => {
+    return teams.filter(team => {
+      const matchesSearch = team.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                            team.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                            team.leader.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                            team.members.some(member => member.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
+                            team.leader.role.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                            team.members.some(member => member.role.toLowerCase().includes(searchQuery.toLowerCase()));
+      
+      let matchesProgress = true;
+      if (selectedProgress === 'low') {
+        matchesProgress = team.progress <= 30;
+      } else if (selectedProgress === 'medium') {
+        matchesProgress = team.progress > 30 && team.progress <= 70;
+      } else if (selectedProgress === 'high') {
+        matchesProgress = team.progress > 70;
+      }
+      
+      return matchesSearch && matchesProgress;
+    });
+  }, [teams, searchQuery, selectedProgress]);
   
   useEffect(() => {
-    // Staggered animation for cards
-    const cards = document.querySelectorAll('.team-card');
-    
-    cards.forEach((card, index) => {
-      setTimeout(() => {
-        card.classList.add('animate-scale-in');
-        card.classList.remove('opacity-0');
+    // Use requestAnimationFrame for smoother animations
+    if (!loading) {
+      requestAnimationFrame(() => {
+        // Staggered animation for cards using the more performant will-change property
+        const cards = document.querySelectorAll('.team-card');
         
-        // Set animation complete when last card is animated
-        if (index === cards.length - 1) {
-          setTimeout(() => setAnimationComplete(true), 300);
-        }
-      }, 100 * index);
-    });
-  }, [searchQuery, selectedProgress]);
+        cards.forEach((card, index) => {
+          // Add will-change before animation starts
+          card.classList.add('will-change-transform', 'will-change-opacity');
+          
+          setTimeout(() => {
+            card.classList.add('animate-scale-in');
+            card.classList.remove('opacity-0');
+            
+            // Set animation complete when last card is animated
+            if (index === cards.length - 1) {
+              setTimeout(() => {
+                setAnimationComplete(true);
+                // Remove will-change after animation to free up resources
+                cards.forEach(c => {
+                  c.classList.remove('will-change-transform', 'will-change-opacity');
+                });
+              }, 300);
+            }
+          }, 50 * index); // Reduced delay for faster rendering
+        });
+      });
+    }
+  }, [filteredTeams, loading]);
   
   return (
     <div className="flex flex-col min-h-screen">
@@ -119,16 +143,25 @@ const Teams = () => {
             </div>
           </div>
           
-          {/* Teams Grid - adjusted for taller cards due to additional member info */}
+          {/* Teams Grid - with loading skeletons and optimized rendering */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredTeams.length > 0 ? (
+            {loading ? (
+              // Show skeleton loaders during initial load
+              Array(6).fill(0).map((_, i) => (
+                <div key={`skeleton-${i}`} className="animate-pulse">
+                  <Skeleton className="h-[280px] w-full rounded-xl" />
+                </div>
+              ))
+            ) : filteredTeams.length > 0 ? (
               filteredTeams.map(team => (
                 <div key={team.id} className="team-card opacity-0">
-                  <TeamCard
-                    id={team.id}
-                    name={team.name}
-                    progress={team.progress}
-                  />
+                  <Suspense fallback={<Skeleton className="h-[280px] w-full rounded-xl" />}>
+                    <TeamCard
+                      id={team.id}
+                      name={team.name}
+                      progress={team.progress}
+                    />
+                  </Suspense>
                 </div>
               ))
             ) : (
