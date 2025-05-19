@@ -405,7 +405,7 @@ export const teamsData: Team[] = [
     id: 11,
     name: "Team 11",
     description: "Alcohol Detector and Engine Locking System",
-    longDescription: "AquaPure is creating a revolutionary water purification system that combines advanced filtration technology with real-time monitoring capabilities. Our solution addresses both industrial and household water treatment needs, with a special focus on removing emerging contaminants that conventional systems miss. The modular design allows for customization based on local water quality issues, while the integrated sensor network continuously monitors water quality parameters to ensure safety and optimize filter replacement scheduling.",
+    longDescription: "This project aims to develop a cutting-edge system that integrates alcohol detection with vehicle engine locking to prevent drunk driving. Utilizing a breathalyzer sensor, the system detects the driver's blood alcohol concentration (BAC) in real-time. If the BAC exceeds the legal limit, the system automatically locks the engine, preventing the vehicle from starting. This technology combines safety, innovation, and compliance with road safety regulations..",
     progress: 35,
     leader: {
       id: 32,
