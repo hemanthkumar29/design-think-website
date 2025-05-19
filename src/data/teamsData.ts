@@ -220,7 +220,7 @@ export const teamsData: Team[] = [
     id: 6,
     name: "Team 06",
     description: "Transmission Line Fault Detection",
-    longDescription: "NeuroLearn is pioneering an adaptive learning platform that uses AI to personalize educational content based on each student's learning style, pace, and preferences. Our system continuously analyzes student performance and engagement to dynamically adjust content difficulty and presentation methods. This project aims to make quality education more accessible and effective by addressing the individual needs of learners, particularly benefiting students with different learning styles or those who struggle in traditional classroom settings.",
+    longDescription: "The Transmission Line Fault Detection project is a significant advancement in the field of power systems. The project utilizes a combination of relay modules, thermistor sensors, and transformers to detect faults ontransmission lines and improve the reliability of the power system. The use of these technologies allows for a timely and accurate detection of faults, preventing power outages and ensuring a safe and sustainable power system.The project also brings numerous benefits to society, including reduced energy losses, improved reliability, increased safety, and cost savings. The integration of the project with other systems, and continued advancements in technology, will lead to even greater benefits for society in the future.",
     progress: 55,
     leader: {
       id: 17,
