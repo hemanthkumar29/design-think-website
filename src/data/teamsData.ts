@@ -590,7 +590,7 @@ export const teamsData: Team[] = [
     id: 16,
     name: "Team 16",
     description: "Smart Parking System",
-    longDescription: "NeuroProsthetics is developing a breakthrough neural interface system that creates more intuitive control of prosthetic limbs. Our technology combines non-invasive neural sensing with advanced signal processing algorithms to interpret intended movements with greater accuracy and lower latency than existing solutions. The system also provides sensory feedback to users, creating a two-way communication channel that significantly improves prosthetic functionality and user experience. This project aims to transform prosthetic technology from basic mobility aids to truly integrated body extensions.",
+    longDescription: "The Internet of Things (IoT)-based Battery Monitoring System using Arduino is designed to remotely monitor the status and performance of batteries in real-time, enhancing safety, efficiency, and reliability. This system continuously measures key battery parameters such as voltage, current, temperature, and state of charge (SoC) using appropriate sensors interfaced with an Arduino microcontroller. The collected data is then transmitted to an IoT platform (like Blynk or Thingspeak) via a Wi-Fi module (e.g., ESP8266), enabling users to access live battery statistics through a web or mobile application. Alerts for abnormal conditions such as overcharging, deep discharging, or overheating are also generated to prevent damage and extend battery lifespan. This project is particularly useful for remote energy systems, electric vehicles, and UPS setups, providing an effective and low-cost solution for battery health monitoring and maintenance.",
     progress: 42,
     leader: {
       id: 47,
