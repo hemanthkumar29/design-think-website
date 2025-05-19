@@ -368,7 +368,7 @@ export const teamsData: Team[] = [
     id: 10,
     name: "Team 10",
     description: "IOT Based Battery Monitoring System",
-    longDescription: "TrafficSense is developing an intelligent traffic management system that reduces congestion and improves safety in urban environments. Using a network of sensors, cameras, and edge computing devices, our system can detect traffic patterns, predict congestion points, and dynamically adjust traffic signal timing to optimize flow. The project also incorporates pedestrian and cyclist detection for improved safety at intersections, and integrates with navigation apps to provide drivers with real-time routing recommendations.",
+    longDescription: "The Internet of Things (IoT)-based Battery Monitoring System using Arduino is designed to remotely monitor the status and performance of batteries in real-time, enhancing safety, efficiency, and reliability. This system continuously measures key battery parameters such as voltage, current, temperature, and state of charge (SoC) using appropriate sensors interfaced with an Arduino microcontroller. The collected data is then transmitted to an IoT platform (like Blynk or Thingspeak) via a Wi-Fi module (e.g., ESP8266), enabling users to access live battery statistics through a web or mobile application. Alerts for abnormal conditions such as overcharging, deep discharging, or overheating are also generated to prevent damage and extend battery lifespan. This project is particularly useful for remote energy systems, electric vehicles, and UPS setups, providing an effective and low-cost solution for battery health monitoring and maintenance.",
     progress: 70,
     leader: {
       id: 29,
