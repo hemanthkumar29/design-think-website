@@ -6,7 +6,251 @@ export interface TeamMember {
   rating?: number;
 }
 
-e504905252-473c47e087f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80"
+export interface Team {
+  id: number;
+  name: string;
+  description: string;
+  longDescription: string;
+  progress: number;
+  leader: TeamMember;
+  members: TeamMember[];
+  projectImages: string[];
+}
+
+// Team data updated with classmate names and roll numbers
+export const teamsData: Team[] = [
+  {
+    id: 1,
+    name: "Team 01",
+    description: "Solar Power Bank",
+    longDescription: "This project presents the design and development of a solar power bank, a portable device that harness solar energy to charge electronic gadgets such as smartphones, tablets, and other USB-powered devices. With the increasing demand for sustainable energy solutions and mobile charging options, the solar power bank offers a convenient and eco-friendly alternative to conventional electricity-dependent chargers. The system integrates photovoltaic (PV) panels to convert sunlight into electrical energy, which is stored in rechargeable lithium-ion batteries. A charge controller regulates the input to ensure safe and efficient charging, while USB output ports provide compatibility with various devices. The power bank is equipped with  dual charging modes: solar and USB input. This project demonstrates the potential of solar energy in addressing power needs in off-grid locations, during travel, or in emergency situations, promoting clean energy use and reducing reliance on non-renewable sources.",
+    progress: 85,
+    leader: {
+      id: 1,
+      name: "A Divya Sri",
+      role: "23KD1A0201",
+      image: "/team_images/23KD1A0201.jpg"
+    },
+    members: [
+      {
+        id: 2,
+        name: "A Rahul",
+        role: "23KD1A0204",
+        image: "/team_images/23KD1A0204.jpg"
+      },
+      {
+        id: 3,
+        name: "A Harshini",
+        role: "23KD1A0202",
+        image: "/team_images/23KD1A0202.jpg"
+      },
+      {
+        id: 4,
+        name: "Ch Sidhu",
+        role: "23KD1A0223",
+        image: "/team_images/23KD1A0223.jpg"
+      },
+      {
+        id: 53,
+        name: "B Veerendra Hanshith",
+        role: "24KD5A0203",
+        image: "/team_images/24KD5A0203.jpg"
+      }
+    ],
+    projectImages: [
+      "https://images.unsplash.com/photo-1548533701-a0afe9c598f2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2787&q=80",
+      "https://images.unsplash.com/photo-1509391366360-2e959784a276?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1744&q=80"
+    ]
+  },
+  {
+    id: 2,
+    name: "Team 02",
+    description: "Smart Doorbell",
+    longDescription: "Smart Doorbell with Visitor Notifications is an innovative IoT-based security solution that enhances home safety and convenience. It features a smart doorbell equipped with a camera,and real-time notification capabilities. When a visitor arrives, the system captures their presence and instantly sends alerts to the homeowner’s smartphone. It also integrates AI for facial recognition and cloud storage for visitor logs. With remote access and smart integration, this solution ensures better security and seamless communication. Designed for modern homes, it offers a smarter way to monitor and manage visitors efficiently.",
+    progress: 72,
+    leader: {
+      id: 5,
+      name: "B Sai Samanvitha",
+      role: "23KD1A0214",
+      image: "/team_images/23KD1A0214.jpg"
+    },
+    members: [
+      {
+        id: 6,
+        name: "B Likitha",
+        role: "23KD1A0206",
+        image: "/team_images/23KD1A0206.jpg"
+      },
+      {
+        id: 7,
+        name: "G Sai",
+        role: "23KD1A0243",
+        image: "/team_images/23KD1A0243.jpg"
+      },
+      {
+        id: 54,
+        name: "Ch Mohan Sampath",
+        role: "23KD1A0226",
+        image: "/team_images/23KD1A0226.jpg"
+      },
+      {
+        id: 55,
+        name: "Ch Chaitanya",
+        role: "23KD1A0228",
+        image: "/team_images/23KD1A0228.jpg"
+      }
+    ],
+    projectImages: [
+      "https://images.unsplash.com/photo-1576086213369-97a306d36557?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1180&q=80",
+      "https://images.unsplash.com/photo-1559447618-6c254f27ed9c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1742&q=80"
+    ]
+  },
+  {
+    id: 3,
+    name: "Team 03",
+    description: "Smart Water Leakage Detector Using IOT",
+    longDescription: "This project presents an IoT based water leakage detection system utilizes sensors to monitor water flow and pressure in real time. The system employs anomaly detection algorithms to identify potential leaks, triggering alerts to authorities via SMS or mobile app , now enabling prompt response to leaks, the system minimizes a water leakage, reduce damage and optimizes maintainance, supporting, sustainable resource management and enhanced water conservation efforts.",
+    progress: 60,
+    leader: {
+      id: 8,
+      name: "G Hyma",
+      role: "23KD1A0234",
+      image: "/team_images/23KD1A0234.jpg"
+    },
+    members: [
+      {
+        id: 9,
+        name: "M Kavya Sri",
+        role: "23KD1A0261",
+        image: "/team_images/23KD1A0261.jpg"
+      },
+      {
+        id: 10,
+        name: "Ch Praveen Kumar",
+        role: "23KD1A0227",
+        image: "/team_images/23KD1A0227.jpg"
+      },
+      {
+        id: 56,
+        name: "K Rohith",
+        role: "24KD5A0208",
+        image: "/team_images/24KD5A0208.jpg"
+      }
+    ],
+    projectImages: [
+      "https://images.unsplash.com/photo-1485827404606-c3d57bc86b40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80",
+      "https://images.unsplash.com/photo-1597662942557-4087855bfcfe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
+    ]
+  },
+  {
+    id: 4,
+    name: "Team 04",
+    description: "Train Accident Prevention",
+    longDescription: "AudioSpace is revolutionizing the way we experience sound through innovative spatial audio technology. Our system creates immersive 3D soundscapes that can be customized for various environments without requiring specialized headphones or equipment. The technology has applications in virtual reality, home entertainment systems, and public spaces where directional sound can enhance user experience while reducing overall noise pollution.",
+    progress: 45,
+    leader: {
+      id: 11,
+      name: "K Ramya",
+      role: "23KD1A0253",
+      image: "/team_images/23KD1A0253.jpg"
+    },
+    members: [
+      {
+        id: 12,
+        name: "D Koti",
+        role: "23KD1A0255",
+        image: "/team_images/23KD1A0255.jpg"
+      },
+      {
+        id: 13,
+        name: "B Chaitanya",
+        role: "23KD1A0213",
+        image: "/team_images/23KD1A0213.jpg"
+      },
+      {
+        id: 57,
+        name: "A Vaikunta Rao",
+        role: "24KD5A0201",
+        image: "/team_images/24KD5A0201.jpg"
+      }
+    ],
+    projectImages: [
+      "https://images.unsplash.com/photo-1558537348-c0f8e733989d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1742&q=80",
+      "https://images.unsplash.com/photo-1601436575544-58d1011d0023?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
+    ]
+  },
+  {
+    id: 5,
+    name: "Team 05",
+    description: "Smart Dustbin Using Bluetooth Module",
+    longDescription: "The Line Follower Smart Dustbin is an innovative solution aimed at enhancing waste management systems through automation and robotics. This smart dustbin is designed to autonomously navigate along a predefined path using line-following technology, guided by infrared or optical sensors. Equipped with a microcontroller, motor drivers, and obstacle detection sensors, the dustbin can follow black or white lines on the floor to reach specific waste collection points or return to its charging station. The automation helps in reducing human effort in large facilities like hospitals, offices, and shopping malls, thereby promoting hygiene and operational efficiency. The integration of smart technologies in this project demonstrates a cost-effective and scalable approach to modern waste disposal and collection.",
+    progress: 65,
+    leader: {
+      id: 14,
+      name: "G Pavani",
+      role: "23KD1A0238",
+      image: "/team_images/23KD1A0238.jpg"
+    },
+    members: [
+      {
+        id: 15,
+        name: "K Sandhya Devi",
+        role: "23KD1A0250",
+        image: "/team_images/23KD1A0250.jpg"
+      },
+      {
+        id: 16,
+        name: "B Vyshnavi",
+        role: "23KD1A0216",
+        image: "/team_images/23KD1A0216.jpg"
+      },
+      {
+        id: 58,
+        name: "B Rajesh",
+        role: "23KD1A0217",
+        image: "/team_images/23KD1A0217.jpg"
+      }
+    ],
+    projectImages: [
+      "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80",
+      "https://images.unsplash.com/photo-1500651230702-0e2d8a49d4ad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
+    ]
+  },
+  {
+    id: 6,
+    name: "Team 06",
+    description: "Transmission Line Fault Detection",
+    longDescription: "The Transmission Line Fault Detection project is a significant advancement in the field of power systems. The project utilizes a combination of relay modules, thermistor sensors, and transformers to detect faults ontransmission lines and improve the reliability of the power system. The use of these technologies allows for a timely and accurate detection of faults, preventing power outages and ensuring a safe and sustainable power system.The project also brings numerous benefits to society, including reduced energy losses, improved reliability, increased safety, and cost savings. The integration of the project with other systems, and continued advancements in technology, will lead to even greater benefits for society in the future.",
+    progress: 55,
+    leader: {
+      id: 17,
+      name: "J Gayatri",
+      role: "23KD1A0246",
+      image: "/team_images/23KD1A0246.jpg"
+    },
+    members: [
+      {
+        id: 18,
+        name: "Ch Prasanna",
+        role: "23KD1A0218",
+        image: "/team_images/23KD1A0218.jpg"
+      },
+      {
+        id: 19,
+        name: "B Ramu",
+        role: "23KD1A0215",
+        image: "/team_images/23KD1A0215.jpg"
+      },
+      {
+        id: 59,
+        name: "G Hareesh",
+        role: "24KD5A0207",
+        image: "/team_images/24KD5A0207.jpg"
+      }
+    ],
+    projectImages: [
+      "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80",
+      "https://images.unsplash.com/photo-1501504905252-473c47e087f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80"
     ]
   },
   {
