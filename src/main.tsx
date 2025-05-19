@@ -26,7 +26,7 @@ const checkForUpdates = () => {
     }
     
     // Force reload from server
-    window.location.reload(true);
+    window.location.reload();
   } else if (!lastVersion) {
     // First visit, just set the version
     localStorage.setItem(LAST_VERSION_KEY, APP_VERSION);
@@ -47,7 +47,7 @@ window.addEventListener('focus', () => {
       .then(response => response.json())
       .then(data => {
         if (data.version !== APP_VERSION) {
-          window.location.reload(true);
+          window.location.reload();
         }
         lastUpdateCheck = Date.now();
       })

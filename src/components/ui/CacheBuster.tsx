@@ -42,7 +42,7 @@ const CacheBuster: React.FC<CacheBusterProps> = ({
         description: "A new version of the site is available.",
         action: {
           label: "Update Now",
-          onClick: () => window.location.reload(true)
+          onClick: () => window.location.reload()
         },
         duration: 60000, // Keep notification visible for a minute
       });
@@ -56,7 +56,7 @@ const CacheBuster: React.FC<CacheBusterProps> = ({
       <Button 
         variant="secondary" 
         className="shadow-lg" 
-        onClick={() => window.location.reload(true)}
+        onClick={() => window.location.reload()}
       >
         <RefreshCw className="mr-2 h-4 w-4" />
         Update Available
