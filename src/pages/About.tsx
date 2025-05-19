@@ -3,8 +3,9 @@ import React from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
-import { ExternalLink, School, GraduationCap } from 'lucide-react';
+import { ExternalLink, School, GraduationCap, Rocket, Target } from 'lucide-react';
 import PageSEO from '@/components/SEO/PageSEO';
+import { Separator } from '@/components/ui/separator';
 
 const About = () => {
   return (
@@ -78,6 +79,69 @@ const About = () => {
               </div>
             </div>
           </div>
+          
+          {/* Vision & Mission Section */}
+          <div className="mt-16 animate-fade-in">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">Vision & Mission</h2>
+              <div className="w-20 h-1 bg-primary mx-auto rounded"></div>
+            </div>
+            
+            <div className="glass-card p-8 rounded-lg space-y-8">
+              {/* Vision Section */}
+              <div className="space-y-4">
+                <div className="flex items-center gap-3 mb-4">
+                  <Target className="w-7 h-7 text-primary flex-shrink-0" />
+                  <h3 className="text-2xl font-bold text-primary">Vision</h3>
+                </div>
+                <p className="text-muted-foreground pl-10">
+                  To be a center of excellence in imparting knowledge, skills and ethical values, while fostering 
+                  innovation, sustainability and globally competent to make exemplary contributions to the field 
+                  of Electrical and Electronics Engineering.
+                </p>
+              </div>
+              
+              <Separator className="my-6" />
+              
+              {/* Mission Section */}
+              <div className="space-y-4">
+                <div className="flex items-center gap-3 mb-4">
+                  <Rocket className="w-7 h-7 text-primary flex-shrink-0" />
+                  <h3 className="text-2xl font-bold text-primary">Mission</h3>
+                </div>
+                
+                <div className="pl-10 space-y-4">
+                  <div className="p-4 bg-secondary/50 rounded-lg border border-border/30">
+                    <p className="text-muted-foreground">
+                      To impart technical education using state-of-the-art infrastructure, laboratories and 
+                      instructional methods ensuring students acquire comprehensive knowledge and skills.
+                    </p>
+                  </div>
+                  
+                  <div className="p-4 bg-secondary/50 rounded-lg border border-border/30">
+                    <p className="text-muted-foreground">
+                      To foster industry-oriented learning by facilitating internships, industrial visits, 
+                      collaborative projects with industries.
+                    </p>
+                  </div>
+                  
+                  <div className="p-4 bg-secondary/50 rounded-lg border border-border/30">
+                    <p className="text-muted-foreground">
+                      To create a congenial environment for higher education, employment and entrepreneurship 
+                      by delivering quality education, enhancing professional skills and promoting research and innovation.
+                    </p>
+                  </div>
+                  
+                  <div className="p-4 bg-secondary/50 rounded-lg border border-border/30">
+                    <p className="text-muted-foreground">
+                      To promote societal commitment and ethical leadership by instilling moral values and 
+                      encouraging responsible engineering practices among students.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </main>
       
@@ -87,4 +151,3 @@ const About = () => {
 };
 
 export default About;
-
