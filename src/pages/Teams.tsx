@@ -1,14 +1,12 @@
-
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { getTeams, subscribeToTeamsUpdates } from '@/services/teamService';
-import TeamCard from '@/components/ui/TeamCard';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import PageSEO from '@/components/SEO/PageSEO';
 import { Skeleton } from '@/components/ui/skeleton';
 
 // Lazy load components that aren't immediately visible
-const TeamCard = lazy(() => import('@/components/ui/TeamCard'));
+const TeamCardComponent = lazy(() => import('@/components/ui/TeamCard'));
 
 const Teams = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -156,7 +154,7 @@ const Teams = () => {
               filteredTeams.map(team => (
                 <div key={team.id} className="team-card opacity-0">
                   <Suspense fallback={<Skeleton className="h-[280px] w-full rounded-xl" />}>
-                    <TeamCard
+                    <TeamCardComponent
                       id={team.id}
                       name={team.name}
                       progress={team.progress}
