@@ -21,14 +21,14 @@ export default defineConfig(({ mode }) => ({
     },
   },
   build: {
-    // Enable minification
-    minify: 'terser',
+    // Enable minification based on mode
+    minify: mode === 'production' ? 'terser' : true,
     terserOptions: {
       compress: {
         // Remove console.logs in production
-        drop_console: true,
+        drop_console: mode === 'production',
         // Remove debugger statements in production
-        drop_debugger: true,
+        drop_debugger: mode === 'production',
       },
     },
     // Generate source maps for debugging
