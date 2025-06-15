@@ -7,7 +7,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import Index from "./pages/Index";
-import CacheBuster from "./components/ui/CacheBuster";
 import { Skeleton } from "@/components/ui/skeleton";
 
 // App version - update when making changes
@@ -63,7 +62,6 @@ function App() {
             <TooltipProvider>
               <Toaster />
               <Sonner />
-              <CacheBuster version={APP_VERSION} />
               <BrowserRouter>
                 <Suspense fallback={<PageLoader />}>
                   <Routes>
