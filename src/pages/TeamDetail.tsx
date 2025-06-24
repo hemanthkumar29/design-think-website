@@ -15,7 +15,6 @@ import PresentationViewer from '@/components/presentations/PresentationViewer';
 const TeamDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(true);
   const [team, setTeam] = useState(null);
   
   useEffect(() => {
@@ -23,27 +22,16 @@ const TeamDetail = () => {
       const teamData = getTeamById(id);
       if (teamData) {
         setTeam(teamData);
+      } else {
+        navigate('/teams');
       }
-      const timer = setTimeout(() => {
-        setIsLoading(false);
-      }, 500);
-      return () => clearTimeout(timer);
     }
-  }, [id]);
+  }, [id, navigate]);
   
-  useEffect(() => {
-    if (!team && !isLoading) {
-      navigate('/teams');
-    }
-  }, [team, isLoading, navigate]);
-  
-  if (isLoading || !team) {
+  if (!team) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
-        <div className="flex flex-col items-center">
-          <div className="w-16 h-16 border-4 border-blue-200 border-t-blue-500 rounded-full animate-spin"></div>
-          <p className="mt-4 text-muted-foreground">Loading team details...</p>
-        </div>
+        <div className="w-8 h-8 border-2 border-blue-200 border-t-blue-500 rounded-full animate-spin"></div>
       </div>
     );
   }
@@ -89,7 +77,7 @@ const TeamDetail = () => {
             </Button>
             
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div className="space-y-6 animate-slide-right">
+              <div className="space-y-6">
                 <div>
                   <span className="inline-block py-1 px-3 bg-blue-100 text-blue-600 rounded-lg text-sm font-medium mb-2">
                     Team {team.id}
@@ -109,7 +97,7 @@ const TeamDetail = () => {
                 </div>
               </div>
               
-              <div className="relative group animate-slide-left">
+              <div className="relative group">
                 <div className="absolute -inset-2 bg-gradient-to-r from-blue-200 to-indigo-200 rounded-lg blur opacity-50 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
                 <div className="relative overflow-hidden rounded-lg shadow-lg">
                   <Avatar className="w-full h-auto object-cover aspect-[4/3]">
@@ -145,15 +133,15 @@ const TeamDetail = () => {
         
         <section className="py-16 px-6 bg-white">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl md:text-3xl font-bold mb-8 animate-fade-in">Project Overview</h2>
-            <div className="prose prose-lg max-w-none animate-fade-in">
+            <h2 className="text-2xl md:text-3xl font-bold mb-8">Project Overview</h2>
+            <div className="prose prose-lg max-w-none">
               <p className="leading-relaxed text-muted-foreground">{team.longDescription}</p>
             </div>
             
             {/* Project Video Section */}
             <div className="mt-12">
-              <h3 className="text-xl md:text-2xl font-bold mb-6 animate-fade-in">Project Presentation</h3>
-              <div className="relative w-full overflow-hidden rounded-lg shadow-lg bg-black aspect-video animate-fade-in">
+              <h3 className="text-xl md:text-2xl font-bold mb-6">Project Presentation</h3>
+              <div className="relative w-full overflow-hidden rounded-lg shadow-lg bg-black aspect-video">
                 <video 
                   controls
                   className="w-full h-full object-contain"
@@ -186,7 +174,7 @@ const TeamDetail = () => {
         
         <section className="py-16 px-6 bg-gray-50">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center animate-fade-in">
+            <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">
               <span className="inline-block py-1 px-3 bg-blue-50 text-blue-600 rounded-lg text-sm font-medium mb-2">
                 Our Team
               </span>
@@ -195,9 +183,7 @@ const TeamDetail = () => {
             </h2>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-              <div 
-                className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border-2 border-yellow-400 animate-fade-in"
-              >
+              <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border-2 border-yellow-400">
                 <div className="aspect-square overflow-hidden relative">
                   <Avatar className="w-full h-full">
                     <AvatarImage 
@@ -226,11 +212,10 @@ const TeamDetail = () => {
                 </div>
               </div>
               
-              {team.members.map((member, index) => (
+              {team.members.map((member) => (
                 <div 
                   key={member.id} 
-                  className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 opacity-100 animate-fade-in"
-                  style={{ animationDelay: `${(index + 1) * 100}ms` }}
+                  className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300"
                 >
                   <div className="aspect-square overflow-hidden">
                     <Avatar className="w-full h-full">
@@ -261,7 +246,7 @@ const TeamDetail = () => {
         
         <section className="py-16 px-6 bg-white">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center animate-fade-in">
+            <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">
               <span className="inline-block py-1 px-3 bg-blue-50 text-blue-600 rounded-lg text-sm font-medium mb-2">
                 Gallery
               </span>
@@ -273,8 +258,7 @@ const TeamDetail = () => {
               {projectImageUrls.map((image, index) => (
                 <div 
                   key={index} 
-                  className="overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 opacity-100 animate-fade-in"
-                  style={{ animationDelay: `${index * 200}ms` }}
+                  className="overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
                 >
                   <img 
                     src={image} 

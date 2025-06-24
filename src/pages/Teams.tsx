@@ -1,19 +1,15 @@
-import React, { useState, useEffect, lazy, Suspense } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { getTeams, subscribeToTeamsUpdates } from '@/services/teamService';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import PageSEO from '@/components/SEO/PageSEO';
-import { Skeleton } from '@/components/ui/skeleton';
-
-// Lazy load components that aren't immediately visible
-const TeamCardComponent = lazy(() => import('@/components/ui/TeamCard'));
+import TeamCard from '@/components/ui/TeamCard';
 
 const Teams = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedProgress, setSelectedProgress] = useState<string>('all');
-  const [animationComplete, setAnimationComplete] = useState(false);
   const [teams, setTeams] = useState(() => getTeams());
-  const [loading, setLoading] = useState(true);
   
   const progressOptions = [
     { value: 'all', label: 'All Progress' },
@@ -23,11 +19,6 @@ const Teams = () => {
   ];
   
   useEffect(() => {
-    // Set initial teams data
-    const initialTeams = getTeams();
-    setTeams(initialTeams);
-    setLoading(false);
-    
     // Subscribe to teams data updates
     const unsubscribe = subscribeToTeamsUpdates(() => {
       const updatedTeams = getTeams();
@@ -60,37 +51,6 @@ const Teams = () => {
     });
   }, [teams, searchQuery, selectedProgress]);
   
-  useEffect(() => {
-    // Use requestAnimationFrame for smoother animations
-    if (!loading) {
-      requestAnimationFrame(() => {
-        // Staggered animation for cards using the more performant will-change property
-        const cards = document.querySelectorAll('.team-card');
-        
-        cards.forEach((card, index) => {
-          // Add will-change before animation starts
-          card.classList.add('will-change-transform', 'will-change-opacity');
-          
-          setTimeout(() => {
-            card.classList.add('animate-scale-in');
-            card.classList.remove('opacity-0');
-            
-            // Set animation complete when last card is animated
-            if (index === cards.length - 1) {
-              setTimeout(() => {
-                setAnimationComplete(true);
-                // Remove will-change after animation to free up resources
-                cards.forEach(c => {
-                  c.classList.remove('will-change-transform', 'will-change-opacity');
-                });
-              }, 300);
-            }
-          }, 50 * index); // Reduced delay for faster rendering
-        });
-      });
-    }
-  }, [filteredTeams, loading]);
-  
   return (
     <div className="flex flex-col min-h-screen">
       <PageSEO 
@@ -103,7 +63,7 @@ const Teams = () => {
       
       <main className="flex-grow pt-24 pb-20 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16 space-y-4 animate-slide-down">
+          <div className="text-center mb-16 space-y-4">
             <span className="inline-block py-1 px-3 bg-blue-50 text-blue-600 rounded-lg text-sm font-medium">
               Projects
             </span>
@@ -114,7 +74,7 @@ const Teams = () => {
           </div>
           
           {/* Filters */}
-          <div className="mb-10 max-w-3xl mx-auto animate-slide-up">
+          <div className="mb-10 max-w-3xl mx-auto">
             <div className="flex flex-col md:flex-row gap-4">
               <div className="flex-grow">
                 <input
@@ -141,26 +101,16 @@ const Teams = () => {
             </div>
           </div>
           
-          {/* Teams Grid - with loading skeletons and optimized rendering */}
+          {/* Teams Grid - simplified rendering */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {loading ? (
-              // Show skeleton loaders during initial load
-              Array(6).fill(0).map((_, i) => (
-                <div key={`skeleton-${i}`} className="animate-pulse">
-                  <Skeleton className="h-[280px] w-full rounded-xl" />
-                </div>
-              ))
-            ) : filteredTeams.length > 0 ? (
+            {filteredTeams.length > 0 ? (
               filteredTeams.map(team => (
-                <div key={team.id} className="team-card opacity-0">
-                  <Suspense fallback={<Skeleton className="h-[280px] w-full rounded-xl" />}>
-                    <TeamCardComponent
-                      id={team.id}
-                      name={team.name}
-                      progress={team.progress}
-                    />
-                  </Suspense>
-                </div>
+                <TeamCard
+                  key={team.id}
+                  id={team.id}
+                  name={team.name}
+                  progress={team.progress}
+                />
               ))
             ) : (
               <div className="col-span-full text-center py-20">
@@ -172,7 +122,7 @@ const Teams = () => {
           </div>
           
           {/* Team Count */}
-          <div className="mt-8 text-center text-sm text-muted-foreground animate-fade-in">
+          <div className="mt-8 text-center text-sm text-muted-foreground">
             Showing {filteredTeams.length} of {teams.length} teams
           </div>
         </div>
