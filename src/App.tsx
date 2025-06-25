@@ -11,6 +11,7 @@ import Teams from "./pages/Teams";
 import TeamDetail from "./pages/TeamDetail";
 import Presentations from "./pages/Presentations";
 import About from "./pages/About";
+import SmartAssessment from "./pages/SmartAssessment";
 
 // Only lazy load admin pages that are less frequently accessed
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -51,6 +52,7 @@ function App() {
               <Suspense fallback={<PageLoader />}>
                 <Routes>
                   <Route path="/" element={<Index />} />
+                  <Route path="/smart-assessment" element={<SmartAssessment />} />
                   <Route path="/teams" element={<Teams />} />
                   <Route path="/team/:id" element={<TeamDetail />} />
                   <Route path="/presentations" element={<Presentations />} />

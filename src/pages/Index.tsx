@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -5,7 +6,7 @@ import { mentorData } from '@/data/teamsData';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import PageSEO from '@/components/SEO/PageSEO';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, Lightbulb } from 'lucide-react';
 
 const Index = () => {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ const Index = () => {
       setTimeout(() => {
         element.classList.add('animate-fade-in');
         element.classList.remove('opacity-0');
-      }, 200 * index); // Faster animation sequence
+      }, 200 * index);
     });
   }, []);
 
@@ -69,18 +70,33 @@ const Index = () => {
               creative problem-solving and human-centered design.
             </p>
             
-            <Button 
-              size="lg" 
-              onClick={() => navigate('/teams')} 
-              className="animate-on-load opacity-0 group relative overflow-hidden px-8 py-6 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
-              aria-label="Explore teams and projects"
-            >
-              <span className="relative z-10 flex items-center gap-2">
-                Explore Teams
-                <ChevronRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" />
-              </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-700 to-indigo-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-on-load opacity-0">
+              <Button 
+                size="lg" 
+                onClick={() => navigate('/smart-assessment')} 
+                className="group relative overflow-hidden px-8 py-6 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
+                aria-label="View our Smart Assessment project showcase"
+              >
+                <span className="relative z-10 flex items-center gap-2">
+                  <Lightbulb className="w-5 h-5" />
+                  Smart Assessment Project
+                  <ChevronRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" />
+                </span>
+              </Button>
+              
+              <Button 
+                size="lg" 
+                variant="outline"
+                onClick={() => navigate('/teams')} 
+                className="group relative overflow-hidden px-8 py-6 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+                aria-label="Explore all teams and projects"
+              >
+                <span className="relative z-10 flex items-center gap-2">
+                  Explore All Teams
+                  <ChevronRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" />
+                </span>
+              </Button>
+            </div>
           </div>
         </section>
         
