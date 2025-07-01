@@ -6,7 +6,7 @@ import { mentorData } from '@/data/teamsData';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import PageSEO from '@/components/SEO/PageSEO';
-import { ChevronRight, Lightbulb } from 'lucide-react';
+import { ChevronRight, Lightbulb, Users, Award, BookOpen } from 'lucide-react';
 
 const Index = () => {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-gray-50">
       <PageSEO 
         title="Home" 
         description="Explore innovative solutions to engineering challenges through creative problem-solving and human-centered design at Lendi Institute's Design Thinking & Innovation program."
@@ -33,22 +33,15 @@ const Index = () => {
       <Navbar />
       
       <main className="flex-grow">
-        <section className="relative min-h-[90vh] flex items-center justify-center px-6 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-50/80 via-indigo-50/60 to-white -z-10"></div>
-          <div 
-            className="absolute inset-0 opacity-10 -z-10 mask-image-blur"
-            aria-hidden="true"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%236366f1' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-            }}
-          ></div>
-          
-          <div className="max-w-5xl mx-auto text-center space-y-8">
-            <div className="flex justify-center mb-8 animate-on-load opacity-0 transform transition-all duration-700 hover:scale-105">
+        {/* Hero Section */}
+        <section className="relative bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 text-white py-20 px-6">
+          <div className="absolute inset-0 bg-black/20"></div>
+          <div className="relative max-w-7xl mx-auto">
+            <div className="flex justify-center mb-8 animate-on-load opacity-0">
               <img 
                 src="https://lendi.org/GRCL/logo.png" 
                 alt="Lendi Institute of Engineering and Technology Logo" 
-                className="h-24 md:h-32 w-auto drop-shadow-lg"
+                className="h-20 md:h-24 w-auto filter brightness-110"
                 loading="eager"
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
@@ -57,86 +50,158 @@ const Index = () => {
               />
             </div>
             
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight tracking-tight animate-on-load opacity-0">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600">
+            <div className="text-center space-y-6">
+              <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6 animate-on-load opacity-0">
                 Design Thinking & Innovation
-              </span>
-              <br />
-              <span className="text-foreground mt-4 block text-3xl md:text-4xl"> EEE-A (2023-27) </span>
-            </h1>
+              </h1>
+              <p className="text-xl md:text-2xl text-blue-100 mb-4 animate-on-load opacity-0">
+                Department of Electrical & Electronic Engineering - A
+              </p>
+              <p className="text-lg md:text-xl text-blue-200 mb-8 max-w-3xl mx-auto animate-on-load opacity-0">
+                Empowering future engineers through innovative problem-solving and human-centered design approaches
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-4 justify-center animate-on-load opacity-0">
+                <Button 
+                  size="lg" 
+                  onClick={() => navigate('/smart-assessment')} 
+                  className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 text-lg font-semibold rounded-lg shadow-lg transition-all duration-300"
+                >
+                  <Lightbulb className="w-5 h-5 mr-2" />
+                  Smart Assessment Project
+                  <ChevronRight className="w-5 h-5 ml-2" />
+                </Button>
+                
+                <Button 
+                  size="lg" 
+                  variant="outline"
+                  onClick={() => navigate('/teams')} 
+                  className="border-2 border-white text-white hover:bg-white hover:text-blue-900 px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300"
+                >
+                  <Users className="w-5 h-5 mr-2" />
+                  Explore Teams
+                </Button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Features Section */}
+        <section className="py-16 px-6 bg-white">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+                Our Approach to Innovation
+              </h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                We follow a structured approach to design thinking that empowers students to solve real-world problems
+              </p>
+            </div>
             
-            <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto animate-on-load opacity-0">
-              Exploring innovative solutions to engineering challenges through 
-              creative problem-solving and human-centered design.
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="text-center p-6 bg-gray-50 rounded-lg hover:shadow-lg transition-shadow duration-300">
+                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Lightbulb className="w-8 h-8 text-blue-600" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">Creative Problem Solving</h3>
+                <p className="text-gray-600">Innovative approaches to complex engineering challenges</p>
+              </div>
+              
+              <div className="text-center p-6 bg-gray-50 rounded-lg hover:shadow-lg transition-shadow duration-300">
+                <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Users className="w-8 h-8 text-orange-600" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">Collaborative Learning</h3>
+                <p className="text-gray-600">Team-based approach to design and innovation</p>
+              </div>
+              
+              <div className="text-center p-6 bg-gray-50 rounded-lg hover:shadow-lg transition-shadow duration-300">
+                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Award className="w-8 h-8 text-green-600" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">Excellence in Design</h3>
+                <p className="text-gray-600">Recognition for outstanding project outcomes</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Mentor Section */}
+        <section className="py-16 px-6 bg-gray-50">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+                Meet Our Mentor
+              </h2>
+              <p className="text-lg text-gray-600">
+                Guided by experienced faculty in design thinking and innovation
+              </p>
+            </div>
+            
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-8">
+                <div className="relative">
+                  <div className="aspect-square max-w-sm mx-auto overflow-hidden rounded-lg">
+                    <img 
+                      src={mentorData.image} 
+                      alt={`${mentorData.name} - ${mentorData.title}`} 
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.src = "https://lendi.edu.in//cloud/2024/12/27/1735293134_cropped-image.jpg.jpg";
+                      }}
+                    />
+                  </div>
+                </div>
+                
+                <div className="flex flex-col justify-center space-y-4">
+                  <div>
+                    <h3 className="text-2xl font-bold text-gray-800">{mentorData.name}</h3>
+                    <p className="text-blue-600 font-semibold text-lg">{mentorData.title}</p>
+                  </div>
+                  
+                  <p className="text-gray-600 leading-relaxed">{mentorData.bio}</p>
+                  
+                  <div className="flex items-center space-x-4 text-sm text-gray-500">
+                    <span className="flex items-center">
+                      <BookOpen className="w-4 h-4 mr-1" />
+                      Lendi Institute of Engineering & Technology
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Call to Action */}
+        <section className="py-16 px-6 bg-blue-900 text-white">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              Ready to Explore Innovation?
+            </h2>
+            <p className="text-xl text-blue-100 mb-8">
+              Discover how our students are transforming ideas into impactful solutions
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-on-load opacity-0">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
                 size="lg" 
                 onClick={() => navigate('/smart-assessment')} 
-                className="group relative overflow-hidden px-8 py-6 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
-                aria-label="View our Smart Assessment project showcase"
+                className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 text-lg font-semibold rounded-lg"
               >
-                <span className="relative z-10 flex items-center gap-2">
-                  <Lightbulb className="w-5 h-5" />
-                  Smart Assessment Project
-                  <ChevronRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" />
-                </span>
+                View Smart Assessment
               </Button>
               
               <Button 
                 size="lg" 
                 variant="outline"
-                onClick={() => navigate('/teams')} 
-                className="group relative overflow-hidden px-8 py-6 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
-                aria-label="Explore all teams and projects"
+                onClick={() => navigate('/about')} 
+                className="border-2 border-white text-white hover:bg-white hover:text-blue-900 px-8 py-4 text-lg font-semibold rounded-lg"
               >
-                <span className="relative z-10 flex items-center gap-2">
-                  Explore All Teams
-                  <ChevronRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" />
-                </span>
+                Learn More
               </Button>
-            </div>
-          </div>
-        </section>
-        
-        <section className="py-20 px-6 bg-gradient-to-b from-white to-blue-50/30">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-16 text-center">
-              <span className="inline-block py-1 px-3 bg-blue-50 text-blue-600 rounded-lg text-sm font-medium mb-2">
-                Leadership
-              </span>
-              <br />
-              Meet Our Mentor
-            </h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-              <div className="relative group animate-on-load opacity-0">
-                <div className="absolute -inset-2 bg-gradient-to-r from-blue-100 to-indigo-100 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
-                <div className="relative overflow-hidden rounded-lg max-w-[400px] max-h-[500px] mx-auto">
-                  <img 
-                    src={mentorData.image} 
-                    alt={`${mentorData.name} - ${mentorData.title}`} 
-                    className="w-full h-full object-cover rounded-lg transform transition-transform duration-700 group-hover:scale-105"
-                    loading="lazy"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = "https://lendi.edu.in//cloud/2024/12/27/1735293134_cropped-image.jpg.jpg";
-                    }}
-                  />
-                </div>
-              </div>
-              
-              <div className="space-y-6 animate-on-load opacity-0">
-                <div>
-                  <h3 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
-                    {mentorData.name}
-                  </h3>
-                  <p className="text-blue-600 font-medium">{mentorData.title}</p>
-                </div>
-                
-                <p className="text-muted-foreground leading-relaxed">{mentorData.bio}</p>
-              </div>
             </div>
           </div>
         </section>

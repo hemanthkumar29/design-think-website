@@ -27,34 +27,71 @@ const Navbar: React.FC = () => {
     <header
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out px-6 md:px-10 py-4',
-        isScrolled ? 'bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-sm' : 'bg-transparent'
+        isScrolled ? 'bg-white shadow-lg' : 'bg-white/95 backdrop-blur-sm'
       )}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <NavLink to="/" className="text-lg md:text-xl font-display font-bold">
-          <span className="gradient-text">DT&I EEE A</span>
+        <NavLink to="/" className="flex items-center space-x-3">
+          <img 
+            src="https://lendi.org/GRCL/logo.png" 
+            alt="Lendi Institute Logo" 
+            className="h-10 w-auto"
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.style.display = 'none';
+            }}
+          />
+          <div className="text-lg md:text-xl font-bold text-blue-900">
+            DT&I EEE-A
+          </div>
         </NavLink>
 
         <nav className="hidden md:flex items-center space-x-8">
-          <NavLink to="/" className={({ isActive }) => cn('nav-link', isActive && 'active')}>
+          <NavLink 
+            to="/" 
+            className={({ isActive }) => cn(
+              'text-gray-700 hover:text-blue-900 font-medium transition-colors duration-200',
+              isActive && 'text-blue-900 font-semibold'
+            )}
+          >
             Home
           </NavLink>
-          <NavLink to="/smart-assessment" className={({ isActive }) => cn('nav-link', isActive && 'active')}>
-            <span className="flex items-center gap-1">
-              <Lightbulb size={16} />
-              Smart Assessment
-            </span>
+          <NavLink 
+            to="/smart-assessment" 
+            className={({ isActive }) => cn(
+              'text-gray-700 hover:text-blue-900 font-medium transition-colors duration-200 flex items-center gap-1',
+              isActive && 'text-blue-900 font-semibold'
+            )}
+          >
+            <Lightbulb size={16} />
+            Smart Assessment
           </NavLink>
-          <NavLink to="/teams" className={({ isActive }) => cn('nav-link', isActive && 'active')}>
+          <NavLink 
+            to="/teams" 
+            className={({ isActive }) => cn(
+              'text-gray-700 hover:text-blue-900 font-medium transition-colors duration-200',
+              isActive && 'text-blue-900 font-semibold'
+            )}
+          >
             Teams
           </NavLink>
-          <NavLink to="/presentations" className={({ isActive }) => cn('nav-link', isActive && 'active')}>
-            <span className="flex items-center gap-1">
-              <Presentation size={16} />
-              Presentations
-            </span>
+          <NavLink 
+            to="/presentations" 
+            className={({ isActive }) => cn(
+              'text-gray-700 hover:text-blue-900 font-medium transition-colors duration-200 flex items-center gap-1',
+              isActive && 'text-blue-900 font-semibold'
+            )}
+          >
+            <Presentation size={16} />
+            Presentations
           </NavLink>
-          <NavLink to="/about" className={({ isActive }) => cn('nav-link', isActive && 'active')}>
+          <NavLink 
+            to="/about" 
+            className={({ isActive }) => cn(
+              'text-gray-700 hover:text-blue-900 font-medium transition-colors duration-200',
+              isActive && 'text-blue-900 font-semibold'
+            )}
+          >
             About
           </NavLink>
           <NavbarAdminLink />
@@ -62,7 +99,7 @@ const Navbar: React.FC = () => {
 
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="md:hidden flex items-center justify-center"
+          className="md:hidden flex items-center justify-center p-2 text-gray-700 hover:text-blue-900"
           aria-label="Toggle menu"
         >
           {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -71,27 +108,53 @@ const Navbar: React.FC = () => {
 
       {/* Mobile menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 animate-slide-down">
+        <div className="md:hidden absolute top-full left-0 right-0 bg-white shadow-lg border-t border-gray-200">
           <nav className="flex flex-col py-4 px-6 space-y-4">
-            <NavLink to="/" className={({ isActive }) => cn('nav-link', isActive && 'active')}>
+            <NavLink 
+              to="/" 
+              className={({ isActive }) => cn(
+                'text-gray-700 hover:text-blue-900 font-medium py-2',
+                isActive && 'text-blue-900 font-semibold'
+              )}
+            >
               Home
             </NavLink>
-            <NavLink to="/smart-assessment" className={({ isActive }) => cn('nav-link', isActive && 'active')}>
-              <span className="flex items-center gap-1">
-                <Lightbulb size={16} />
-                Smart Assessment
-              </span>
+            <NavLink 
+              to="/smart-assessment" 
+              className={({ isActive }) => cn(
+                'text-gray-700 hover:text-blue-900 font-medium py-2 flex items-center gap-2',
+                isActive && 'text-blue-900 font-semibold'
+              )}
+            >
+              <Lightbulb size={16} />
+              Smart Assessment
             </NavLink>
-            <NavLink to="/teams" className={({ isActive }) => cn('nav-link', isActive && 'active')}>
+            <NavLink 
+              to="/teams" 
+              className={({ isActive }) => cn(
+                'text-gray-700 hover:text-blue-900 font-medium py-2',
+                isActive && 'text-blue-900 font-semibold'
+              )}
+            >
               Teams
             </NavLink>
-            <NavLink to="/presentations" className={({ isActive }) => cn('nav-link', isActive && 'active')}>
-              <span className="flex items-center gap-1">
-                <Presentation size={16} />
-                Presentations
-              </span>
+            <NavLink 
+              to="/presentations" 
+              className={({ isActive }) => cn(
+                'text-gray-700 hover:text-blue-900 font-medium py-2 flex items-center gap-2',
+                isActive && 'text-blue-900 font-semibold'
+              )}
+            >
+              <Presentation size={16} />
+              Presentations
             </NavLink>
-            <NavLink to="/about" className={({ isActive }) => cn('nav-link', isActive && 'active')}>
+            <NavLink 
+              to="/about" 
+              className={({ isActive }) => cn(
+                'text-gray-700 hover:text-blue-900 font-medium py-2',
+                isActive && 'text-blue-900 font-semibold'
+              )}
+            >
               About
             </NavLink>
           </nav>
