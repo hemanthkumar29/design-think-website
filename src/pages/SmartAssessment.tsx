@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
 import { Heart, Users, Lightbulb, Wrench, TestTube, ChevronRight, Github, Mail, MessageSquare } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -61,11 +60,6 @@ const SmartAssessment = () => {
     { name: 'Tejesh', role: 'Quality Assurance', bio: 'Ensures robust testing and maintains high code quality standards.' }
   ];
 
-  const testimonials = [
-    { name: 'Dr. Varaprasad', role: 'Faculty Supervisor', quote: 'The Smart Assessment platform has revolutionized how we conduct and evaluate student assessments. Highly recommended!' },
-    { name: 'Prof. Rajesh Kumar', role: 'HOD EEE', quote: 'Impressive innovation from our students. This tool has significant potential for widespread adoption.' }
-  ];
-
   const scrollToSection = (sectionId: string) => {
     document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -105,14 +99,6 @@ const SmartAssessment = () => {
               Explore the Process
               <ChevronRight className="ml-2 w-5 h-5" />
             </Button>
-            <Button 
-              size="lg" 
-              variant="outline"
-              onClick={() => scrollToSection('prototype')}
-              className="px-8 py-6 text-lg"
-            >
-              View Prototype
-            </Button>
           </div>
         </div>
       </section>
@@ -147,106 +133,6 @@ const SmartAssessment = () => {
               </AccordionItem>
             ))}
           </Accordion>
-        </div>
-      </section>
-
-      {/* Prototype Showcase */}
-      <section id="prototype" className="py-20 px-6 bg-gray-50">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Prototype Showcase</h2>
-            <p className="text-xl text-muted-foreground">Interactive demonstration of our Smart Assessment platform</p>
-          </div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <h3 className="text-2xl font-semibold">Key Features</h3>
-              <ul className="space-y-4">
-                <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
-                  <span>AI-powered automatic grading and feedback generation</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
-                  <span>Real-time analytics and progress tracking</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
-                  <span>Personalized learning recommendations</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
-                  <span>Intuitive dashboard for faculty and students</span>
-                </li>
-              </ul>
-            </div>
-            
-            <Card className="p-6">
-              <div className="aspect-video bg-gradient-to-br from-blue-100 to-purple-100 rounded-lg flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Wrench className="w-8 h-8 text-blue-600" />
-                  </div>
-                  <p className="text-lg font-medium">Interactive Prototype</p>
-                  <p className="text-muted-foreground">Demo will be embedded here</p>
-                </div>
-              </div>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* User Testing & Feedback */}
-      <section className="py-20 px-6 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">User Testing Results</h2>
-            <p className="text-xl text-muted-foreground">Feedback from faculty and performance metrics</p>
-          </div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Testimonials */}
-            <div className="space-y-6">
-              <h3 className="text-2xl font-semibold">Faculty Testimonials</h3>
-              {testimonials.map((testimonial, index) => (
-                <Card key={index} className="p-6">
-                  <blockquote className="text-lg italic mb-4">"{testimonial.quote}"</blockquote>
-                  <div>
-                    <p className="font-semibold">{testimonial.name}</p>
-                    <p className="text-muted-foreground">{testimonial.role}</p>
-                  </div>
-                </Card>
-              ))}
-            </div>
-            
-            {/* Metrics */}
-            <div className="space-y-6">
-              <h3 className="text-2xl font-semibold">Performance Metrics</h3>
-              <div className="space-y-4">
-                <div>
-                  <div className="flex justify-between mb-2">
-                    <span>Grading Efficiency</span>
-                    <span className="font-semibold">85% Improvement</span>
-                  </div>
-                  <Progress value={85} className="h-3" />
-                </div>
-                <div>
-                  <div className="flex justify-between mb-2">
-                    <span>User Satisfaction</span>
-                    <span className="font-semibold">92%</span>
-                  </div>
-                  <Progress value={92} className="h-3" />
-                </div>
-                <div>
-                  <div className="flex justify-between mb-2">
-                    <span>Time Saved</span>
-                    <span className="font-semibold">60% Reduction</span>
-                  </div>
-                  <Progress value={60} className="h-3" />
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -289,9 +175,6 @@ const SmartAssessment = () => {
               <div className="space-y-2">
                 <button onClick={() => scrollToSection('process')} className="block text-gray-300 hover:text-white transition-colors">
                   Design Process
-                </button>
-                <button onClick={() => scrollToSection('prototype')} className="block text-gray-300 hover:text-white transition-colors">
-                  Prototype
                 </button>
               </div>
             </div>
