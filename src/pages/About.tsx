@@ -3,11 +3,29 @@ import React from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
-import { ExternalLink, School, GraduationCap, Rocket, Target } from 'lucide-react';
+import { ExternalLink, School, GraduationCap, Rocket, Target, Users, Award } from 'lucide-react';
 import PageSEO from '@/components/SEO/PageSEO';
 import { Separator } from '@/components/ui/separator';
 
 const About = () => {
+  const managementMembers = [
+    {
+      name: "Sri P. Madhusudhan Reddy",
+      designation: "Chairman",
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face"
+    },
+    {
+      name: "Sri P. Srinivasa Rao",
+      designation: "Vice Chairman",
+      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face"
+    },
+    {
+      name: "Sri K. Siva Rama Krishna",
+      designation: "Secretary & Correspondent",
+      image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=300&h=300&fit=crop&crop=face"
+    }
+  ];
+
   return (
     <div className="min-h-screen flex flex-col">
       <PageSEO
@@ -139,6 +157,106 @@ const About = () => {
                     </p>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Our Management Section */}
+          <div className="mt-16">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Management</h2>
+              <div className="w-20 h-1 bg-primary mx-auto rounded"></div>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {managementMembers.map((member, index) => (
+                <div key={index} className="glass-card p-6 rounded-lg text-center hover:shadow-lg transition-all duration-300 hover:scale-105">
+                  <div className="mb-6">
+                    <img 
+                      src={member.image} 
+                      alt={member.name}
+                      className="w-32 h-32 rounded-full mx-auto object-cover border-4 border-primary/20"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.src = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face";
+                      }}
+                    />
+                  </div>
+                  <h3 className="text-xl font-bold text-primary mb-2">{member.name}</h3>
+                  <p className="text-muted-foreground font-semibold">{member.designation}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Principal & HOD Section */}
+          <div className="mt-16">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">Principal & Head of Department (EEE)</h2>
+              <div className="w-20 h-1 bg-primary mx-auto rounded"></div>
+            </div>
+            
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {/* Principal */}
+              <div className="glass-card p-8 rounded-lg space-y-6">
+                <div className="flex items-center gap-3 mb-6">
+                  <Award className="w-8 h-8 text-primary" />
+                  <h3 className="text-2xl font-bold text-primary">Principal</h3>
+                </div>
+                
+                <div className="text-center mb-6">
+                  <img 
+                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face" 
+                    alt="Dr. V. V. Rama Reddy"
+                    className="w-40 h-40 rounded-lg mx-auto object-cover border-4 border-primary/20"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face";
+                    }}
+                  />
+                </div>
+                
+                <div className="text-center space-y-2">
+                  <h4 className="text-xl font-bold text-gray-800">Dr. V. V. Rama Reddy</h4>
+                  <p className="text-primary font-semibold">Principal</p>
+                </div>
+                
+                <p className="text-muted-foreground text-center">
+                  Dr. V. V. Rama Reddy brings extensive experience in engineering education and administration. 
+                  He is committed to fostering academic excellence and innovation at Lendi Institute, ensuring 
+                  students receive world-class education and opportunities for holistic development.
+                </p>
+              </div>
+
+              {/* HOD EEE */}
+              <div className="glass-card p-8 rounded-lg space-y-6">
+                <div className="flex items-center gap-3 mb-6">
+                  <Users className="w-8 h-8 text-primary" />
+                  <h3 className="text-2xl font-bold text-primary">Head of Department</h3>
+                </div>
+                
+                <div className="text-center mb-6">
+                  <img 
+                    src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=200&h=200&fit=crop&crop=face" 
+                    alt="Mr. K. Subbaramaiah"
+                    className="w-40 h-40 rounded-lg mx-auto object-cover border-4 border-primary/20"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=200&h=200&fit=crop&face";
+                    }}
+                  />
+                </div>
+                
+                <div className="text-center space-y-2">
+                  <h4 className="text-xl font-bold text-gray-800">Mr. K. Subbaramaiah</h4>
+                  <p className="text-primary font-semibold">Head of Department, EEE</p>
+                </div>
+                
+                <p className="text-muted-foreground text-center">
+                  Mr. K. Subbaramaiah leads the Electrical & Electronics Engineering department with dedication 
+                  to academic excellence and industry-relevant curriculum. He champions innovative teaching methods 
+                  and encourages students to pursue research and practical applications in electrical engineering.
+                </p>
               </div>
             </div>
           </div>
