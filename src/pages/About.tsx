@@ -12,17 +12,17 @@ const About = () => {
     {
       name: "Sri P. Madhusudhan Reddy",
       designation: "Chairman",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face"
+      image: "https://lendi.edu.in//cloud/2024/11/19/1732023045_chairman1.jpeg"
     },
     {
       name: "Sri P. Srinivasa Rao",
       designation: "Vice Chairman",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face"
+      image: "https://lendi.edu.in//cloud/2024/11/19/1732023050_vicechairman1.jpeg"
     },
     {
       name: "Sri K. Siva Rama Krishna",
       designation: "Secretary & Correspondent",
-      image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=300&h=300&fit=crop&crop=face"
+      image: "https://lendi.edu.in//cloud/2024/11/19/1732023056_secretary1.jpeg"
     }
   ];
 
@@ -206,7 +206,7 @@ const About = () => {
                 
                 <div className="text-center mb-6">
                   <img 
-                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face" 
+                    src="https://lendi.edu.in//cloud/2024/12/15/1734257026_Lendi%20col.jpg" 
                     alt="Dr. V. V. Rama Reddy"
                     className="w-40 h-40 rounded-lg mx-auto object-cover border-4 border-primary/20"
                     onError={(e) => {
@@ -237,7 +237,7 @@ const About = () => {
                 
                 <div className="text-center mb-6">
                   <img 
-                    src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=200&h=200&fit=crop&crop=face" 
+                    src="https://lendi.edu.in//cloud/2024/12/26/1735221638_cropped-image.jpg.jpg"
                     alt="Mr. K. Subbaramaiah"
                     className="w-40 h-40 rounded-lg mx-auto object-cover border-4 border-primary/20"
                     onError={(e) => {
