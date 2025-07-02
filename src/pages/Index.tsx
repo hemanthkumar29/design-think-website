@@ -6,7 +6,7 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import PageSEO from '@/components/SEO/PageSEO';
 import { ChevronRight, Lightbulb, Users, Award, BookOpen } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
+import Badge from '@/components/ui/Badge';
 
 const Index = () => {
   const navigate = useNavigate();
