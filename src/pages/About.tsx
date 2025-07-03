@@ -10,7 +10,7 @@ import { Separator } from '@/components/ui/separator';
 const About = () => {
   const managementMembers = [
     {
-      name: "Sri P. Madhusudhan Reddy",
+      name: "Sri P. Madhusudhan Rao",
       designation: "Chairman",
       image: "https://lendi.edu.in//cloud/2024/11/19/1732023045_chairman1.jpeg"
     },
