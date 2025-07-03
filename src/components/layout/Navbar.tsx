@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { Menu, X, Presentation, Lightbulb } from 'lucide-react';
+import { Menu, X, LogIn, Lightbulb } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import NavbarAdminLink from '../NavbarAdminLink';
 
@@ -76,14 +76,14 @@ const Navbar: React.FC = () => {
             Teams
           </NavLink>
           <NavLink 
-            to="/presentations" 
+            to="/student-login" 
             className={({ isActive }) => cn(
               'text-gray-700 hover:text-blue-900 font-medium transition-colors duration-200 flex items-center gap-1',
               isActive && 'text-blue-900 font-semibold'
             )}
           >
-            <Presentation size={16} />
-            Presentations
+            <LogIn size={16} />
+            Student Login
           </NavLink>
           <NavLink 
             to="/about" 
@@ -139,14 +139,14 @@ const Navbar: React.FC = () => {
               Teams
             </NavLink>
             <NavLink 
-              to="/presentations" 
+              to="/student-login" 
               className={({ isActive }) => cn(
                 'text-gray-700 hover:text-blue-900 font-medium py-2 flex items-center gap-2',
                 isActive && 'text-blue-900 font-semibold'
               )}
             >
-              <Presentation size={16} />
-              Presentations
+              <LogIn size={16} />
+              Student Login
             </NavLink>
             <NavLink 
               to="/about" 
