@@ -253,7 +253,7 @@ const About = () => {
                 </div>
                 
                 <p className="text-muted-foreground text-center">
-                  Mr. K. Subbaramaiah leads the Electrical & Electronics Engineering department with dedication 
+                  Dr. K. Subbaramaiah leads the Electrical & Electronics Engineering department with dedication 
                   to academic excellence and industry-relevant curriculum. He champions innovative teaching methods 
                   and encourages students to pursue research and practical applications in electrical engineering.
                 </p>
