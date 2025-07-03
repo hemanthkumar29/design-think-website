@@ -248,7 +248,7 @@ const About = () => {
                 </div>
                 
                 <div className="text-center space-y-2">
-                  <h4 className="text-xl font-bold text-gray-800">Mr. K. Subbaramaiah</h4>
+                  <h4 className="text-xl font-bold text-gray-800">Dr. K. Subbaramaiah</h4>
                   <p className="text-primary font-semibold">Head of Department, EEE</p>
                 </div>
                 
