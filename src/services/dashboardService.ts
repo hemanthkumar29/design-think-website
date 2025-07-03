@@ -1,4 +1,3 @@
-
 export interface TeamDashboardData {
   username: string;
   teamName: string;
@@ -9,6 +8,8 @@ export interface TeamDashboardData {
     photo: string;
   }>;
   projectPhotos: string[];
+  projectVideos?: string[];
+  presentations?: string[];
 }
 
 const DASHBOARD_DATA_KEY = 'teamDashboardData';
@@ -48,7 +49,9 @@ const initializeDefaultData = (): Record<string, TeamDashboardData> => {
         { name: 'Team Member 2', photo: '/placeholder.svg' },
         { name: 'Team Member 3', photo: '/placeholder.svg' }
       ],
-      projectPhotos: ['/placeholder.svg', '/placeholder.svg']
+      projectPhotos: ['/placeholder.svg', '/placeholder.svg'],
+      projectVideos: [],
+      presentations: []
     };
   });
 
