@@ -238,7 +238,7 @@ const About = () => {
                 <div className="text-center mb-6">
                   <img 
                     src="https://lendi.edu.in//cloud/2024/12/26/1735221638_cropped-image.jpg.jpg"
-                    alt="Mr. K. Subbaramaiah"
+                    alt="Dr. K. Subbaramaiah"
                     className="w-40 h-40 rounded-lg mx-auto object-cover border-4 border-primary/20"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
