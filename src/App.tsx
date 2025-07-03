@@ -1,4 +1,3 @@
-
 import React, { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -17,6 +16,10 @@ import SmartAssessment from "./pages/SmartAssessment";
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Admin = lazy(() => import("./pages/Admin"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
+
+// Add new imports for the student login and dashboard
+const StudentLogin = lazy(() => import("./pages/StudentLogin"));
+const TeamDashboard = lazy(() => import("./pages/TeamDashboard"));
 
 // Import Admin context
 import { AdminProvider } from "./context/AdminContext";
@@ -57,6 +60,8 @@ function App() {
                   <Route path="/team/:id" element={<TeamDetail />} />
                   <Route path="/presentations" element={<Presentations />} />
                   <Route path="/about" element={<About />} />
+                  <Route path="/student-login" element={<StudentLogin />} />
+                  <Route path="/dashboard/:teamId" element={<TeamDashboard />} />
                   <Route path="/admin" element={<Admin />} />
                   <Route 
                     path="/admin/dashboard" 

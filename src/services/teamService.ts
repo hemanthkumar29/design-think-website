@@ -1,4 +1,5 @@
 import { Team, teamsData as initialTeamsData } from '@/data/teamsData';
+import { getDashboardData } from './dashboardService';
 
 // Custom event for team data updates
 const TEAMS_UPDATED_EVENT = 'teamsDataUpdated';
@@ -7,7 +8,23 @@ const TEAMS_UPDATED_EVENT = 'teamsDataUpdated';
 export const getTeams = (): Team[] => {
   try {
     const storedTeamsData = localStorage.getItem('teamsData');
-    return storedTeamsData ? JSON.parse(storedTeamsData) : initialTeamsData;
+    const teams = storedTeamsData ? JSON.parse(storedTeamsData) : initialTeamsData;
+    
+    // Merge with dashboard data if available
+    const dashboardData = getDashboardData();
+    
+    return teams.map((team: Team) => {
+      const dashboardTeamData = dashboardData[`team${team.id}`];
+      if (dashboardTeamData) {
+        return {
+          ...team,
+          name: dashboardTeamData.teamName,
+          description: dashboardTeamData.projectTitle,
+          longDescription: dashboardTeamData.abstract
+        };
+      }
+      return team;
+    });
   } catch (error) {
     console.error('Error loading teams data:', error);
     return initialTeamsData;
@@ -84,3 +101,8 @@ export const subscribeToTeamsUpdates = (callback: () => void): () => void => {
   // Return unsubscribe function
   return () => window.removeEventListener(TEAMS_UPDATED_EVENT, handler);
 };
+
+// Add listener for dashboard updates
+window.addEventListener('dashboardDataUpdated', () => {
+  window.dispatchEvent(new CustomEvent(TEAMS_UPDATED_EVENT));
+});
