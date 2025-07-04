@@ -88,11 +88,12 @@ export const updateTeamDashboardData = async (teamId: string, data: Partial<Team
   }
 };
 
-// Upload and save media files
+// Upload and save media files with specific filename to replace existing files
 export const uploadTeamMedia = async (
   teamId: string,
   file: File,
-  mediaType: 'project_photo' | 'video' | 'presentation'
+  mediaType: 'project_photo' | 'video' | 'presentation',
+  specificFilename?: string
 ): Promise<string | null> => {
   try {
     const numericTeamId = parseInt(teamId.replace('team', ''));
@@ -111,12 +112,13 @@ export const uploadTeamMedia = async (
         break;
     }
 
-    // Upload file to storage
-    const fileUrl = await uploadFile(file, bucket, numericTeamId);
+    // Upload file to storage with specific filename if provided
+    const fileUrl = await uploadFile(file, bucket, numericTeamId, specificFilename);
     
     if (fileUrl) {
       // Save media record in database
-      await addOrUpdateTeamMedia(numericTeamId, mediaType, fileUrl, file.name);
+      const fileName = specificFilename || file.name;
+      await addOrUpdateTeamMedia(numericTeamId, mediaType, fileUrl, fileName);
     }
 
     return fileUrl;

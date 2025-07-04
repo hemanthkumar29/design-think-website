@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -154,6 +155,15 @@ const TeamDashboard = () => {
     }
   };
 
+  // Function to get existing filename based on member name and team
+  const getExistingMemberFilename = (memberName: string, teamId: string) => {
+    // Convert member name to expected filename format
+    // This assumes files are named like "23KD1A0201.jpg" etc.
+    const teamNumber = teamId?.replace('team', '');
+    // You might need to adjust this logic based on your actual naming convention
+    return memberName.replace(/\s+/g, '') + '.jpg';
+  };
+
   const simulateFileUpload = async (file: File): Promise<string> => {
     // Simulate file upload delay
     await new Promise(resolve => setTimeout(resolve, 1000));
@@ -194,11 +204,15 @@ const TeamDashboard = () => {
         }
       }
 
-      // Handle member photo uploads
+      // Handle member photo uploads - replace existing files with same names
       for (let i = 0; i < memberPhotoFiles.length; i++) {
         if (memberPhotoFiles[i].file && teamData.members[i]) {
           setSaveMessage(`Uploading member photo ${i + 1}...`);
-          const photoUrl = await uploadTeamMedia(teamId, memberPhotoFiles[i].file!, 'project_photo');
+          const member = teamData.members[i];
+          const existingFilename = getExistingMemberFilename(member.name, teamId);
+          
+          // Upload with the same filename to replace existing image
+          const photoUrl = await uploadTeamMedia(teamId, memberPhotoFiles[i].file!, 'project_photo', existingFilename);
           if (photoUrl) {
             setTeamData(prev => {
               if (!prev) return null;
@@ -210,11 +224,13 @@ const TeamDashboard = () => {
         }
       }
 
-      // Handle project photo uploads
+      // Handle project photo uploads - replace existing files
       for (let i = 0; i < projectPhotoFiles.length; i++) {
         if (projectPhotoFiles[i].file) {
           setSaveMessage(`Uploading project photo ${i + 1}...`);
-          const photoUrl = await uploadTeamMedia(teamId, projectPhotoFiles[i].file!, 'project_photo');
+          const existingFilename = `project${i + 1}.jpg`; // Assuming project photos are named project1.jpg, project2.jpg, etc.
+          
+          const photoUrl = await uploadTeamMedia(teamId, projectPhotoFiles[i].file!, 'project_photo', existingFilename);
           if (photoUrl) {
             setTeamData(prev => {
               if (!prev) return null;
@@ -250,14 +266,6 @@ const TeamDashboard = () => {
   const handleInputChange = (field: keyof TeamDashboardData, value: any) => {
     if (teamData) {
       setTeamData({ ...teamData, [field]: value });
-    }
-  };
-
-  const handleMemberChange = (index: number, field: 'name' | 'photo', value: string) => {
-    if (teamData) {
-      const updatedMembers = [...teamData.members];
-      updatedMembers[index] = { ...updatedMembers[index], [field]: value };
-      setTeamData({ ...teamData, members: updatedMembers });
     }
   };
 
@@ -492,12 +500,12 @@ const TeamDashboard = () => {
               {teamData.members.map((member, index) => (
                 <div key={index} className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 border rounded-lg">
                   <div>
-                    <Label htmlFor={`member-name-${index}`}>Member {index + 1} Name</Label>
-                    <Input
-                      id={`member-name-${index}`}
-                      value={member.name}
-                      onChange={(e) => handleMemberChange(index, 'name', e.target.value)}
-                    />
+                    <Label className="text-sm font-medium">
+                      {index === 0 ? 'Team Leader' : `Team Member ${index}`}
+                    </Label>
+                    <div className="mt-1 p-2 bg-gray-50 rounded border">
+                      <span className="text-sm">{member.name}</span>
+                    </div>
                   </div>
                   <div>
                     <Label htmlFor={`member-photo-${index}`}>Photo</Label>
@@ -544,11 +552,9 @@ const TeamDashboard = () => {
                           className="w-20 h-20 object-cover rounded-lg"
                         />
                       )}
-                      <Input
-                        placeholder="Or enter photo URL"
-                        value={member.photo}
-                        onChange={(e) => handleMemberChange(index, 'photo', e.target.value)}
-                      />
+                      <div className="text-xs text-gray-500">
+                        Current photo: {member.photo}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -607,11 +613,9 @@ const TeamDashboard = () => {
                       className="w-32 h-32 object-cover rounded-lg"
                     />
                   )}
-                  <Input
-                    placeholder="Or enter photo URL"
-                    value={photo}
-                    onChange={(e) => handleProjectPhotoChange(index, e.target.value)}
-                  />
+                  <div className="text-xs text-gray-500">
+                    Current photo: {photo}
+                  </div>
                 </div>
               ))}
             </CardContent>

@@ -112,20 +112,39 @@ export const updateTeamMember = async (memberId: string, updates: {
   }
 };
 
-// Upload file to Supabase Storage
+// Upload file to Supabase Storage with specific filename option
 export const uploadFile = async (
   file: File,
   bucket: 'team-media' | 'team-videos' | 'team-presentations',
-  teamId: number
+  teamId: number,
+  specificFilename?: string
 ): Promise<string | null> => {
   try {
-    const fileExt = file.name.split('.').pop();
-    const fileName = `team_${teamId}_${Date.now()}.${fileExt}`;
+    let fileName: string;
+    
+    if (specificFilename) {
+      // Use the specific filename provided (to replace existing files)
+      fileName = specificFilename;
+    } else {
+      // Generate new filename
+      const fileExt = file.name.split('.').pop();
+      fileName = `team_${teamId}_${Date.now()}.${fileExt}`;
+    }
+    
     const filePath = `${teamId}/${fileName}`;
+
+    // If we're replacing an existing file, remove the old one first
+    if (specificFilename) {
+      await supabase.storage
+        .from(bucket)
+        .remove([filePath]);
+    }
 
     const { error: uploadError } = await supabase.storage
       .from(bucket)
-      .upload(filePath, file);
+      .upload(filePath, file, {
+        upsert: true // This will overwrite existing files
+      });
 
     if (uploadError) {
       console.error('Error uploading file:', uploadError);
