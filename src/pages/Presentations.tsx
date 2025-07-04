@@ -10,17 +10,26 @@ import { Download, Presentation } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const Presentations = () => {
-  const [teams, setTeams] = useState(() => getTeams());
+  const [teams, setTeams] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
   
   useEffect(() => {
+    const loadTeams = async () => {
+      try {
+        const teamsData = await getTeams();
+        setTeams(teamsData);
+      } catch (error) {
+        console.error('Error loading teams:', error);
+      }
+    };
+
     // Set initial teams data
-    setTeams(getTeams());
+    loadTeams();
     
     // Subscribe to teams data updates
     const unsubscribe = subscribeToTeamsUpdates(() => {
-      setTeams(getTeams());
+      loadTeams();
     });
     
     return () => unsubscribe();

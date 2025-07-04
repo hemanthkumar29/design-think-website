@@ -19,17 +19,28 @@ interface TeamCardProps {
 const TeamCard: React.FC<TeamCardProps> = memo(({ id, name, progress: initialProgress, className }) => {
   const navigate = useNavigate();
   const [progress, setProgress] = useState(initialProgress);
-  const [team, setTeam] = useState(() => getTeamById(id));
+  const [team, setTeam] = useState(null);
   
-  // Subscribe to team updates
+  // Subscribe to team updates and load team data
   useEffect(() => {
-    const updateTeam = () => {
-      const updatedTeam = getTeamById(id);
+    const loadTeamData = async () => {
+      const teamData = await getTeamById(id);
+      if (teamData) {
+        setTeam(teamData);
+        setProgress(teamData.progress);
+      }
+    };
+
+    const updateTeam = async () => {
+      const updatedTeam = await getTeamById(id);
       if (updatedTeam) {
         setTeam(updatedTeam);
         setProgress(updatedTeam.progress);
       }
     };
+    
+    // Load initial team data
+    loadTeamData();
     
     // Subscribe to updates
     const unsubscribe = subscribeToTeamsUpdates(updateTeam);

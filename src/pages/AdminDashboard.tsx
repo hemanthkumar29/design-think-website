@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
@@ -13,7 +14,7 @@ import { Award, Save, Percent, Star, ChevronDown, ChevronUp } from 'lucide-react
 import StarRating from '@/components/ui/StarRating';
 
 const AdminDashboard = () => {
-  const [teams, setTeams] = useState(() => getTeams());
+  const [teams, setTeams] = useState([]);
   const [progressValues, setProgressValues] = useState({});
   const [expandedTeams, setExpandedTeams] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -33,14 +34,26 @@ const AdminDashboard = () => {
     }
   }, [navigate, toast]);
 
-  // Initialize progress values
+  // Load teams data
   useEffect(() => {
-    const initialValues = {};
-    teams.forEach(team => {
-      initialValues[team.id] = team.progress;
-    });
-    setProgressValues(initialValues);
-  }, [teams]);
+    const loadTeams = async () => {
+      try {
+        const teamsData = await getTeams();
+        setTeams(teamsData);
+        
+        // Initialize progress values
+        const initialValues = {};
+        teamsData.forEach(team => {
+          initialValues[team.id] = team.progress;
+        });
+        setProgressValues(initialValues);
+      } catch (error) {
+        console.error('Error loading teams:', error);
+      }
+    };
+
+    loadTeams();
+  }, []);
 
   const handleProgressChange = (teamId, newValue) => {
     setProgressValues(prev => ({
