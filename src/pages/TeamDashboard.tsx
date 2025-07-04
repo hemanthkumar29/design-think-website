@@ -503,8 +503,8 @@ const TeamDashboard = () => {
                     <Label className="text-sm font-medium">
                       {index === 0 ? 'Team Leader' : `Team Member ${index}`}
                     </Label>
-                    <div className="mt-1 p-2 bg-gray-50 rounded border">
-                      <span className="text-sm">{member.name}</span>
+                    <div className="mt-1 p-3 bg-gray-100 rounded border">
+                      <span className="text-sm font-medium text-gray-800">{member.name}</span>
                     </div>
                   </div>
                   <div>
@@ -525,7 +525,7 @@ const TeamDashboard = () => {
                           onClick={() => memberPhotoInputRefs.current[index]?.click()}
                         >
                           <Upload className="w-4 h-4 mr-2" />
-                          Upload New Photo
+                          Upload Photo
                         </Button>
                         {memberPhotoFiles[index]?.preview && (
                           <Button
@@ -553,7 +553,7 @@ const TeamDashboard = () => {
                         />
                       )}
                       <div className="text-xs text-gray-500">
-                        Current photo: {member.photo}
+                        Current: {member.photo}
                       </div>
                     </div>
                   </div>
@@ -586,7 +586,7 @@ const TeamDashboard = () => {
                       onClick={() => projectPhotoInputRefs.current[index]?.click()}
                     >
                       <Upload className="w-4 h-4 mr-2" />
-                      Upload New Photo
+                      Upload Photo
                     </Button>
                     {projectPhotoFiles[index]?.preview && (
                       <Button
@@ -614,7 +614,7 @@ const TeamDashboard = () => {
                     />
                   )}
                   <div className="text-xs text-gray-500">
-                    Current photo: {photo}
+                    Current: {photo}
                   </div>
                 </div>
               ))}
