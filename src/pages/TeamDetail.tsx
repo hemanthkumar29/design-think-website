@@ -9,6 +9,7 @@ import PageSEO from '@/components/SEO/PageSEO';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { getTeamById } from '@/services/teamService';
+import { fetchTeamData } from '@/services/supabaseTeamService';
 import StarRating from '@/components/ui/StarRating';
 import PresentationViewer from '@/components/presentations/PresentationViewer';
 
@@ -16,22 +17,47 @@ const TeamDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [team, setTeam] = useState(null);
+  const [supabaseTeamData, setSupabaseTeamData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   
   useEffect(() => {
-    if (id) {
-      const teamData = getTeamById(id);
-      if (teamData) {
-        setTeam(teamData);
-      } else {
-        navigate('/teams');
+    const loadTeamData = async () => {
+      if (id) {
+        try {
+          // Load legacy team data for display compatibility
+          const teamData = await getTeamById(id);
+          setTeam(teamData);
+          
+          // Load Supabase data for updated content
+          const supabaseData = await fetchTeamData(parseInt(id));
+          setSupabaseTeamData(supabaseData);
+        } catch (error) {
+          console.error('Error loading team data:', error);
+          navigate('/teams');
+        } finally {
+          setIsLoading(false);
+        }
       }
-    }
+    };
+
+    loadTeamData();
   }, [id, navigate]);
+  
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="w-8 h-8 border-2 border-blue-200 border-t-blue-500 rounded-full animate-spin"></div>
+      </div>
+    );
+  }
   
   if (!team) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
-        <div className="w-8 h-8 border-2 border-blue-200 border-t-blue-500 rounded-full animate-spin"></div>
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4">Team not found</h1>
+          <Button onClick={() => navigate('/teams')}>Back to Teams</Button>
+        </div>
       </div>
     );
   }
@@ -44,22 +70,38 @@ const TeamDetail = () => {
       .toUpperCase();
   };
   
-  // Video URL based on team ID
-  const videoUrl = `/team_videos/team_${team.id}.mp4`;
+  // Use Supabase data if available, otherwise fallback to legacy data
+  const displayTeam = supabaseTeamData ? {
+    ...team,
+    name: supabaseTeamData.team_name,
+    description: supabaseTeamData.project_title,
+    longDescription: supabaseTeamData.abstract || team.longDescription
+  } : team;
 
-  // Updated project image URLs using the new folder structure
-  const projectImageUrls = [
+  // Get project media from Supabase data
+  const projectImages = supabaseTeamData?.media
+    .filter(m => m.media_type === 'project_photo')
+    .map(m => m.file_url) || [];
+  
+  const projectVideos = supabaseTeamData?.media
+    .filter(m => m.media_type === 'video')
+    .map(m => m.file_url) || [];
+
+  // Fallback images if no custom images uploaded
+  const displayImages = projectImages.length > 0 ? projectImages : [
     `/project-images/team${team.id}/project1.jpg`,
     `/project-images/team${team.id}/project2.jpg`,
     `/project-images/team${team.id}/project3.jpg`,
   ];
+
+  const videoUrl = projectVideos.length > 0 ? projectVideos[0] : `/team_videos/team_${team.id}.mp4`;
   
   return (
     <div className="flex flex-col min-h-screen">
       <PageSEO
-        title={`Team ${team.name}`} 
-        description={`Learn about Team ${team.name} and their innovative project: ${team.description}. See team members and project progress.`}
-        keywords={`${team.name}, design thinking project, engineering innovation, student team, Lendi Institute, ${team.leader.name}`}
+        title={`Team ${displayTeam.name}`} 
+        description={`Learn about Team ${displayTeam.name} and their innovative project: ${displayTeam.description}. See team members and project progress.`}
+        keywords={`${displayTeam.name}, design thinking project, engineering innovation, student team, Lendi Institute, ${team.leader.name}`}
       />
       
       <Navbar />
@@ -82,10 +124,10 @@ const TeamDetail = () => {
                   <span className="inline-block py-1 px-3 bg-blue-100 text-blue-600 rounded-lg text-sm font-medium mb-2">
                     Team {team.id}
                   </span>
-                  <h1 className="text-3xl md:text-5xl font-bold">{team.name}</h1>
+                  <h1 className="text-3xl md:text-5xl font-bold">{displayTeam.name}</h1>
                 </div>
                 
-                <p className="text-xl text-muted-foreground">{team.description}</p>
+                <p className="text-xl text-muted-foreground">{displayTeam.description}</p>
                 
                 <div className="pt-4">
                   <ProgressBar 
@@ -135,7 +177,7 @@ const TeamDetail = () => {
           <div className="max-w-4xl mx-auto">
             <h2 className="text-2xl md:text-3xl font-bold mb-8">Project Overview</h2>
             <div className="prose prose-lg max-w-none">
-              <p className="leading-relaxed text-muted-foreground">{team.longDescription}</p>
+              <p className="leading-relaxed text-muted-foreground">{displayTeam.longDescription}</p>
             </div>
             
             {/* Project Video Section */}
@@ -145,11 +187,10 @@ const TeamDetail = () => {
                 <video 
                   controls
                   className="w-full h-full object-contain"
-                  poster={projectImageUrls[0]}
+                  poster={displayImages[0]}
                   onError={(e) => {
                     const el = e.currentTarget;
                     el.onerror = null; 
-                    // Set fallback content
                     el.parentElement.innerHTML = `
                       <div class="flex flex-col items-center justify-center w-full h-full text-white p-8 text-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-4 opacity-60"><path d="M2 16V8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2z"/><path d="m10 9 5 3-5 3z"/></svg>
@@ -167,7 +208,7 @@ const TeamDetail = () => {
             
             {/* Presentation Section */}
             <div className="mt-16 pt-8 border-t border-gray-100">
-              <PresentationViewer teamId={team.id} teamName={team.name} />
+              <PresentationViewer teamId={team.id} teamName={displayTeam.name} />
             </div>
           </div>
         </section>
@@ -255,7 +296,7 @@ const TeamDetail = () => {
             </h2>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {projectImageUrls.map((image, index) => (
+              {displayImages.map((image, index) => (
                 <div 
                   key={index} 
                   className="overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"

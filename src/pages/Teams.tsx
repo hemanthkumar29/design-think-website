@@ -9,7 +9,8 @@ import TeamCard from '@/components/ui/TeamCard';
 const Teams = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedProgress, setSelectedProgress] = useState<string>('all');
-  const [teams, setTeams] = useState(() => getTeams());
+  const [teams, setTeams] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   
   const progressOptions = [
     { value: 'all', label: 'All Progress' },
@@ -19,16 +20,28 @@ const Teams = () => {
   ];
   
   useEffect(() => {
+    const loadTeams = async () => {
+      try {
+        const teamsData = await getTeams();
+        setTeams(teamsData);
+      } catch (error) {
+        console.error('Error loading teams:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadTeams();
+    
     // Subscribe to teams data updates
     const unsubscribe = subscribeToTeamsUpdates(() => {
-      const updatedTeams = getTeams();
-      setTeams(updatedTeams);
+      loadTeams();
     });
     
     return () => unsubscribe();
   }, []);
   
-  // Filter teams based on search query and progress - memoize for performance
+  // Filter teams based on search query and progress
   const filteredTeams = React.useMemo(() => {
     return teams.filter(team => {
       const matchesSearch = team.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -50,6 +63,18 @@ const Teams = () => {
       return matchesSearch && matchesProgress;
     });
   }, [teams, searchQuery, selectedProgress]);
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col min-h-screen">
+        <Navbar />
+        <main className="flex-grow pt-24 pb-20 px-6 flex items-center justify-center">
+          <div className="w-8 h-8 border-2 border-blue-200 border-t-blue-500 rounded-full animate-spin"></div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
   
   return (
     <div className="flex flex-col min-h-screen">
@@ -101,7 +126,7 @@ const Teams = () => {
             </div>
           </div>
           
-          {/* Teams Grid - simplified rendering */}
+          {/* Teams Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredTeams.length > 0 ? (
               filteredTeams.map(team => (

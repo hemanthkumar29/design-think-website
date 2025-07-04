@@ -1,59 +1,62 @@
 import { Team, teamsData as initialTeamsData } from '@/data/teamsData';
-import { getDashboardData } from './dashboardService';
+import { fetchAllTeams, type TeamData } from './supabaseTeamService';
 
 // Custom event for team data updates
 const TEAMS_UPDATED_EVENT = 'teamsDataUpdated';
 
-// Get teams data with localStorage fallback
-export const getTeams = (): Team[] => {
+// Convert Supabase team data to legacy format for compatibility
+const convertSupabaseTeamToLegacy = (supabaseTeam: TeamData): Team => {
+  // Find the team from initial data to get legacy fields
+  const legacyTeam = initialTeamsData.find(t => t.id === supabaseTeam.id) || initialTeamsData[0];
+  
+  return {
+    ...legacyTeam,
+    id: supabaseTeam.id,
+    name: supabaseTeam.team_name,
+    description: supabaseTeam.project_title,
+    longDescription: supabaseTeam.abstract || legacyTeam.longDescription
+  };
+};
+
+// Get teams data from Supabase
+export const getTeams = async (): Promise<Team[]> => {
   try {
-    const storedTeamsData = localStorage.getItem('teamsData');
-    const teams = storedTeamsData ? JSON.parse(storedTeamsData) : initialTeamsData;
+    const supabaseTeams = await fetchAllTeams();
     
-    // Merge with dashboard data if available
-    const dashboardData = getDashboardData();
+    if (supabaseTeams.length === 0) {
+      // Fallback to initial data if no teams in database
+      return initialTeamsData;
+    }
     
-    return teams.map((team: Team) => {
-      const dashboardTeamData = dashboardData[`team${team.id}`];
-      if (dashboardTeamData) {
-        return {
-          ...team,
-          name: dashboardTeamData.teamName,
-          description: dashboardTeamData.projectTitle,
-          longDescription: dashboardTeamData.abstract
-        };
-      }
-      return team;
-    });
+    return supabaseTeams.map(convertSupabaseTeamToLegacy);
   } catch (error) {
     console.error('Error loading teams data:', error);
     return initialTeamsData;
   }
 };
 
-// Update a team's progress
+// Update a team's progress (keeping existing functionality)
 export const updateTeamProgress = (teamId: number, newProgress: number): Team[] => {
-  const currentTeams = getTeams();
+  // This function maintains localStorage compatibility for progress tracking
+  // In a full implementation, this would also be stored in Supabase
+  const currentTeams = initialTeamsData;
   const updatedTeams = currentTeams.map(team => 
     team.id === teamId ? { ...team, progress: newProgress } : team
   );
   
-  // Persist to localStorage
   localStorage.setItem('teamsData', JSON.stringify(updatedTeams));
-  
-  // Dispatch custom event to notify components about the update
   window.dispatchEvent(new CustomEvent(TEAMS_UPDATED_EVENT));
   
   return updatedTeams;
 };
 
-// Update a team member's rating
+// Update a team member's rating (keeping existing functionality)
 export const updateMemberRating = (teamId: number, memberId: number, rating: number): Team[] => {
-  const currentTeams = getTeams();
+  // This function maintains localStorage compatibility for rating tracking
+  const currentTeams = initialTeamsData;
   
   const updatedTeams = currentTeams.map(team => {
     if (team.id === teamId) {
-      // Check if the member is the team leader
       if (team.leader.id === memberId) {
         return {
           ...team,
@@ -64,7 +67,6 @@ export const updateMemberRating = (teamId: number, memberId: number, rating: num
         };
       }
       
-      // Otherwise, update the member in the members array
       const updatedMembers = team.members.map(member => 
         member.id === memberId ? { ...member, rating } : member
       );
@@ -78,19 +80,21 @@ export const updateMemberRating = (teamId: number, memberId: number, rating: num
     return team;
   });
   
-  // Persist to localStorage
   localStorage.setItem('teamsData', JSON.stringify(updatedTeams));
-  
-  // Dispatch custom event to notify components about the update
   window.dispatchEvent(new CustomEvent(TEAMS_UPDATED_EVENT));
   
   return updatedTeams;
 };
 
-// Get a single team by ID
-export const getTeamById = (id: number | string): Team | undefined => {
-  const teams = getTeams();
-  return teams.find(team => team.id.toString() === id.toString());
+// Get a single team by ID from Supabase
+export const getTeamById = async (id: number | string): Promise<Team | undefined> => {
+  try {
+    const teams = await getTeams();
+    return teams.find(team => team.id.toString() === id.toString());
+  } catch (error) {
+    console.error('Error getting team by ID:', error);
+    return initialTeamsData.find(team => team.id.toString() === id.toString());
+  }
 };
 
 // Subscribe to teams data updates
@@ -98,11 +102,10 @@ export const subscribeToTeamsUpdates = (callback: () => void): () => void => {
   const handler = () => callback();
   window.addEventListener(TEAMS_UPDATED_EVENT, handler);
   
-  // Return unsubscribe function
   return () => window.removeEventListener(TEAMS_UPDATED_EVENT, handler);
 };
 
-// Add listener for dashboard updates
+// Trigger updates when dashboard data changes
 window.addEventListener('dashboardDataUpdated', () => {
   window.dispatchEvent(new CustomEvent(TEAMS_UPDATED_EVENT));
 });

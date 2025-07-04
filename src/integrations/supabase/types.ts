@@ -9,7 +9,103 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      team_media: {
+        Row: {
+          created_at: string | null
+          file_name: string | null
+          file_url: string
+          id: string
+          media_type: string
+          team_id: number | null
+        }
+        Insert: {
+          created_at?: string | null
+          file_name?: string | null
+          file_url: string
+          id?: string
+          media_type: string
+          team_id?: number | null
+        }
+        Update: {
+          created_at?: string | null
+          file_name?: string | null
+          file_url?: string
+          id?: string
+          media_type?: string
+          team_id?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "team_media_team_id_fkey"
+            columns: ["team_id"]
+            isOneToOne: false
+            referencedRelation: "teams"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      team_members: {
+        Row: {
+          created_at: string | null
+          id: string
+          name: string
+          photo_url: string | null
+          team_id: number | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          name: string
+          photo_url?: string | null
+          team_id?: number | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          name?: string
+          photo_url?: string | null
+          team_id?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "team_members_team_id_fkey"
+            columns: ["team_id"]
+            isOneToOne: false
+            referencedRelation: "teams"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      teams: {
+        Row: {
+          abstract: string | null
+          created_at: string | null
+          id: number
+          leader_username: string
+          project_title: string
+          team_name: string
+          updated_at: string | null
+        }
+        Insert: {
+          abstract?: string | null
+          created_at?: string | null
+          id?: number
+          leader_username: string
+          project_title: string
+          team_name: string
+          updated_at?: string | null
+        }
+        Update: {
+          abstract?: string | null
+          created_at?: string | null
+          id?: number
+          leader_username?: string
+          project_title?: string
+          team_name?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

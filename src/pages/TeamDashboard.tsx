@@ -10,7 +10,7 @@ import { LogOut, Save, Upload, Eye, FileVideo, FileText, X } from 'lucide-react'
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import PageSEO from '@/components/SEO/PageSEO';
-import { getTeamDashboardData, updateTeamDashboardData, isValidTeamLeader, TeamDashboardData } from '@/services/dashboardService';
+import { getTeamDashboardData, updateTeamDashboardData, isValidTeamLeader, uploadTeamMedia, type TeamDashboardData } from '@/services/dashboardService';
 
 interface FileUploadPreview {
   file: File | null;
@@ -39,27 +39,34 @@ const TeamDashboard = () => {
   const projectPhotoInputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   useEffect(() => {
-    const currentTeamLeader = localStorage.getItem('currentTeamLeader');
-    const currentTeamId = localStorage.getItem('currentTeamId');
+    const loadTeamData = async () => {
+      const currentTeamLeader = localStorage.getItem('currentTeamLeader');
+      const currentTeamId = localStorage.getItem('currentTeamId');
 
-    if (!currentTeamLeader || !teamId || currentTeamId !== teamId?.replace('team', '')) {
-      navigate('/student-login');
-      return;
-    }
+      if (!currentTeamLeader || !teamId || currentTeamId !== teamId?.replace('team', '')) {
+        navigate('/student-login');
+        return;
+      }
 
-    if (!isValidTeamLeader(currentTeamLeader, teamId)) {
-      navigate('/student-login');
-      return;
-    }
+      try {
+        const data = await getTeamDashboardData(teamId);
+        if (data && data.username === currentTeamLeader) {
+          setTeamData(data);
+          // Initialize file upload arrays
+          setMemberPhotoFiles(data.members.map(() => ({ file: null, preview: null, type: 'image' as const })));
+          setProjectPhotoFiles(data.projectPhotos.map(() => ({ file: null, preview: null, type: 'image' as const })));
+        } else {
+          navigate('/student-login');
+        }
+      } catch (error) {
+        console.error('Error loading team data:', error);
+        navigate('/student-login');
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-    const data = getTeamDashboardData(teamId);
-    if (data) {
-      setTeamData(data);
-      // Initialize file upload arrays
-      setMemberPhotoFiles(data.members.map(() => ({ file: null, preview: null, type: 'image' as const })));
-      setProjectPhotoFiles(data.projectPhotos.map(() => ({ file: null, preview: null, type: 'image' as const })));
-    }
-    setIsLoading(false);
+    loadTeamData();
   }, [teamId, navigate]);
 
   const handleLogout = () => {
@@ -161,50 +168,78 @@ const TeamDashboard = () => {
     setSaveMessage('Saving changes...');
 
     try {
-      const updatedData = { ...teamData };
+      // Save basic team data first
+      await updateTeamDashboardData(teamId, teamData);
 
-      // Handle video upload
+      // Handle file uploads
       if (videoFile.file) {
-        const videoUrl = await simulateFileUpload(videoFile.file);
-        updatedData.projectVideos = updatedData.projectVideos || [];
-        updatedData.projectVideos[0] = videoUrl;
+        setSaveMessage('Uploading video...');
+        const videoUrl = await uploadTeamMedia(teamId, videoFile.file, 'video');
+        if (videoUrl) {
+          setTeamData(prev => prev ? {
+            ...prev,
+            projectVideos: [videoUrl]
+          } : null);
+        }
       }
 
-      // Handle PPT upload
       if (pptFile.file) {
-        const pptUrl = await simulateFileUpload(pptFile.file);
-        updatedData.presentations = updatedData.presentations || [];
-        updatedData.presentations[0] = pptUrl;
+        setSaveMessage('Uploading presentation...');
+        const pptUrl = await uploadTeamMedia(teamId, pptFile.file, 'presentation');
+        if (pptUrl) {
+          setTeamData(prev => prev ? {
+            ...prev,
+            presentations: [pptUrl]
+          } : null);
+        }
       }
 
       // Handle member photo uploads
       for (let i = 0; i < memberPhotoFiles.length; i++) {
-        if (memberPhotoFiles[i].file) {
-          const photoUrl = await simulateFileUpload(memberPhotoFiles[i].file!);
-          updatedData.members[i].photo = photoUrl;
+        if (memberPhotoFiles[i].file && teamData.members[i]) {
+          setSaveMessage(`Uploading member photo ${i + 1}...`);
+          const photoUrl = await uploadTeamMedia(teamId, memberPhotoFiles[i].file!, 'project_photo');
+          if (photoUrl) {
+            setTeamData(prev => {
+              if (!prev) return null;
+              const updatedMembers = [...prev.members];
+              updatedMembers[i] = { ...updatedMembers[i], photo: photoUrl };
+              return { ...prev, members: updatedMembers };
+            });
+          }
         }
       }
 
       // Handle project photo uploads
       for (let i = 0; i < projectPhotoFiles.length; i++) {
         if (projectPhotoFiles[i].file) {
-          const photoUrl = await simulateFileUpload(projectPhotoFiles[i].file!);
-          updatedData.projectPhotos[i] = photoUrl;
+          setSaveMessage(`Uploading project photo ${i + 1}...`);
+          const photoUrl = await uploadTeamMedia(teamId, projectPhotoFiles[i].file!, 'project_photo');
+          if (photoUrl) {
+            setTeamData(prev => {
+              if (!prev) return null;
+              const updatedPhotos = [...prev.projectPhotos];
+              updatedPhotos[i] = photoUrl;
+              return { ...prev, projectPhotos: updatedPhotos };
+            });
+          }
         }
       }
 
-      updateTeamDashboardData(teamId, updatedData);
-      setTeamData(updatedData);
-      
       // Clear file upload states
       setVideoFile({ file: null, preview: null, type: 'video' });
       setPptFile({ file: null, preview: null, type: 'document' });
-      setMemberPhotoFiles(updatedData.members.map(() => ({ file: null, preview: null, type: 'image' as const })));
-      setProjectPhotoFiles(updatedData.projectPhotos.map(() => ({ file: null, preview: null, type: 'image' as const })));
+      setMemberPhotoFiles(teamData.members.map(() => ({ file: null, preview: null, type: 'image' as const })));
+      setProjectPhotoFiles(teamData.projectPhotos.map(() => ({ file: null, preview: null, type: 'image' as const })));
 
-      setSaveMessage('Changes saved successfully!');
+      setSaveMessage('All changes saved successfully!');
+      
+      // Dispatch event to notify other components
+      window.dispatchEvent(new CustomEvent('dashboardDataUpdated', { detail: { teamId } }));
+      
       setTimeout(() => setSaveMessage(''), 3000);
     } catch (error) {
+      console.error('Error saving changes:', error);
       setSaveMessage('Error saving changes. Please try again.');
       setTimeout(() => setSaveMessage(''), 3000);
     } finally {
@@ -288,7 +323,7 @@ const TeamDashboard = () => {
               <p className="text-muted-foreground">Manage your team's project content</p>
             </div>
             <div className="flex gap-2">
-              <Button variant="outline" onClick={viewTeamPage}>
+              <Button variant="outline" onClick={() => navigate(`/team/${teamData.id}`)}>
                 <Eye className="w-4 h-4 mr-2" />
                 View Team Page
               </Button>
@@ -318,7 +353,7 @@ const TeamDashboard = () => {
                 <Input
                   id="teamName"
                   value={teamData.teamName}
-                  onChange={(e) => handleInputChange('teamName', e.target.value)}
+                  onChange={(e) => setTeamData(prev => prev ? { ...prev, teamName: e.target.value } : null)}
                 />
               </div>
               <div>
@@ -326,7 +361,7 @@ const TeamDashboard = () => {
                 <Input
                   id="projectTitle"
                   value={teamData.projectTitle}
-                  onChange={(e) => handleInputChange('projectTitle', e.target.value)}
+                  onChange={(e) => setTeamData(prev => prev ? { ...prev, projectTitle: e.target.value } : null)}
                 />
               </div>
               <div>
@@ -334,7 +369,7 @@ const TeamDashboard = () => {
                 <Textarea
                   id="abstract"
                   value={teamData.abstract}
-                  onChange={(e) => handleInputChange('abstract', e.target.value)}
+                  onChange={(e) => setTeamData(prev => prev ? { ...prev, abstract: e.target.value } : null)}
                   rows={4}
                 />
               </div>
