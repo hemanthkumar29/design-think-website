@@ -53,7 +53,7 @@ const TeamDashboard = () => {
         const data = await getTeamDashboardData(teamId);
         if (data && data.username === currentTeamLeader) {
           setTeamData(data);
-          // Initialize file upload arrays
+          // Initialize file upload arrays based on actual team members
           setMemberPhotoFiles(data.members.map(() => ({ file: null, preview: null, type: 'image' as const })));
           setProjectPhotoFiles(data.projectPhotos.map(() => ({ file: null, preview: null, type: 'image' as const })));
         } else {
@@ -498,17 +498,17 @@ const TeamDashboard = () => {
             </CardHeader>
             <CardContent className="space-y-4">
               {teamData.members.map((member, index) => (
-                <div key={index} className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 border rounded-lg">
-                  <div>
-                    <Label className="text-sm font-medium">
+                <div key={index} className="flex items-center gap-6 p-4 border rounded-lg">
+                  <div className="flex-1">
+                    <Label className="text-sm font-medium mb-2 block">
                       {index === 0 ? 'Team Leader' : `Team Member ${index}`}
                     </Label>
-                    <div className="mt-1 p-3 bg-gray-100 rounded border">
+                    <div className="p-3 bg-gray-100 rounded border">
                       <span className="text-sm font-medium text-gray-800">{member.name}</span>
                     </div>
                   </div>
-                  <div>
-                    <Label htmlFor={`member-photo-${index}`}>Photo</Label>
+                  <div className="flex-1">
+                    <Label className="text-sm font-medium mb-2 block">Photo</Label>
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
                         <input
