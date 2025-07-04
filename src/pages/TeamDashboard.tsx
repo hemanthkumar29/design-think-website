@@ -11,12 +11,12 @@ import { LogOut, Save, Upload, Eye, FileVideo, FileText, X } from 'lucide-react'
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import PageSEO from '@/components/SEO/PageSEO';
-import { getTeamDashboardData, updateTeamDashboardData, isValidTeamLeader, uploadTeamMedia, type TeamDashboardData } from '@/services/dashboardService';
+import { getTeamDashboardData, updateTeamDashboardData, uploadTeamMedia, type TeamDashboardData } from '@/services/dashboardService';
 
 interface FileUploadPreview {
   file: File | null;
   preview: string | null;
-  type: 'image' | 'video' | 'document';
+  type: 'video' | 'document';
 }
 
 const TeamDashboard = () => {
@@ -27,17 +27,13 @@ const TeamDashboard = () => {
   const [saveMessage, setSaveMessage] = useState('');
   const [uploading, setUploading] = useState(false);
   
-  // File upload states
+  // File upload states - only for video and PPT
   const [videoFile, setVideoFile] = useState<FileUploadPreview>({ file: null, preview: null, type: 'video' });
   const [pptFile, setPptFile] = useState<FileUploadPreview>({ file: null, preview: null, type: 'document' });
-  const [memberPhotoFiles, setMemberPhotoFiles] = useState<FileUploadPreview[]>([]);
-  const [projectPhotoFiles, setProjectPhotoFiles] = useState<FileUploadPreview[]>([]);
 
-  // File input refs
+  // File input refs - only for video and PPT
   const videoInputRef = useRef<HTMLInputElement>(null);
   const pptInputRef = useRef<HTMLInputElement>(null);
-  const memberPhotoInputRefs = useRef<(HTMLInputElement | null)[]>([]);
-  const projectPhotoInputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   useEffect(() => {
     const loadTeamData = async () => {
@@ -53,9 +49,6 @@ const TeamDashboard = () => {
         const data = await getTeamDashboardData(teamId);
         if (data && data.username === currentTeamLeader) {
           setTeamData(data);
-          // Initialize file upload arrays based on actual team members
-          setMemberPhotoFiles(data.members.map(() => ({ file: null, preview: null, type: 'image' as const })));
-          setProjectPhotoFiles(data.projectPhotos.map(() => ({ file: null, preview: null, type: 'image' as const })));
         } else {
           navigate('/student-login');
         }
@@ -76,9 +69,8 @@ const TeamDashboard = () => {
     navigate('/student-login');
   };
 
-  const validateFile = (file: File, type: 'image' | 'video' | 'document'): string | null => {
+  const validateFile = (file: File, type: 'video' | 'document'): string | null => {
     const maxSizes = {
-      image: 5 * 1024 * 1024, // 5MB
       video: 100 * 1024 * 1024, // 100MB
       document: 10 * 1024 * 1024 // 10MB
     };
@@ -88,7 +80,6 @@ const TeamDashboard = () => {
     }
 
     const allowedTypes = {
-      image: ['image/jpeg', 'image/png', 'image/gif', 'image/webp'],
       video: ['video/mp4', 'video/webm', 'video/mov', 'video/quicktime'],
       document: ['application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation']
     };
@@ -100,7 +91,7 @@ const TeamDashboard = () => {
     return null;
   };
 
-  const handleFileSelect = (file: File, type: 'image' | 'video' | 'document', setter: React.Dispatch<React.SetStateAction<FileUploadPreview>>) => {
+  const handleFileSelect = (file: File, type: 'video' | 'document', setter: React.Dispatch<React.SetStateAction<FileUploadPreview>>) => {
     const error = validateFile(file, type);
     if (error) {
       alert(error);
@@ -123,52 +114,6 @@ const TeamDashboard = () => {
     if (file) {
       handleFileSelect(file, 'document', setPptFile);
     }
-  };
-
-  const handleMemberPhotoUpload = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const error = validateFile(file, 'image');
-      if (error) {
-        alert(error);
-        return;
-      }
-      const preview = URL.createObjectURL(file);
-      const newFiles = [...memberPhotoFiles];
-      newFiles[index] = { file, preview, type: 'image' };
-      setMemberPhotoFiles(newFiles);
-    }
-  };
-
-  const handleProjectPhotoUpload = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const error = validateFile(file, 'image');
-      if (error) {
-        alert(error);
-        return;
-      }
-      const preview = URL.createObjectURL(file);
-      const newFiles = [...projectPhotoFiles];
-      newFiles[index] = { file, preview, type: 'image' };
-      setProjectPhotoFiles(newFiles);
-    }
-  };
-
-  // Function to get existing filename based on member name and team
-  const getExistingMemberFilename = (memberName: string, teamId: string) => {
-    // Convert member name to expected filename format
-    // This assumes files are named like "23KD1A0201.jpg" etc.
-    const teamNumber = teamId?.replace('team', '');
-    // You might need to adjust this logic based on your actual naming convention
-    return memberName.replace(/\s+/g, '') + '.jpg';
-  };
-
-  const simulateFileUpload = async (file: File): Promise<string> => {
-    // Simulate file upload delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    // In a real implementation, this would upload to a server and return the URL
-    return URL.createObjectURL(file);
   };
 
   const handleSave = async () => {
@@ -204,49 +149,9 @@ const TeamDashboard = () => {
         }
       }
 
-      // Handle member photo uploads - replace existing files with same names
-      for (let i = 0; i < memberPhotoFiles.length; i++) {
-        if (memberPhotoFiles[i].file && teamData.members[i]) {
-          setSaveMessage(`Uploading member photo ${i + 1}...`);
-          const member = teamData.members[i];
-          const existingFilename = getExistingMemberFilename(member.name, teamId);
-          
-          // Upload with the same filename to replace existing image
-          const photoUrl = await uploadTeamMedia(teamId, memberPhotoFiles[i].file!, 'project_photo', existingFilename);
-          if (photoUrl) {
-            setTeamData(prev => {
-              if (!prev) return null;
-              const updatedMembers = [...prev.members];
-              updatedMembers[i] = { ...updatedMembers[i], photo: photoUrl };
-              return { ...prev, members: updatedMembers };
-            });
-          }
-        }
-      }
-
-      // Handle project photo uploads - replace existing files
-      for (let i = 0; i < projectPhotoFiles.length; i++) {
-        if (projectPhotoFiles[i].file) {
-          setSaveMessage(`Uploading project photo ${i + 1}...`);
-          const existingFilename = `project${i + 1}.jpg`; // Assuming project photos are named project1.jpg, project2.jpg, etc.
-          
-          const photoUrl = await uploadTeamMedia(teamId, projectPhotoFiles[i].file!, 'project_photo', existingFilename);
-          if (photoUrl) {
-            setTeamData(prev => {
-              if (!prev) return null;
-              const updatedPhotos = [...prev.projectPhotos];
-              updatedPhotos[i] = photoUrl;
-              return { ...prev, projectPhotos: updatedPhotos };
-            });
-          }
-        }
-      }
-
       // Clear file upload states
       setVideoFile({ file: null, preview: null, type: 'video' });
       setPptFile({ file: null, preview: null, type: 'document' });
-      setMemberPhotoFiles(teamData.members.map(() => ({ file: null, preview: null, type: 'image' as const })));
-      setProjectPhotoFiles(teamData.projectPhotos.map(() => ({ file: null, preview: null, type: 'image' as const })));
 
       setSaveMessage('All changes saved successfully!');
       
@@ -263,27 +168,8 @@ const TeamDashboard = () => {
     }
   };
 
-  const handleInputChange = (field: keyof TeamDashboardData, value: any) => {
-    if (teamData) {
-      setTeamData({ ...teamData, [field]: value });
-    }
-  };
-
-  const handleProjectPhotoChange = (index: number, value: string) => {
-    if (teamData) {
-      const updatedPhotos = [...teamData.projectPhotos];
-      updatedPhotos[index] = value;
-      setTeamData({ ...teamData, projectPhotos: updatedPhotos });
-    }
-  };
-
-  const viewTeamPage = () => {
-    const teamNumber = teamId?.replace('team', '');
-    navigate(`/team/${teamNumber}`);
-  };
-
   const clearFilePreview = (setter: React.Dispatch<React.SetStateAction<FileUploadPreview>>, inputRef: React.RefObject<HTMLInputElement>) => {
-    setter({ file: null, preview: null, type: 'image' });
+    setter({ file: null, preview: null, type: 'video' });
     if (inputRef.current) {
       inputRef.current.value = '';
     }
@@ -488,136 +374,6 @@ const TeamDashboard = () => {
                   )}
                 </div>
               </div>
-            </CardContent>
-          </Card>
-
-          {/* Team Members */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Team Members</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {teamData.members.map((member, index) => (
-                <div key={index} className="flex items-center gap-6 p-4 border rounded-lg">
-                  <div className="flex-1">
-                    <Label className="text-sm font-medium mb-2 block">
-                      {index === 0 ? 'Team Leader' : `Team Member ${index}`}
-                    </Label>
-                    <div className="p-3 bg-gray-100 rounded border">
-                      <span className="text-sm font-medium text-gray-800">{member.name}</span>
-                    </div>
-                  </div>
-                  <div className="flex-1">
-                    <Label className="text-sm font-medium mb-2 block">Photo</Label>
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-2">
-                        <input
-                          ref={el => memberPhotoInputRefs.current[index] = el}
-                          type="file"
-                          accept="image/*"
-                          onChange={(e) => handleMemberPhotoUpload(e, index)}
-                          className="hidden"
-                        />
-                        <Button
-                          type="button"
-                          variant="outline"
-                          size="sm"
-                          onClick={() => memberPhotoInputRefs.current[index]?.click()}
-                        >
-                          <Upload className="w-4 h-4 mr-2" />
-                          Upload Photo
-                        </Button>
-                        {memberPhotoFiles[index]?.preview && (
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => {
-                              const newFiles = [...memberPhotoFiles];
-                              newFiles[index] = { file: null, preview: null, type: 'image' };
-                              setMemberPhotoFiles(newFiles);
-                              if (memberPhotoInputRefs.current[index]) {
-                                memberPhotoInputRefs.current[index]!.value = '';
-                              }
-                            }}
-                          >
-                            <X className="w-4 h-4" />
-                          </Button>
-                        )}
-                      </div>
-                      {memberPhotoFiles[index]?.preview && (
-                        <img
-                          src={memberPhotoFiles[index].preview!}
-                          alt={`Preview for ${member.name}`}
-                          className="w-20 h-20 object-cover rounded-lg"
-                        />
-                      )}
-                      <div className="text-xs text-gray-500">
-                        Current: {member.photo}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
-
-          {/* Project Photos */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Project Photos</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {teamData.projectPhotos.map((photo, index) => (
-                <div key={index} className="space-y-2">
-                  <Label htmlFor={`project-photo-${index}`}>Project Photo {index + 1}</Label>
-                  <div className="flex items-center gap-2">
-                    <input
-                      ref={el => projectPhotoInputRefs.current[index] = el}
-                      type="file"
-                      accept="image/*"
-                      onChange={(e) => handleProjectPhotoUpload(e, index)}
-                      className="hidden"
-                    />
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() => projectPhotoInputRefs.current[index]?.click()}
-                    >
-                      <Upload className="w-4 h-4 mr-2" />
-                      Upload Photo
-                    </Button>
-                    {projectPhotoFiles[index]?.preview && (
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => {
-                          const newFiles = [...projectPhotoFiles];
-                          newFiles[index] = { file: null, preview: null, type: 'image' };
-                          setProjectPhotoFiles(newFiles);
-                          if (projectPhotoInputRefs.current[index]) {
-                            projectPhotoInputRefs.current[index]!.value = '';
-                          }
-                        }}
-                      >
-                        <X className="w-4 h-4" />
-                      </Button>
-                    )}
-                  </div>
-                  {projectPhotoFiles[index]?.preview && (
-                    <img
-                      src={projectPhotoFiles[index].preview!}
-                      alt={`Project photo ${index + 1} preview`}
-                      className="w-32 h-32 object-cover rounded-lg"
-                    />
-                  )}
-                  <div className="text-xs text-gray-500">
-                    Current: {photo}
-                  </div>
-                </div>
-              ))}
             </CardContent>
           </Card>
 
