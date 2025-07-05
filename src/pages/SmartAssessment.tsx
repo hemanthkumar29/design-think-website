@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Badge } from '@/components/ui/badge';
-import { Heart, Users, Lightbulb, Wrench, TestTube, ChevronRight, Github, Mail, MessageSquare } from 'lucide-react';
+import { Heart, Users, Lightbulb, Wrench, TestTube, ChevronRight, MessageSquare } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import PageSEO from '@/components/SEO/PageSEO';
@@ -159,47 +159,8 @@ const SmartAssessment = () => {
         </div>
       </section>
 
-      {/* Enhanced Footer */}
-      <footer className="bg-gray-900 text-white py-12 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div>
-              <h3 className="text-xl font-semibold mb-4">Smart Assessment</h3>
-              <p className="text-gray-300 mb-4">
-                Innovative educational technology developed through Design Thinking methodology.
-              </p>
-            </div>
-            
-            <div>
-              <h3 className="text-xl font-semibold mb-4">Quick Links</h3>
-              <div className="space-y-2">
-                <button onClick={() => scrollToSection('process')} className="block text-gray-300 hover:text-white transition-colors">
-                  Design Process
-                </button>
-              </div>
-            </div>
-            
-            <div>
-              <h3 className="text-xl font-semibold mb-4">Connect</h3>
-              <div className="flex gap-4">
-                <Button variant="ghost" size="icon" className="text-gray-300 hover:text-white">
-                  <Github className="w-5 h-5" />
-                </Button>
-                <Button variant="ghost" size="icon" className="text-gray-300 hover:text-white">
-                  <Mail className="w-5 h-5" />
-                </Button>
-                <Button variant="ghost" size="icon" className="text-gray-300 hover:text-white">
-                  <MessageSquare className="w-5 h-5" />
-                </Button>
-              </div>
-            </div>
-          </div>
-          
-          <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-300">
-            <p>© 2024 Smart Assessment Project - EEE Department A, Lendi Institute</p>
-          </div>
-        </div>
-      </footer>
+      {/* Use the consistent Footer component */}
+      <Footer />
 
       {/* Floating Feedback Button */}
       <Button 
