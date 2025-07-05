@@ -20,28 +20,43 @@ const TeamDetail = () => {
   const [supabaseTeamData, setSupabaseTeamData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   
+  const loadTeamData = async () => {
+    if (id) {
+      try {
+        // Load legacy team data for display compatibility
+        const teamData = await getTeamById(id);
+        setTeam(teamData);
+        
+        // Load Supabase data for updated content
+        const supabaseData = await fetchTeamData(parseInt(id));
+        setSupabaseTeamData(supabaseData);
+      } catch (error) {
+        console.error('Error loading team data:', error);
+        navigate('/teams');
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  };
+  
   useEffect(() => {
-    const loadTeamData = async () => {
-      if (id) {
-        try {
-          // Load legacy team data for display compatibility
-          const teamData = await getTeamById(id);
-          setTeam(teamData);
-          
-          // Load Supabase data for updated content
-          const supabaseData = await fetchTeamData(parseInt(id));
-          setSupabaseTeamData(supabaseData);
-        } catch (error) {
-          console.error('Error loading team data:', error);
-          navigate('/teams');
-        } finally {
-          setIsLoading(false);
-        }
+    loadTeamData();
+  }, [id, navigate]);
+
+  // Listen for dashboard updates
+  useEffect(() => {
+    const handleDashboardUpdate = (event) => {
+      if (event.detail?.teamId === `team${id}`) {
+        console.log('Dashboard updated, refreshing team data...');
+        loadTeamData();
       }
     };
 
-    loadTeamData();
-  }, [id, navigate]);
+    window.addEventListener('dashboardDataUpdated', handleDashboardUpdate);
+    return () => {
+      window.removeEventListener('dashboardDataUpdated', handleDashboardUpdate);
+    };
+  }, [id]);
   
   if (isLoading) {
     return (

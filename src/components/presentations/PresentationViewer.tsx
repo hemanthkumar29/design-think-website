@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Download, Presentation } from 'lucide-react';
+import { fetchTeamData } from '@/services/supabaseTeamService';
 
 interface PresentationViewerProps {
   teamId: number;
@@ -11,7 +12,30 @@ interface PresentationViewerProps {
 const PresentationViewer: React.FC<PresentationViewerProps> = ({ teamId, teamName }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [showFallback, setShowFallback] = useState(false);
-  const presentationUrl = `/team_presentations/team_${teamId}_presentation.pptx`;
+  const [presentationUrl, setPresentationUrl] = useState<string>('');
+  
+  useEffect(() => {
+    const loadPresentation = async () => {
+      try {
+        // First check for uploaded presentation in Supabase
+        const teamData = await fetchTeamData(teamId);
+        const uploadedPresentation = teamData?.media.find(m => m.media_type === 'presentation');
+        
+        if (uploadedPresentation?.file_url) {
+          setPresentationUrl(uploadedPresentation.file_url);
+        } else {
+          // Fallback to static presentation file
+          setPresentationUrl(`/team_presentations/team_${teamId}_presentation.pptx`);
+        }
+      } catch (error) {
+        console.error('Error loading presentation:', error);
+        // Fallback to static presentation file
+        setPresentationUrl(`/team_presentations/team_${teamId}_presentation.pptx`);
+      }
+    };
+
+    loadPresentation();
+  }, [teamId]);
   
   // Use Microsoft Office Online viewer for better PPTX support
   const previewUrl = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(window.location.origin + presentationUrl)}`;
