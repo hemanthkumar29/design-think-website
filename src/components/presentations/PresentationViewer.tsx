@@ -13,6 +13,7 @@ const PresentationViewer: React.FC<PresentationViewerProps> = ({ teamId, teamNam
   const [isLoading, setIsLoading] = useState(true);
   const [showFallback, setShowFallback] = useState(false);
   const [presentationUrl, setPresentationUrl] = useState<string>('');
+  const [isSupabaseUrl, setIsSupabaseUrl] = useState(false);
   
   useEffect(() => {
     const loadPresentation = async () => {
@@ -22,15 +23,20 @@ const PresentationViewer: React.FC<PresentationViewerProps> = ({ teamId, teamNam
         const uploadedPresentation = teamData?.media.find(m => m.media_type === 'presentation');
         
         if (uploadedPresentation?.file_url) {
+          console.log('Found uploaded presentation:', uploadedPresentation.file_url);
           setPresentationUrl(uploadedPresentation.file_url);
+          setIsSupabaseUrl(true);
         } else {
+          console.log('No uploaded presentation found, using static file');
           // Fallback to static presentation file
           setPresentationUrl(`/team_presentations/team_${teamId}_presentation.pptx`);
+          setIsSupabaseUrl(false);
         }
       } catch (error) {
         console.error('Error loading presentation:', error);
         // Fallback to static presentation file
         setPresentationUrl(`/team_presentations/team_${teamId}_presentation.pptx`);
+        setIsSupabaseUrl(false);
       }
     };
 
@@ -38,10 +44,12 @@ const PresentationViewer: React.FC<PresentationViewerProps> = ({ teamId, teamNam
   }, [teamId]);
   
   // Use Microsoft Office Online viewer for better PPTX support
-  const previewUrl = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(window.location.origin + presentationUrl)}`;
+  // Handle URL construction differently for Supabase vs static files
+  const fullPresentationUrl = isSupabaseUrl ? presentationUrl : `${window.location.origin}${presentationUrl}`;
+  const previewUrl = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(fullPresentationUrl)}`;
   
   // Fallback to Google Docs Viewer if Office Online fails
-  const fallbackPreviewUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(window.location.origin + presentationUrl)}&embedded=true`;
+  const fallbackPreviewUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(fullPresentationUrl)}&embedded=true`;
   
   useEffect(() => {
     const timer = setTimeout(() => {
