@@ -102,13 +102,24 @@ const TeamDetail = () => {
     .filter(m => m.media_type === 'video')
     .map(m => m.file_url) || [];
 
-  // Fallback images if no custom images uploaded
-  const displayImages = projectImages.length > 0 ? projectImages : [
-    `/project-images/team${team.id}/project1.jpg`,
-    `/project-images/team${team.id}/project2.jpg`,
-    `/project-images/team${team.id}/project3.jpg`,
-  ];
+  // Enhanced image handling - check both uploaded and static images
+  const getProjectImages = () => {
+    // If we have uploaded images, use them
+    if (projectImages.length > 0) {
+      console.log('Using uploaded project images:', projectImages);
+      return projectImages.slice(0, 3); // Ensure we only show 3 images
+    }
+    
+    // Otherwise, use static images from project-images folder
+    console.log(`Using static images for team ${team.id}`);
+    return [
+      `/project-images/team${team.id}/project1.jpg`,
+      `/project-images/team${team.id}/project2.jpg`,
+      `/project-images/team${team.id}/project3.jpg`,
+    ];
+  };
 
+  const displayImages = getProjectImages();
   const videoUrl = projectVideos.length > 0 ? projectVideos[0] : `/team_videos/team_${team.id}.mp4`;
   
   return (
@@ -321,6 +332,7 @@ const TeamDetail = () => {
                     alt={`Project image ${index + 1} for Team ${team.id}`} 
                     className="w-full h-auto aspect-video object-cover transition-transform duration-300 hover:scale-105"
                     onError={(e) => {
+                      console.log(`Failed to load image: ${image}`);
                       const placeholders = [
                         "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80",
                         "https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80",
@@ -331,6 +343,12 @@ const TeamDetail = () => {
                   />
                 </div>
               ))}
+            </div>
+            
+            <div className="mt-8 text-center">
+              <p className="text-sm text-muted-foreground">
+                Project images from Team {team.id}'s development process and final presentation
+              </p>
             </div>
           </div>
         </section>
