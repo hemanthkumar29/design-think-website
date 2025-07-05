@@ -72,7 +72,7 @@ const TeamDashboard = () => {
   const validateFile = (file: File, type: 'video' | 'document'): string | null => {
     const maxSizes = {
       video: 100 * 1024 * 1024, // 100MB
-      document: 10 * 1024 * 1024 // 10MB
+      document: 25 * 1024 * 1024 // 25MB
     };
 
     if (file.size > maxSizes[type]) {
