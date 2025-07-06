@@ -12,8 +12,7 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     react({
-      // Optimize React refresh for development
-      jsxImportSource: '@emotion/react',
+      // Remove the incorrect jsxImportSource configuration
     }),
     mode === 'development' && componentTagger(),
   ].filter(Boolean),
@@ -23,18 +22,18 @@ export default defineConfig(({ mode }) => ({
     },
   },
   build: {
-    // Optimize build output
-    minify: mode === 'production' ? 'terser' : true,
-    terserOptions: {
+    // Fix minification configuration
+    minify: mode === 'production' ? 'terser' : 'esbuild',
+    terserOptions: mode === 'production' ? {
       compress: {
-        drop_console: mode === 'production',
-        drop_debugger: mode === 'production',
-        pure_funcs: mode === 'production' ? ['console.log', 'console.info'] : [],
+        drop_console: true,
+        drop_debugger: true,
+        pure_funcs: ['console.log', 'console.info'],
       },
       mangle: {
         safari10: true,
       },
-    },
+    } : undefined,
     sourcemap: mode !== 'production',
     target: 'es2020',
     cssCodeSplit: true,
