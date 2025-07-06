@@ -43,13 +43,12 @@ export default defineConfig(({ mode }) => ({
         manualChunks: {
           // Core React libraries
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          // UI components
+          // UI components - removed @radix-ui/react-badge as it's not installed
           'ui-components': [
             '@radix-ui/react-accordion',
             '@radix-ui/react-dialog',
             '@radix-ui/react-dropdown-menu',
             '@radix-ui/react-avatar',
-            '@radix-ui/react-badge',
           ],
           // Utils and smaller libraries
           'utils': ['clsx', 'tailwind-merge', 'lucide-react'],
