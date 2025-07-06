@@ -11,10 +11,9 @@ export default defineConfig(({ mode }) => ({
     port: 8080,
   },
   plugins: [
-    react({
-      // Remove the incorrect jsxImportSource configuration
-    }),
-    mode === 'development' && componentTagger(),
+    react(),
+    mode === 'development' &&
+    componentTagger(),
   ].filter(Boolean),
   resolve: {
     alias: {
@@ -22,86 +21,31 @@ export default defineConfig(({ mode }) => ({
     },
   },
   build: {
-    // Fix minification configuration
-    minify: mode === 'production' ? 'terser' : 'esbuild',
-    terserOptions: mode === 'production' ? {
+    // Enable minification based on mode
+    minify: mode === 'production' ? 'terser' : true,
+    terserOptions: {
       compress: {
-        drop_console: true,
-        drop_debugger: true,
-        pure_funcs: ['console.log', 'console.info'],
+        // Remove console.logs in production
+        drop_console: mode === 'production',
+        // Remove debugger statements in production
+        drop_debugger: mode === 'production',
       },
-      mangle: {
-        safari10: true,
-      },
-    } : undefined,
+    },
+    // Generate source maps for debugging
     sourcemap: mode !== 'production',
-    target: 'es2020',
-    cssCodeSplit: true,
-    // Optimize chunk splitting for better caching
+    // Split chunks for better caching
     rollupOptions: {
       output: {
         manualChunks: {
-          // Core React libraries
-          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          // UI components - removed @radix-ui/react-badge as it's not installed
-          'ui-components': [
-            '@radix-ui/react-accordion',
-            '@radix-ui/react-dialog',
-            '@radix-ui/react-dropdown-menu',
-            '@radix-ui/react-avatar',
-          ],
-          // Utils and smaller libraries
-          'utils': ['clsx', 'tailwind-merge', 'lucide-react'],
-          // Large libraries
-          'query': ['@tanstack/react-query'],
-          'supabase': ['@supabase/supabase-js'],
-        },
-        // Optimize chunk names
-        chunkFileNames: (chunkInfo) => {
-          const facadeModuleId = chunkInfo.facadeModuleId
-            ? chunkInfo.facadeModuleId.split('/').pop()?.replace('.tsx', '').replace('.ts', '')
-            : 'chunk';
-          return `js/${facadeModuleId}-[hash].js`;
-        },
-        assetFileNames: (assetInfo) => {
-          const info = assetInfo.name?.split('.') || [];
-          const ext = info[info.length - 1];
-          if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(ext)) {
-            return `img/[name]-[hash][extname]`;
-          }
-          if (/css/i.test(ext)) {
-            return `css/[name]-[hash][extname]`;
-          }
-          return `assets/[name]-[hash][extname]`;
+          vendor: ['react', 'react-dom', 'react-router-dom'],
+          ui: ['@/components/ui'],
         },
       },
     },
     // Optimize assets
-    assetsInlineLimit: 2048, // 2kb - smaller than before for better caching
-    cssMinify: true,
+    assetsInlineLimit: 4096, // 4kb
   },
   optimizeDeps: {
-    include: [
-      'react',
-      'react-dom',
-      'react-router-dom',
-      '@tanstack/react-query',
-      'lucide-react',
-    ],
-    exclude: ['@supabase/supabase-js'], // Let it be bundled normally
-  },
-  // Enable CSS preprocessing optimizations
-  css: {
-    devSourcemap: mode !== 'production',
-    preprocessorOptions: {
-      css: {
-        charset: false,
-      },
-    },
-  },
-  // Performance optimizations
-  esbuild: {
-    logOverride: { 'this-is-undefined-in-esm': 'silent' },
-    legalComments: mode === 'production' ? 'none' : 'inline',
+    include: ['react', 'react-dom', 'react-router-dom'],
   },
 }));

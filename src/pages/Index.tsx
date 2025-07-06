@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -6,29 +5,20 @@ import { mentorData } from '@/data/teamsData';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import PageSEO from '@/components/SEO/PageSEO';
-import OptimizedImage from '@/components/ui/OptimizedImage';
 import { ChevronRight, Lightbulb, Users, Award, BookOpen } from 'lucide-react';
-
 const Index = () => {
   const navigate = useNavigate();
-  
   useEffect(() => {
     const elements = document.querySelectorAll('.animate-on-load');
     elements.forEach((element, index) => {
       setTimeout(() => {
         element.classList.add('animate-fade-in');
         element.classList.remove('opacity-0');
-      }, 100 * index); // Reduced delay for faster loading
+      }, 200 * index);
     });
   }, []);
-
-  return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
-      <PageSEO 
-        title="Home" 
-        description="Explore innovative solutions to engineering challenges through creative problem-solving and human-centered design at Lendi Institute's Design Thinking & Innovation program." 
-        keywords="design thinking, innovation, electrical engineering, EEE, Lendi Institute, engineering projects, creative solutions" 
-      />
+  return <div className="flex flex-col min-h-screen bg-gray-50">
+      <PageSEO title="Home" description="Explore innovative solutions to engineering challenges through creative problem-solving and human-centered design at Lendi Institute's Design Thinking & Innovation program." keywords="design thinking, innovation, electrical engineering, EEE, Lendi Institute, engineering projects, creative solutions" />
       
       <Navbar />
       
@@ -38,17 +28,10 @@ const Index = () => {
           <div className="absolute inset-0 bg-black/20"></div>
           <div className="relative max-w-7xl mx-auto">
             <div className="flex justify-center mb-8 animate-on-load opacity-0">
-              <OptimizedImage 
-                src="https://lendi.org/GRCL/logo.png" 
-                alt="Lendi Institute of Engineering and Technology Logo" 
-                className="h-20 md:h-24 w-auto filter brightness-110" 
-                loading="eager"
-                placeholder="Logo"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.style.display = 'none';
-                }}
-              />
+              <img src="https://lendi.org/GRCL/logo.png" alt="Lendi Institute of Engineering and Technology Logo" className="h-20 md:h-24 w-auto filter brightness-110" loading="eager" onError={e => {
+              const target = e.target as HTMLImageElement;
+              target.style.display = 'none';
+            }} />
             </div>
             
             <div className="text-center space-y-6">
@@ -63,22 +46,13 @@ const Index = () => {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center animate-on-load opacity-0">
-                <Button 
-                  size="lg" 
-                  onClick={() => navigate('/smart-assessment')} 
-                  className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 text-lg font-semibold rounded-lg shadow-lg transition-all duration-300 gpu-accelerated"
-                >
+                <Button size="lg" onClick={() => navigate('/smart-assessment')} className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 text-lg font-semibold rounded-lg shadow-lg transition-all duration-300">
                   <Lightbulb className="w-5 h-5 mr-2" />
                   Smart Assessment Project
                   <ChevronRight className="w-5 h-5 ml-2" />
                 </Button>
                 
-                <Button 
-                  size="lg" 
-                  variant="outline" 
-                  onClick={() => navigate('/teams')} 
-                  className="border-2 border-white hover:bg-white px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300 text-blue-800 gpu-accelerated"
-                >
+                <Button size="lg" variant="outline" onClick={() => navigate('/teams')} className="border-2 border-white hover:bg-white px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300 text-blue-800">
                   <Users className="w-5 h-5 mr-2" />
                   Explore Teams
                 </Button>
@@ -100,7 +74,7 @@ const Index = () => {
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="text-center p-6 bg-gray-50 rounded-lg hover:shadow-lg transition-shadow duration-300 gpu-accelerated">
+              <div className="text-center p-6 bg-gray-50 rounded-lg hover:shadow-lg transition-shadow duration-300">
                 <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Lightbulb className="w-8 h-8 text-blue-600" />
                 </div>
@@ -108,7 +82,7 @@ const Index = () => {
                 <p className="text-gray-600">Innovative approaches to complex engineering challenges</p>
               </div>
               
-              <div className="text-center p-6 bg-gray-50 rounded-lg hover:shadow-lg transition-shadow duration-300 gpu-accelerated">
+              <div className="text-center p-6 bg-gray-50 rounded-lg hover:shadow-lg transition-shadow duration-300">
                 <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Users className="w-8 h-8 text-orange-600" />
                 </div>
@@ -116,7 +90,7 @@ const Index = () => {
                 <p className="text-gray-600">Team-based approach to design and innovation</p>
               </div>
               
-              <div className="text-center p-6 bg-gray-50 rounded-lg hover:shadow-lg transition-shadow duration-300 gpu-accelerated">
+              <div className="text-center p-6 bg-gray-50 rounded-lg hover:shadow-lg transition-shadow duration-300">
                 <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Award className="w-8 h-8 text-green-600" />
                 </div>
@@ -143,16 +117,10 @@ const Index = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-8">
                 <div className="relative">
                   <div className="aspect-square max-w-sm mx-auto overflow-hidden rounded-lg">
-                    <OptimizedImage 
-                      src={mentorData.image} 
-                      alt={`${mentorData.name} - ${mentorData.title}`} 
-                      className="w-full h-full object-cover" 
-                      placeholder="Mentor Photo"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.src = "https://lendi.edu.in//cloud/2024/12/27/1735293134_cropped-image.jpg.jpg";
-                      }}
-                    />
+                    <img src={mentorData.image} alt={`${mentorData.name} - ${mentorData.title}`} className="w-full h-full object-cover" loading="lazy" onError={e => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = "https://lendi.edu.in//cloud/2024/12/27/1735293134_cropped-image.jpg.jpg";
+                  }} />
                   </div>
                 </div>
                 
@@ -187,20 +155,11 @@ const Index = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                size="lg" 
-                onClick={() => navigate('/smart-assessment')} 
-                className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 text-lg font-semibold rounded-lg gpu-accelerated"
-              >
+              <Button size="lg" onClick={() => navigate('/smart-assessment')} className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 text-lg font-semibold rounded-lg">
                 View Smart Assessment
               </Button>
               
-              <Button 
-                size="lg" 
-                variant="outline" 
-                onClick={() => navigate('/about')} 
-                className="border-2 border-white text-white hover:bg-white hover:text-blue-900 px-8 py-4 text-lg font-semibold rounded-lg gpu-accelerated"
-              >
+              <Button size="lg" variant="outline" onClick={() => navigate('/about')} className="border-2 border-white text-white hover:bg-white hover:text-blue-900 px-8 py-4 text-lg font-semibold rounded-lg">
                 Learn More
               </Button>
             </div>
@@ -209,8 +168,6 @@ const Index = () => {
       </main>
       
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
