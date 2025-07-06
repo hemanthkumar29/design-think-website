@@ -65,7 +65,7 @@ const SmartAssessment = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-background">
       <PageSEO 
         title="Smart Assessment - Design Thinking Innovation"
         description="Innovative smart assessment platform developed through Design Thinking methodology by EEE-A students at Lendi Institute."
@@ -74,85 +74,93 @@ const SmartAssessment = () => {
       
       <Navbar />
       
-      {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center justify-center px-6 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-        <div className="max-w-4xl mx-auto text-center space-y-8">
-          <Badge className="px-4 py-2 text-sm font-medium bg-blue-100 text-blue-800">
-            Design Thinking & Innovation Project
-          </Badge>
-          
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600">
-            Smart Assessment
-          </h1>
-          
-          <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-            Revolutionizing educational assessment through intelligent automation, 
-            real-time analytics, and personalized learning insights.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              size="lg" 
-              onClick={() => scrollToSection('process')}
-              className="px-8 py-6 text-lg bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
-            >
-              Explore the Process
-              <ChevronRight className="ml-2 w-5 h-5" />
-            </Button>
+      {/* Hero Section - Updated with consistent styling */}
+      <section className="relative pt-20 pb-16 px-6">
+        <div className="lendi-container">
+          <div className="max-w-4xl mx-auto text-center space-y-8">
+            <Badge className="px-4 py-2 text-sm font-medium">
+              Design Thinking & Innovation Project
+            </Badge>
+            
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 lendi-text-primary font-display">
+              Smart Assessment
+            </h1>
+            
+            <p className="text-xl md:text-2xl lendi-text-secondary mb-8 max-w-3xl mx-auto">
+              Revolutionizing educational assessment through intelligent automation, 
+              real-time analytics, and personalized learning insights.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button 
+                size="lg" 
+                onClick={() => scrollToSection('process')}
+                className="lendi-button px-8 py-6 text-lg"
+              >
+                Explore the Process
+                <ChevronRight className="ml-2 w-5 h-5" />
+              </Button>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Design Thinking Process */}
-      <section id="process" className="py-20 px-6 bg-white">
-        <div className="max-w-6xl mx-auto">
+      {/* Design Thinking Process - Updated with consistent styling */}
+      <section id="process" className="lendi-section lendi-bg-secondary">
+        <div className="lendi-container">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Design Thinking Process</h2>
-            <p className="text-xl text-muted-foreground">Our systematic approach to innovation</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 lendi-text-primary font-display">
+              Design Thinking Process
+            </h2>
+            <p className="text-xl lendi-text-secondary">Our systematic approach to innovation</p>
           </div>
           
-          <Accordion type="single" collapsible className="space-y-4">
-            {designThinkingPhases.map((phase, index) => (
-              <AccordionItem key={phase.id} value={phase.id} className="border rounded-lg">
-                <AccordionTrigger className="px-6 py-4 hover:no-underline">
-                  <div className="flex items-center gap-4">
-                    <div className={`p-3 rounded-full bg-gray-100 ${phase.color}`}>
-                      <phase.icon className="w-6 h-6" />
+          <div className="max-w-4xl mx-auto">
+            <Accordion type="single" collapsible className="space-y-4">
+              {designThinkingPhases.map((phase, index) => (
+                <AccordionItem key={phase.id} value={phase.id} className="lendi-card">
+                  <AccordionTrigger className="px-6 py-4 hover:no-underline">
+                    <div className="flex items-center gap-4">
+                      <div className={`p-3 rounded-full bg-gray-100 ${phase.color}`}>
+                        <phase.icon className="w-6 h-6" />
+                      </div>
+                      <div className="text-left">
+                        <h3 className="text-xl font-semibold lendi-text-primary">
+                          {index + 1}. {phase.title}
+                        </h3>
+                        <p className="lendi-text-secondary">{phase.description}</p>
+                      </div>
                     </div>
-                    <div className="text-left">
-                      <h3 className="text-xl font-semibold">
-                        {index + 1}. {phase.title}
-                      </h3>
-                      <p className="text-muted-foreground">{phase.description}</p>
-                    </div>
-                  </div>
-                </AccordionTrigger>
-                <AccordionContent className="px-6 pb-6">
-                  <p className="text-lg leading-relaxed">{phase.content}</p>
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-6 pb-6">
+                    <p className="text-lg leading-relaxed lendi-text-secondary">{phase.content}</p>
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
         </div>
       </section>
 
-      {/* Team Section */}
-      <section className="py-20 px-6 bg-gray-50">
-        <div className="max-w-6xl mx-auto">
+      {/* Team Section - Updated with consistent styling */}
+      <section className="lendi-section bg-background">
+        <div className="lendi-container">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Our Team</h2>
-            <p className="text-xl text-muted-foreground">Meet the innovators behind Smart Assessment</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 lendi-text-primary font-display">
+              Our Team
+            </h2>
+            <p className="text-xl lendi-text-secondary">Meet the innovators behind Smart Assessment</p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
             {teamMembers.map((member, index) => (
-              <Card key={index} className="p-6 text-center hover:shadow-lg transition-shadow">
-                <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+              <Card key={index} className="lendi-card p-6 text-center hover-scale">
+                <div className="w-16 h-16 lendi-bg-primary rounded-full mx-auto mb-4 flex items-center justify-center">
                   <span className="text-white font-bold text-xl">{member.name.charAt(0)}</span>
                 </div>
-                <h3 className="text-xl font-semibold mb-2">{member.name}</h3>
+                <h3 className="text-xl font-semibold mb-2 lendi-text-primary">{member.name}</h3>
                 <p className="text-blue-600 font-medium mb-3">{member.role}</p>
-                <p className="text-muted-foreground text-sm">{member.bio}</p>
+                <p className="lendi-text-secondary text-sm">{member.bio}</p>
               </Card>
             ))}
           </div>
@@ -162,9 +170,9 @@ const SmartAssessment = () => {
       {/* Use the consistent Footer component */}
       <Footer />
 
-      {/* Floating Feedback Button */}
+      {/* Floating Feedback Button - Updated with consistent styling */}
       <Button 
-        className="fixed bottom-6 right-6 rounded-full p-4 shadow-lg bg-blue-600 hover:bg-blue-700"
+        className="fixed bottom-6 right-6 rounded-full p-4 shadow-lg lendi-button"
         size="icon"
       >
         <MessageSquare className="w-5 h-5" />
