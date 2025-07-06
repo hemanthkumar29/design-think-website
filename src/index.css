@@ -9,34 +9,24 @@
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
-
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
-
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-
     --primary: 221.2 83.2% 53.3%;
     --primary-foreground: 210 40% 98%;
-
     --secondary: 210 40% 96%;
     --secondary-foreground: 222.2 84% 4.9%;
-
     --muted: 210 40% 96%;
     --muted-foreground: 215.4 16.3% 46.9%;
-
     --accent: 210 40% 96%;
     --accent-foreground: 222.2 84% 4.9%;
-
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 221.2 83.2% 53.3%;
-
     --radius: 0.5rem;
-
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 9% 89%;
@@ -50,28 +40,20 @@
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
-
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
-
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-
     --primary: 217.2 91.2% 59.8%;
     --primary-foreground: 222.2 84% 4.9%;
-
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
-
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
-
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
-
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 224.3 76.3% 94.1%;
@@ -83,6 +65,8 @@
 
   html {
     @apply scroll-smooth;
+    /* Optimize scrolling performance */
+    scroll-behavior: smooth;
   }
 
   body {
@@ -90,6 +74,8 @@
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Optimize text rendering */
+    text-rendering: optimizeLegibility;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -97,38 +83,40 @@
     font-family: 'Poppins', 'Inter', sans-serif;
   }
   
-  /* Performance optimizations */
+  /* Optimized media elements */
   img, video {
     @apply max-w-full h-auto;
+    /* Optimize image rendering */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
   }
   
-  /* Apply hardware acceleration where needed */
-  .transform-gpu {
+  /* GPU acceleration for smooth animations */
+  .gpu-accelerated {
     transform: translateZ(0);
     will-change: transform;
+    backface-visibility: hidden;
+    perspective: 1000px;
   }
   
-  /* Optimize animations */
-  .will-change-transform {
-    will-change: transform;
-  }
-  
-  .will-change-opacity {
-    will-change: opacity;
+  /* Optimized animation base */
+  .optimized-animation {
+    transform: translateZ(0);
+    will-change: transform, opacity;
   }
 }
 
 @layer components {
   .lendi-card {
-    @apply bg-white rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-shadow duration-300;
+    @apply bg-white rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-shadow duration-300 gpu-accelerated;
   }
   
   .lendi-button {
-    @apply bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200;
+    @apply bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200 gpu-accelerated;
   }
   
   .lendi-button-outline {
-    @apply border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200;
+    @apply border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 gpu-accelerated;
   }
   
   .lendi-section {
@@ -156,12 +144,11 @@
   }
   
   .hover-scale {
-    @apply transition-transform duration-300 hover:scale-[1.02];
-    transform: translateZ(0);
+    @apply transition-transform duration-300 hover:scale-[1.02] gpu-accelerated;
   }
   
   .page-transition-enter {
-    @apply animate-fade-in;
+    @apply animate-fade-in optimized-animation;
   }
 
   .gradient-text {
@@ -173,11 +160,11 @@
   }
   
   .nav-link {
-    @apply relative px-2 py-1 text-foreground/80 transition-colors duration-200 hover:text-foreground;
+    @apply relative px-2 py-1 text-foreground/80 transition-colors duration-200 hover:text-foreground gpu-accelerated;
   }
   
   .nav-link:after {
-    @apply content-[''] absolute bottom-0 left-0 w-full h-[2px] bg-blue-600 scale-x-0 origin-bottom-right transition-transform duration-300;
+    @apply content-[''] absolute bottom-0 left-0 w-full h-[2px] bg-blue-600 scale-x-0 origin-bottom-right transition-transform duration-300 gpu-accelerated;
   }
   
   .nav-link:hover:after {
@@ -193,18 +180,45 @@
   }
   
   .card-hover {
-    @apply transition-all duration-300 hover:shadow-lg hover:border-blue-200;
-    transform: translateZ(0);
+    @apply transition-all duration-300 hover:shadow-lg hover:border-blue-200 gpu-accelerated;
   }
   
   .btn-hover {
-    @apply relative overflow-hidden transition-all duration-300 after:absolute after:inset-0 after:bg-white/10 after:opacity-0 hover:after:opacity-100 after:transition-opacity;
-    transform: translateZ(0);
+    @apply relative overflow-hidden transition-all duration-300 after:absolute after:inset-0 after:bg-white/10 after:opacity-0 hover:after:opacity-100 after:transition-opacity gpu-accelerated;
   }
   
-  /* Optimize animation performance */
-  .animation-gpu {
-    transform: translateZ(0);
-    will-change: transform;
+  /* Optimized skeleton loading */
+  .skeleton {
+    @apply bg-gray-200 animate-pulse rounded;
+  }
+  
+  /* Performance-optimized scroll areas */
+  .scroll-optimized {
+    -webkit-overflow-scrolling: touch;
+    overflow-scrolling: touch;
+  }
+  
+  /* Contain layout shifts */
+  .layout-stable {
+    contain: layout style paint;
+  }
+}
+
+/* Critical performance optimizations */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Optimize for high-DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+  img {
+    image-rendering: -webkit-optimize-contrast;
   }
 }
