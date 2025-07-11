@@ -4,6 +4,11 @@ import { fetchAllTeams, type TeamData } from './supabaseTeamService';
 // Custom event for team data updates
 const TEAMS_UPDATED_EVENT = 'teamsDataUpdated';
 
+// Cache for teams data
+let teamsCache: Team[] | null = null;
+let cacheTimestamp = 0;
+const CACHE_DURATION = 30000; // 30 seconds
+
 // Convert Supabase team data to legacy format for compatibility
 const convertSupabaseTeamToLegacy = (supabaseTeam: TeamData): Team => {
   // Find the team from initial data to get legacy fields
@@ -18,17 +23,31 @@ const convertSupabaseTeamToLegacy = (supabaseTeam: TeamData): Team => {
   };
 };
 
-// Get teams data from Supabase
+// Get teams data from Supabase with caching
 export const getTeams = async (): Promise<Team[]> => {
   try {
-    const supabaseTeams = await fetchAllTeams();
+    const now = Date.now();
     
-    if (supabaseTeams.length === 0) {
-      // Fallback to initial data if no teams in database
-      return initialTeamsData;
+    // Return cached data if still fresh
+    if (teamsCache && (now - cacheTimestamp) < CACHE_DURATION) {
+      return teamsCache;
     }
     
-    return supabaseTeams.map(convertSupabaseTeamToLegacy);
+    const supabaseTeams = await fetchAllTeams();
+    
+    let result: Team[];
+    if (supabaseTeams.length === 0) {
+      // Fallback to initial data if no teams in database
+      result = initialTeamsData;
+    } else {
+      result = supabaseTeams.map(convertSupabaseTeamToLegacy);
+    }
+    
+    // Update cache
+    teamsCache = result;
+    cacheTimestamp = now;
+    
+    return result;
   } catch (error) {
     console.error('Error loading teams data:', error);
     return initialTeamsData;
@@ -45,6 +64,10 @@ export const updateTeamProgress = (teamId: number, newProgress: number): Team[] 
   );
   
   localStorage.setItem('teamsData', JSON.stringify(updatedTeams));
+  
+  // Clear cache to force refresh
+  teamsCache = null;
+  
   window.dispatchEvent(new CustomEvent(TEAMS_UPDATED_EVENT));
   
   return updatedTeams;
@@ -81,12 +104,16 @@ export const updateMemberRating = (teamId: number, memberId: number, rating: num
   });
   
   localStorage.setItem('teamsData', JSON.stringify(updatedTeams));
+  
+  // Clear cache to force refresh
+  teamsCache = null;
+  
   window.dispatchEvent(new CustomEvent(TEAMS_UPDATED_EVENT));
   
   return updatedTeams;
 };
 
-// Get a single team by ID from Supabase
+// Get a single team by ID from cache or fetch
 export const getTeamById = async (id: number | string): Promise<Team | undefined> => {
   try {
     const teams = await getTeams();
@@ -99,7 +126,12 @@ export const getTeamById = async (id: number | string): Promise<Team | undefined
 
 // Subscribe to teams data updates
 export const subscribeToTeamsUpdates = (callback: () => void): () => void => {
-  const handler = () => callback();
+  const handler = () => {
+    // Clear cache when updates happen
+    teamsCache = null;
+    callback();
+  };
+  
   window.addEventListener(TEAMS_UPDATED_EVENT, handler);
   
   return () => window.removeEventListener(TEAMS_UPDATED_EVENT, handler);
@@ -107,5 +139,7 @@ export const subscribeToTeamsUpdates = (callback: () => void): () => void => {
 
 // Trigger updates when dashboard data changes
 window.addEventListener('dashboardDataUpdated', () => {
+  // Clear cache when dashboard updates
+  teamsCache = null;
   window.dispatchEvent(new CustomEvent(TEAMS_UPDATED_EVENT));
 });

@@ -131,9 +131,16 @@
     @apply bg-gray-50;
   }
   
-  /* Simplified animations - only essential ones */
-  .page-transition-enter {
-    @apply animate-fade-in;
+  /* Essential animations only - removed most for performance */
+  .fade-in {
+    opacity: 0;
+    animation: fadeIn 0.2s ease-out forwards;
+  }
+
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+    }
   }
 
   .gradient-text {

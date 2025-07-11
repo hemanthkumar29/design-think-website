@@ -20,22 +20,38 @@ const TeamCard: React.FC<TeamCardProps> = memo(({ id, name, progress: initialPro
   const navigate = useNavigate();
   const [progress, setProgress] = useState(initialProgress);
   const [team, setTeam] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   
   // Subscribe to team updates and load team data
   useEffect(() => {
+    let isMounted = true;
+    
     const loadTeamData = async () => {
-      const teamData = await getTeamById(id);
-      if (teamData) {
-        setTeam(teamData);
-        setProgress(teamData.progress);
+      try {
+        const teamData = await getTeamById(id);
+        if (teamData && isMounted) {
+          setTeam(teamData);
+          setProgress(teamData.progress);
+        }
+      } catch (error) {
+        console.error('Error loading team data:', error);
+      } finally {
+        if (isMounted) {
+          setIsLoading(false);
+        }
       }
     };
 
     const updateTeam = async () => {
-      const updatedTeam = await getTeamById(id);
-      if (updatedTeam) {
-        setTeam(updatedTeam);
-        setProgress(updatedTeam.progress);
+      if (!isMounted) return;
+      try {
+        const updatedTeam = await getTeamById(id);
+        if (updatedTeam && isMounted) {
+          setTeam(updatedTeam);
+          setProgress(updatedTeam.progress);
+        }
+      } catch (error) {
+        console.error('Error updating team data:', error);
       }
     };
     
@@ -46,6 +62,7 @@ const TeamCard: React.FC<TeamCardProps> = memo(({ id, name, progress: initialPro
     const unsubscribe = subscribeToTeamsUpdates(updateTeam);
     
     return () => {
+      isMounted = false;
       unsubscribe();
     };
   }, [id]);
@@ -55,10 +72,33 @@ const TeamCard: React.FC<TeamCardProps> = memo(({ id, name, progress: initialPro
     navigate(`/team/${id}`);
   }, [navigate, id]);
 
+  if (isLoading) {
+    return (
+      <div 
+        className={cn(
+          'bg-white p-6 rounded-xl shadow-md border border-gray-200',
+          className
+        )}
+      >
+        <div className="space-y-4">
+          <div className="min-h-[40px] flex items-start">
+            <div className="h-5 bg-gray-200 rounded w-3/4"></div>
+          </div>
+          <div className="space-y-2">
+            <div className="h-3 bg-gray-200 rounded w-1/2"></div>
+            <div className="h-3 bg-gray-200 rounded w-full"></div>
+          </div>
+          <div className="h-2 bg-gray-200 rounded w-full"></div>
+          <div className="h-8 bg-gray-200 rounded w-full"></div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div 
       className={cn(
-        'glass-card p-6 rounded-xl hover-scale group cursor-pointer transform-gpu',
+        'bg-white p-6 rounded-xl shadow-md border border-gray-200 hover:shadow-lg cursor-pointer transform-gpu will-change-transform',
         className
       )}
       onClick={handleCardClick}
@@ -88,7 +128,7 @@ const TeamCard: React.FC<TeamCardProps> = memo(({ id, name, progress: initialPro
                   <span className="text-xs font-medium">Team Members:</span>
                 </div>
                 <ul className="text-xs opacity-70 space-y-0.5 pl-4">
-                  {team.members.map((member) => (
+                  {team.members.slice(0, 3).map((member) => (
                     <li key={member.id} className="truncate flex items-center justify-between">
                       <span>{member.name}</span>
                       {member.rating && member.rating > 0 && (
@@ -96,6 +136,9 @@ const TeamCard: React.FC<TeamCardProps> = memo(({ id, name, progress: initialPro
                       )}
                     </li>
                   ))}
+                  {team.members.length > 3 && (
+                    <li className="text-xs opacity-50">+{team.members.length - 3} more</li>
+                  )}
                 </ul>
               </div>
             )}
@@ -109,7 +152,7 @@ const TeamCard: React.FC<TeamCardProps> = memo(({ id, name, progress: initialPro
         />
         
         <Button 
-          className="w-full transition-all duration-300 mt-2 opacity-90 group-hover:opacity-100"
+          className="w-full mt-2 opacity-90 hover:opacity-100"
           size="sm"
         >
           View Project

@@ -60,7 +60,7 @@ const Presentations = () => {
       
       <main className="flex-grow pt-24 pb-20 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12 space-y-4 animate-slide-down">
+          <div className="text-center mb-12 space-y-4">
             <span className="inline-block py-1 px-3 bg-blue-50 text-blue-600 rounded-lg text-sm font-medium">
               Resources
             </span>
@@ -71,11 +71,11 @@ const Presentations = () => {
           </div>
           
           {/* Search Bar */}
-          <div className="mb-10 max-w-3xl mx-auto animate-slide-up">
+          <div className="mb-10 max-w-3xl mx-auto">
             <input
               type="text"
               placeholder="Search presentations by team name, project, or team leader..."
-              className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+              className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -90,7 +90,7 @@ const Presentations = () => {
                 return (
                   <div 
                     key={team.id} 
-                    className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 animate-fade-in"
+                    className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl"
                   >
                     <div className="bg-blue-50 p-4 flex items-center justify-between">
                       <div className="flex items-center gap-2">
@@ -151,7 +151,7 @@ const Presentations = () => {
           </div>
           
           {/* Team Count */}
-          <div className="mt-8 text-center text-sm text-muted-foreground animate-fade-in">
+          <div className="mt-8 text-center text-sm text-muted-foreground">
             Showing {sortedTeams.length} of {teams.length} teams
           </div>
         </div>

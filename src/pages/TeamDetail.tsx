@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import ProgressBar from '@/components/ui/ProgressBar';
@@ -165,14 +166,14 @@ const TeamDetail = () => {
                 </div>
               </div>
               
-              <div className="relative group">
-                <div className="absolute -inset-2 bg-gradient-to-r from-blue-200 to-indigo-200 rounded-lg blur opacity-50 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
-                <div className="relative overflow-hidden rounded-lg shadow-lg">
+              <div className="relative">
+                <div className="overflow-hidden rounded-lg shadow-lg">
                   <Avatar className="w-full h-auto object-cover aspect-[4/3]">
                     <AvatarImage 
                       src={team.leader.image} 
                       alt={team.leader.name}
                       className="w-full h-auto aspect-[4/3] object-cover"
+                      loading="eager"
                     />
                     <AvatarFallback className="w-full h-auto aspect-[4/3] text-5xl bg-gradient-to-r from-blue-100 to-indigo-100">
                       {getInitials(team.leader.name)}
@@ -214,6 +215,7 @@ const TeamDetail = () => {
                   controls
                   className="w-full h-full object-contain"
                   poster={displayImages[0]}
+                  preload="metadata"
                   onError={(e) => {
                     const el = e.currentTarget;
                     el.onerror = null; 
@@ -250,13 +252,14 @@ const TeamDetail = () => {
             </h2>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-              <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border-2 border-yellow-400">
+              <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl border-2 border-yellow-400">
                 <div className="aspect-square overflow-hidden relative">
                   <Avatar className="w-full h-full">
                     <AvatarImage 
                       src={team.leader.image} 
                       alt={team.leader.name} 
-                      className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                      className="w-full h-full object-cover"
+                      loading="lazy"
                     />
                     <AvatarFallback className="w-full h-full text-3xl bg-gradient-to-r from-yellow-100 to-amber-100">
                       {getInitials(team.leader.name)}
@@ -282,14 +285,15 @@ const TeamDetail = () => {
               {team.members.map((member) => (
                 <div 
                   key={member.id} 
-                  className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300"
+                  className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl"
                 >
                   <div className="aspect-square overflow-hidden">
                     <Avatar className="w-full h-full">
                       <AvatarImage 
                         src={member.image} 
                         alt={member.name} 
-                        className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                        className="w-full h-full object-cover"
+                        loading="lazy"
                       />
                       <AvatarFallback className="w-full h-full text-3xl bg-gradient-to-r from-blue-100 to-indigo-100">
                         {getInitials(member.name)}
@@ -325,12 +329,13 @@ const TeamDetail = () => {
               {displayImages.map((image, index) => (
                 <div 
                   key={index} 
-                  className="overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
+                  className="overflow-hidden rounded-lg shadow-lg hover:shadow-xl"
                 >
                   <img 
                     src={image} 
                     alt={`Project image ${index + 1} for Team ${team.id}`} 
-                    className="w-full h-auto aspect-video object-cover transition-transform duration-300 hover:scale-105"
+                    className="w-full h-auto aspect-video object-cover"
+                    loading="lazy"
                     onError={(e) => {
                       console.log(`Failed to load image: ${image}`);
                       const placeholders = [
