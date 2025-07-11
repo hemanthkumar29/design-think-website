@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+
+import React, { useState, useEffect, useCallback } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { Menu, X, LogIn, Lightbulb } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -9,14 +10,30 @@ const Navbar: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
 
+  // Optimized scroll handler with throttling
+  const handleScroll = useCallback(() => {
+    const scrolled = window.scrollY > 10;
+    if (scrolled !== isScrolled) {
+      setIsScrolled(scrolled);
+    }
+  }, [isScrolled]);
+
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
+    // Throttle scroll events for better performance
+    let ticking = false;
+    const throttledScrollHandler = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    window.addEventListener('scroll', throttledScrollHandler, { passive: true });
+    return () => window.removeEventListener('scroll', throttledScrollHandler);
+  }, [handleScroll]);
 
   useEffect(() => {
     setIsMobileMenuOpen(false);
@@ -25,7 +42,7 @@ const Navbar: React.FC = () => {
   return (
     <header
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out px-6 md:px-10 py-4',
+        'fixed top-0 left-0 right-0 z-50 px-6 md:px-10 py-4',
         isScrolled ? 'bg-white shadow-lg' : 'bg-white/95 backdrop-blur-sm'
       )}
     >
@@ -35,6 +52,9 @@ const Navbar: React.FC = () => {
             src="/lovable-uploads/41483ebe-d661-4c71-9a57-26359e0d9b6d.png" 
             alt="Lendi Institute Logo" 
             className="h-10 w-auto"
+            width="40"
+            height="40"
+            loading="eager"
             onError={(e) => {
               const target = e.target as HTMLImageElement;
               target.style.display = 'none';
@@ -49,7 +69,7 @@ const Navbar: React.FC = () => {
           <NavLink 
             to="/" 
             className={({ isActive }) => cn(
-              'text-gray-700 hover:text-blue-900 font-medium transition-colors duration-200',
+              'text-gray-700 hover:text-blue-900 font-medium',
               isActive && 'text-blue-900 font-semibold'
             )}
           >
@@ -58,7 +78,7 @@ const Navbar: React.FC = () => {
           <NavLink 
             to="/smart-assessment" 
             className={({ isActive }) => cn(
-              'text-gray-700 hover:text-blue-900 font-medium transition-colors duration-200 flex items-center gap-1',
+              'text-gray-700 hover:text-blue-900 font-medium flex items-center gap-1',
               isActive && 'text-blue-900 font-semibold'
             )}
           >
@@ -68,7 +88,7 @@ const Navbar: React.FC = () => {
           <NavLink 
             to="/teams" 
             className={({ isActive }) => cn(
-              'text-gray-700 hover:text-blue-900 font-medium transition-colors duration-200',
+              'text-gray-700 hover:text-blue-900 font-medium',
               isActive && 'text-blue-900 font-semibold'
             )}
           >
@@ -77,7 +97,7 @@ const Navbar: React.FC = () => {
           <NavLink 
             to="/student-login" 
             className={({ isActive }) => cn(
-              'text-gray-700 hover:text-blue-900 font-medium transition-colors duration-200 flex items-center gap-1',
+              'text-gray-700 hover:text-blue-900 font-medium flex items-center gap-1',
               isActive && 'text-blue-900 font-semibold'
             )}
           >
@@ -87,7 +107,7 @@ const Navbar: React.FC = () => {
           <NavLink 
             to="/about" 
             className={({ isActive }) => cn(
-              'text-gray-700 hover:text-blue-900 font-medium transition-colors duration-200',
+              'text-gray-700 hover:text-blue-900 font-medium',
               isActive && 'text-blue-900 font-semibold'
             )}
           >

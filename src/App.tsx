@@ -1,3 +1,4 @@
+
 import React, { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -5,19 +6,19 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
-import Index from "./pages/Index";
-import Teams from "./pages/Teams";
-import TeamDetail from "./pages/TeamDetail";
-import Presentations from "./pages/Presentations";
-import About from "./pages/About";
-import SmartAssessment from "./pages/SmartAssessment";
 
-// Only lazy load admin pages that are less frequently accessed
+// Preload critical components immediately
+import Index from "./pages/Index";
+
+// Lazy load all other pages for better initial bundle size
+const Teams = lazy(() => import("./pages/Teams"));
+const TeamDetail = lazy(() => import("./pages/TeamDetail"));
+const Presentations = lazy(() => import("./pages/Presentations"));
+const About = lazy(() => import("./pages/About"));
+const SmartAssessment = lazy(() => import("./pages/SmartAssessment"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Admin = lazy(() => import("./pages/Admin"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
-
-// Add new imports for the student login and dashboard
 const StudentLogin = lazy(() => import("./pages/StudentLogin"));
 const TeamDashboard = lazy(() => import("./pages/TeamDashboard"));
 
@@ -25,24 +26,26 @@ const TeamDashboard = lazy(() => import("./pages/TeamDashboard"));
 import { AdminProvider } from "./context/AdminContext";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 
-// Create a client outside of the render function
+// Optimized query client with better performance settings
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 5 * 60 * 1000, // 5 minutes
-      gcTime: 10 * 60 * 1000, // 10 minutes (replacing cacheTime)
+      staleTime: 10 * 60 * 1000, // 10 minutes - increased for better caching
+      gcTime: 30 * 60 * 1000, // 30 minutes - increased for better memory management
+      retry: 1, // Reduced retries for faster error handling
+      refetchOnWindowFocus: false, // Prevent unnecessary refetches
     },
   },
 });
 
-// Minimal loading fallback component
-const PageLoader = () => (
-  <div className="min-h-screen flex items-center justify-center">
-    <div className="w-8 h-8 border-2 border-blue-200 border-t-blue-500 rounded-full animate-spin"></div>
+// Optimized loading component with minimal DOM
+const PageLoader = React.memo(() => (
+  <div className="min-h-screen flex items-center justify-center bg-gray-50">
+    <div className="w-6 h-6 border-2 border-blue-200 border-t-blue-500 rounded-full animate-spin"></div>
   </div>
-);
+));
 
-// Define App as a proper React function component
+// Define App as a proper React function component with performance optimizations
 function App() {
   return (
     <QueryClientProvider client={queryClient}>

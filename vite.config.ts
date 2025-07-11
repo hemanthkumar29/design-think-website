@@ -21,7 +21,7 @@ export default defineConfig(({ mode }) => ({
     },
   },
   build: {
-    // Enable minification based on mode
+    // Enhanced minification for better performance
     minify: mode === 'production' ? 'terser' : true,
     terserOptions: {
       compress: {
@@ -29,23 +29,68 @@ export default defineConfig(({ mode }) => ({
         drop_console: mode === 'production',
         // Remove debugger statements in production
         drop_debugger: mode === 'production',
+        // Additional optimizations
+        pure_funcs: mode === 'production' ? ['console.log', 'console.warn'] : [],
+        passes: 2, // Multiple passes for better compression
+      },
+      mangle: {
+        safari10: true, // Fix Safari 10 issues
       },
     },
-    // Generate source maps for debugging
-    sourcemap: mode !== 'production',
-    // Split chunks for better caching
+    // Generate source maps only in development
+    sourcemap: mode === 'development',
+    // Optimized chunk splitting for better caching
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom'],
-          ui: ['@/components/ui'],
+          // Core React libraries
+          vendor: ['react', 'react-dom'],
+          // Router for navigation
+          router: ['react-router-dom'],
+          // UI components
+          ui: ['@radix-ui/react-slot', '@radix-ui/react-toast'],
+          // Query library
+          query: ['@tanstack/react-query'],
+          // Icons
+          icons: ['lucide-react'],
         },
+        // Optimize chunk file names
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        entryFileNames: 'assets/js/[name]-[hash].js',
+        assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
       },
     },
     // Optimize assets
-    assetsInlineLimit: 4096, // 4kb
+    assetsInlineLimit: 2048, // 2kb - reduced for better caching
+    // Target modern browsers for better performance
+    target: 'es2020',
+    // Enable CSS code splitting
+    cssCodeSplit: true,
   },
   optimizeDeps: {
-    include: ['react', 'react-dom', 'react-router-dom'],
+    // Pre-bundle dependencies for faster dev server startup
+    include: [
+      'react', 
+      'react-dom', 
+      'react-router-dom',
+      '@tanstack/react-query',
+      'lucide-react',
+    ],
+    // Exclude large dependencies that change frequently
+    exclude: ['@supabase/supabase-js'],
+  },
+  // Enhanced CSS optimization
+  css: {
+    devSourcemap: mode === 'development',
+    preprocessorOptions: {
+      // Add any CSS preprocessing options here
+    },
+  },
+  // Performance optimizations
+  esbuild: {
+    // Remove console logs in production
+    drop: mode === 'production' ? ['console', 'debugger'] : [],
+    // Optimize for modern browsers
+    target: 'es2020',
   },
 }));
