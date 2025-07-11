@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -7,10 +6,8 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import PageSEO from '@/components/SEO/PageSEO';
 import { ChevronRight, Lightbulb, Users, Award, BookOpen } from 'lucide-react';
-
 const Index = () => {
   const navigate = useNavigate();
-
   useEffect(() => {
     const elements = document.querySelectorAll('.animate-on-load');
     elements.forEach((element, index) => {
@@ -20,14 +17,8 @@ const Index = () => {
       }, 200 * index);
     });
   }, []);
-
-  return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
-      <PageSEO 
-        title="Home" 
-        description="Explore innovative solutions to engineering challenges through creative problem-solving and human-centered design at Lendi Institute's Design Thinking & Innovation program." 
-        keywords="design thinking, innovation, electrical engineering, EEE, Lendi Institute, engineering projects, creative solutions" 
-      />
+  return <div className="flex flex-col min-h-screen bg-gray-50">
+      <PageSEO title="Home" description="Explore innovative solutions to engineering challenges through creative problem-solving and human-centered design at Lendi Institute's Design Thinking & Innovation program." keywords="design thinking, innovation, electrical engineering, EEE, Lendi Institute, engineering projects, creative solutions" />
       
       <Navbar />
       
@@ -36,27 +27,11 @@ const Index = () => {
         <section className="relative bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 text-white py-20 px-6">
           <div className="absolute inset-0 bg-black/20"></div>
           <div className="relative max-w-7xl mx-auto">
-            <div className="flex justify-center mb-8 animate-on-load opacity-0 relative">
-              <img 
-                src="/lovable-uploads/7fb8fae3-edc3-4aaf-b4c7-88521a846c1a.png" 
-                alt="Lendi Institute Logo Background" 
-                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-32 md:h-40 w-auto opacity-10 z-0"
-                loading="eager" 
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.style.display = 'none';
-                }} 
-              />
-              <img 
-                src="https://lendi.org/GRCL/logo.png" 
-                alt="Lendi Institute of Engineering and Technology Logo" 
-                className="h-20 md:h-24 w-auto filter brightness-110 relative z-10" 
-                loading="eager" 
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.style.display = 'none';
-                }} 
-              />
+            <div className="flex justify-center mb-8 animate-on-load opacity-0">
+              <img src="https://lendi.org/GRCL/logo.png" alt="Lendi Institute of Engineering and Technology Logo" className="h-20 md:h-24 w-auto filter brightness-110" loading="eager" onError={e => {
+              const target = e.target as HTMLImageElement;
+              target.style.display = 'none';
+            }} />
             </div>
             
             <div className="text-center space-y-6">
@@ -71,22 +46,13 @@ const Index = () => {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center animate-on-load opacity-0">
-                <Button 
-                  size="lg" 
-                  onClick={() => navigate('/smart-assessment')} 
-                  className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 text-lg font-semibold rounded-lg shadow-lg transition-all duration-300"
-                >
+                <Button size="lg" onClick={() => navigate('/smart-assessment')} className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 text-lg font-semibold rounded-lg shadow-lg transition-all duration-300">
                   <Lightbulb className="w-5 h-5 mr-2" />
                   Smart Assessment Project
                   <ChevronRight className="w-5 h-5 ml-2" />
                 </Button>
                 
-                <Button 
-                  size="lg" 
-                  variant="outline" 
-                  onClick={() => navigate('/teams')} 
-                  className="border-2 border-white hover:bg-white px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300 text-blue-800"
-                >
+                <Button size="lg" variant="outline" onClick={() => navigate('/teams')} className="border-2 border-white hover:bg-white px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300 text-blue-800">
                   <Users className="w-5 h-5 mr-2" />
                   Explore Teams
                 </Button>
@@ -135,6 +101,7 @@ const Index = () => {
           </div>
         </section>
 
+        {/* Mentor Section */}
         <section className="py-16 px-6 bg-gray-50">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12">
@@ -150,16 +117,10 @@ const Index = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-8">
                 <div className="relative">
                   <div className="aspect-square max-w-sm mx-auto overflow-hidden rounded-lg">
-                    <img 
-                      src={mentorData.image} 
-                      alt={`${mentorData.name} - ${mentorData.title}`} 
-                      className="w-full h-full object-cover" 
-                      loading="lazy" 
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.src = "https://lendi.edu.in//cloud/2024/12/27/1735293134_cropped-image.jpg.jpg";
-                      }} 
-                    />
+                    <img src={mentorData.image} alt={`${mentorData.name} - ${mentorData.title}`} className="w-full h-full object-cover" loading="lazy" onError={e => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = "https://lendi.edu.in//cloud/2024/12/27/1735293134_cropped-image.jpg.jpg";
+                  }} />
                   </div>
                 </div>
                 
@@ -183,6 +144,7 @@ const Index = () => {
           </div>
         </section>
 
+        {/* Call to Action */}
         <section className="py-16 px-6 bg-blue-900 text-white">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
@@ -193,20 +155,11 @@ const Index = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                size="lg" 
-                onClick={() => navigate('/smart-assessment')} 
-                className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 text-lg font-semibold rounded-lg"
-              >
+              <Button size="lg" onClick={() => navigate('/smart-assessment')} className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 text-lg font-semibold rounded-lg">
                 View Smart Assessment
               </Button>
               
-              <Button 
-                size="lg" 
-                variant="outline" 
-                onClick={() => navigate('/about')} 
-                className="border-2 border-white text-white hover:bg-white hover:text-blue-900 px-8 py-4 text-lg font-semibold rounded-lg"
-              >
+              <Button size="lg" variant="outline" onClick={() => navigate('/about')} className="border-2 border-white text-white hover:bg-white hover:text-blue-900 px-8 py-4 text-lg font-semibold rounded-lg">
                 Learn More
               </Button>
             </div>
@@ -215,8 +168,6 @@ const Index = () => {
       </main>
       
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
