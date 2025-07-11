@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { Menu, X, LogIn, Lightbulb } from 'lucide-react';
@@ -33,7 +32,7 @@ const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <NavLink to="/" className="flex items-center space-x-3">
           <img 
-            src="https://lendi.org/GRCL/logo.png" 
+            src="/lovable-uploads/41483ebe-d661-4c71-9a57-26359e0d9b6d.png" 
             alt="Lendi Institute Logo" 
             className="h-10 w-auto"
             onError={(e) => {
@@ -106,7 +105,6 @@ const Navbar: React.FC = () => {
         </button>
       </div>
 
-      {/* Mobile menu */}
       {isMobileMenuOpen && (
         <div className="md:hidden absolute top-full left-0 right-0 bg-white shadow-lg border-t border-gray-200">
           <nav className="flex flex-col py-4 px-6 space-y-4">
