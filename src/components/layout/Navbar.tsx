@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { Menu, X, LogIn, Lightbulb } from 'lucide-react';
@@ -31,17 +30,26 @@ const Navbar: React.FC = () => {
       )}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <NavLink to="/" className="flex items-center space-x-3">
+        <NavLink to="/" className="flex items-center space-x-3 relative">
           <img 
-            src="https://lendi.org/GRCL/logo.png" 
-            alt="Lendi Institute Logo" 
-            className="h-10 w-auto"
+            src="/lovable-uploads/7fb8fae3-edc3-4aaf-b4c7-88521a846c1a.png" 
+            alt="Lendi Institute Logo Background" 
+            className="absolute -left-8 top-1/2 transform -translate-y-1/2 h-16 w-auto opacity-20 z-0"
             onError={(e) => {
               const target = e.target as HTMLImageElement;
               target.style.display = 'none';
             }}
           />
-          <div className="text-lg md:text-xl font-bold text-blue-900">
+          <img 
+            src="https://lendi.org/GRCL/logo.png" 
+            alt="Lendi Institute Logo" 
+            className="h-10 w-auto relative z-10"
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.style.display = 'none';
+            }}
+          />
+          <div className="text-lg md:text-xl font-bold text-blue-900 relative z-10">
             DT&I EEE-A
           </div>
         </NavLink>
