@@ -35,7 +35,7 @@ const Index = () => {
         <section className="relative bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 text-white py-20 px-6">
           <div className="absolute inset-0 bg-black/20"></div>
           <div className="relative max-w-7xl mx-auto">
-            <div className="flex justify-center mb-8 animate-on-load opacity-0">
+            <div className="flex justify-center mb-4 animate-on-load opacity-0">
               <img 
                 src="/lovable-uploads/41483ebe-d661-4c71-9a57-26359e0d9b6d.png" 
                 alt="Lendi Institute of Engineering and Technology Logo" 
