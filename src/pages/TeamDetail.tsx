@@ -20,6 +20,7 @@ const TeamDetail = () => {
   const [team, setTeam] = useState(null);
   const [supabaseTeamData, setSupabaseTeamData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [availableImages, setAvailableImages] = useState([]);
   
   const loadTeamData = async () => {
     if (id) {
@@ -31,6 +32,9 @@ const TeamDetail = () => {
         // Load Supabase data for updated content
         const supabaseData = await fetchTeamData(parseInt(id));
         setSupabaseTeamData(supabaseData);
+        
+        // Check for available project images
+        await checkAvailableImages(id);
       } catch (error) {
         console.error('Error loading team data:', error);
         navigate('/teams');
@@ -38,6 +42,32 @@ const TeamDetail = () => {
         setIsLoading(false);
       }
     }
+  };
+
+  const checkAvailableImages = async (teamId) => {
+    const imageUrls = [];
+    
+    // Check for up to 3 project images
+    for (let i = 1; i <= 3; i++) {
+      const imageUrl = `/project-images/team${teamId}/project${i}.jpg`;
+      
+      try {
+        // Create a promise to check if image exists
+        await new Promise((resolve, reject) => {
+          const img = new Image();
+          img.onload = resolve;
+          img.onerror = reject;
+          img.src = imageUrl;
+        });
+        
+        imageUrls.push(imageUrl);
+      } catch (error) {
+        // Image doesn't exist, skip it
+        console.log(`Image ${imageUrl} not found`);
+      }
+    }
+    
+    setAvailableImages(imageUrls);
   };
   
   useEffect(() => {
@@ -103,24 +133,8 @@ const TeamDetail = () => {
     .filter(m => m.media_type === 'video')
     .map(m => m.file_url) || [];
 
-  // Enhanced image handling - check both uploaded and static images
-  const getProjectImages = () => {
-    // If we have uploaded images, use them
-    if (projectImages.length > 0) {
-      console.log('Using uploaded project images:', projectImages);
-      return projectImages.slice(0, 3); // Ensure we only show 3 images
-    }
-    
-    // Otherwise, use static images from project-images folder
-    console.log(`Using static images for team ${team.id}`);
-    return [
-      `/project-images/team${team.id}/project1.jpg`,
-      `/project-images/team${team.id}/project2.jpg`,
-      `/project-images/team${team.id}/project3.jpg`,
-    ];
-  };
-
-  const displayImages = getProjectImages();
+  // Use uploaded images first, then fall back to static images if they exist
+  const displayImages = projectImages.length > 0 ? projectImages.slice(0, 3) : availableImages;
   const videoUrl = projectVideos.length > 0 ? projectVideos[0] : `/team_videos/team_${team.id}.mp4`;
   
   return (
@@ -315,48 +329,45 @@ const TeamDetail = () => {
           </div>
         </section>
         
-        <section className="py-16 px-6 bg-white">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">
-              <span className="inline-block py-1 px-3 bg-blue-50 text-blue-600 rounded-lg text-sm font-medium mb-2">
-                Gallery
-              </span>
-              <br />
-              Project Showcase
-            </h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {displayImages.map((image, index) => (
-                <div 
-                  key={index} 
-                  className="overflow-hidden rounded-lg shadow-lg hover:shadow-xl"
-                >
-                  <img 
-                    src={image} 
-                    alt={`Project image ${index + 1} for Team ${team.id}`} 
-                    className="w-full h-auto aspect-video object-cover"
-                    loading="lazy"
-                    onError={(e) => {
-                      console.log(`Failed to load image: ${image}`);
-                      const placeholders = [
-                        "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80",
-                        "https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80",
-                        "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
-                      ];
-                      e.currentTarget.src = placeholders[index % placeholders.length];
-                    }}
-                  />
-                </div>
-              ))}
+        {displayImages.length > 0 && (
+          <section className="py-16 px-6 bg-white">
+            <div className="max-w-6xl mx-auto">
+              <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">
+                <span className="inline-block py-1 px-3 bg-blue-50 text-blue-600 rounded-lg text-sm font-medium mb-2">
+                  Gallery
+                </span>
+                <br />
+                Project Showcase
+              </h2>
+              
+              <div className={`grid gap-8 ${
+                displayImages.length === 1 ? 'grid-cols-1 max-w-2xl mx-auto' :
+                displayImages.length === 2 ? 'grid-cols-1 md:grid-cols-2' :
+                'grid-cols-1 md:grid-cols-3'
+              }`}>
+                {displayImages.map((image, index) => (
+                  <div 
+                    key={index} 
+                    className="overflow-hidden rounded-lg shadow-lg hover:shadow-xl"
+                  >
+                    <img 
+                      src={image} 
+                      alt={`Project image ${index + 1} for Team ${team.id}`} 
+                      className="w-full h-auto aspect-video object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                ))}
+              </div>
+              
+              <div className="mt-8 text-center">
+                <p className="text-sm text-muted-foreground">
+                  Project images from Team {team.id}'s development process ({displayImages.length} image{displayImages.length !== 1 ? 's' : ''})
+                </p>
+              </div>
             </div>
-            
-            <div className="mt-8 text-center">
-              <p className="text-sm text-muted-foreground">
-                Project images from Team {team.id}'s development process and final presentation
-              </p>
-            </div>
-          </div>
-        </section>
+          </section>
+        )}
       </main>
       
       <Footer />
