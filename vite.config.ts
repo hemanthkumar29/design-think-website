@@ -53,8 +53,6 @@ export default defineConfig(({ mode }) => ({
           query: ['@tanstack/react-query'],
           // Icons
           icons: ['lucide-react'],
-          // Supabase as separate chunk to avoid module conflicts
-          supabase: ['@supabase/supabase-js'],
         },
         // Optimize chunk file names
         chunkFileNames: 'assets/js/[name]-[hash].js',
@@ -71,10 +69,11 @@ export default defineConfig(({ mode }) => ({
     // Ensure proper module format
     commonjsOptions: {
       transformMixedEsModules: true,
+      include: [/node_modules/],
     },
   },
   optimizeDeps: {
-    // Pre-bundle dependencies for faster dev server startup
+    // Pre-bundle core dependencies only
     include: [
       'react', 
       'react-dom', 
@@ -82,10 +81,17 @@ export default defineConfig(({ mode }) => ({
       '@tanstack/react-query',
       'lucide-react',
     ],
-    // Force ESM for Supabase to avoid module format conflicts
+    // Completely exclude all Supabase packages from pre-bundling
+    exclude: [
+      '@supabase/supabase-js',
+      '@supabase/postgrest-js',
+      '@supabase/realtime-js',
+      '@supabase/storage-js',
+      '@supabase/functions-js',
+      '@supabase/auth-js',
+    ],
+    // Force re-optimization on every build
     force: true,
-    // Exclude Supabase to prevent pre-bundling conflicts
-    exclude: ['@supabase/supabase-js', '@supabase/postgrest-js'],
   },
   // Enhanced CSS optimization
   css: {
@@ -101,8 +107,13 @@ export default defineConfig(({ mode }) => ({
     // Optimize for modern browsers
     target: 'es2020',
   },
-  // Fix for Supabase module resolution
+  // Module resolution fixes
   define: {
     global: 'globalThis',
+    'process.env': '{}',
+  },
+  // SSR-related fixes
+  ssr: {
+    noExternal: ['@supabase/supabase-js'],
   },
 }));
