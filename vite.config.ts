@@ -53,6 +53,8 @@ export default defineConfig(({ mode }) => ({
           query: ['@tanstack/react-query'],
           // Icons
           icons: ['lucide-react'],
+          // Supabase as separate chunk to avoid module conflicts
+          supabase: ['@supabase/supabase-js'],
         },
         // Optimize chunk file names
         chunkFileNames: 'assets/js/[name]-[hash].js',
@@ -66,6 +68,10 @@ export default defineConfig(({ mode }) => ({
     target: 'es2020',
     // Enable CSS code splitting
     cssCodeSplit: true,
+    // Ensure proper module format
+    commonjsOptions: {
+      transformMixedEsModules: true,
+    },
   },
   optimizeDeps: {
     // Pre-bundle dependencies for faster dev server startup
@@ -76,8 +82,10 @@ export default defineConfig(({ mode }) => ({
       '@tanstack/react-query',
       'lucide-react',
     ],
-    // Exclude large dependencies that change frequently
-    exclude: ['@supabase/supabase-js'],
+    // Force ESM for Supabase to avoid module format conflicts
+    force: true,
+    // Exclude Supabase to prevent pre-bundling conflicts
+    exclude: ['@supabase/supabase-js', '@supabase/postgrest-js'],
   },
   // Enhanced CSS optimization
   css: {
@@ -92,5 +100,9 @@ export default defineConfig(({ mode }) => ({
     drop: mode === 'production' ? ['console', 'debugger'] : [],
     // Optimize for modern browsers
     target: 'es2020',
+  },
+  // Fix for Supabase module resolution
+  define: {
+    global: 'globalThis',
   },
 }));
