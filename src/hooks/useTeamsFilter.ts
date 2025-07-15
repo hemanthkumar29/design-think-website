@@ -1,8 +1,23 @@
 
 import { useMemo } from 'react';
 
+interface Team {
+  id: number;
+  name: string;
+  description: string;
+  progress: number;
+  leader: {
+    name: string;
+    role: string;
+  };
+  members: Array<{
+    name: string;
+    role: string;
+  }>;
+}
+
 interface UseTeamsFilterProps {
-  teams: any[];
+  teams: Team[];
   searchQuery: string;
   selectedProgress: string;
 }

@@ -30,11 +30,11 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 15 * 60 * 1000, // 15 minutes - increased for better caching
-      gcTime: 45 * 60 * 1000, // 45 minutes - increased for better memory management
-      retry: 1, // Reduced retries for faster error handling
-      refetchOnWindowFocus: false, // Prevent unnecessary refetches
-      refetchOnReconnect: false, // Prevent refetch on reconnect
+      staleTime: 15 * 60 * 1000,
+      gcTime: 45 * 60 * 1000,
+      retry: 1,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
     },
   },
 });
@@ -46,7 +46,6 @@ const PageLoader = React.memo(() => (
   </div>
 ));
 
-// Define App as a proper React function component with performance optimizations
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
