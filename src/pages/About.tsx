@@ -2,265 +2,229 @@
 import React from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import { Button } from '@/components/ui/button';
-import { ExternalLink, School, GraduationCap, Rocket, Target, Users, Award } from 'lucide-react';
 import PageSEO from '@/components/SEO/PageSEO';
-import { Separator } from '@/components/ui/separator';
+import { mentorData } from '@/data/teamsData';
+import { Award, BookOpen, Lightbulb, Users, Target, Zap } from 'lucide-react';
 
 const About = () => {
-  const managementMembers = [
-    {
-      name: "Sri P. Madhusudhan Rao",
-      designation: "Chairman",
-      image: "https://lendi.edu.in//cloud/2024/11/19/1732023045_chairman1.jpeg"
-    },
-    {
-      name: "Sri P. Srinivasa Rao",
-      designation: "Vice Chairman",
-      image: "https://lendi.edu.in//cloud/2024/11/19/1732023050_vicechairman1.jpeg"
-    },
-    {
-      name: "Sri K. Siva Rama Krishna",
-      designation: "Secretary & Correspondent",
-      image: "https://lendi.edu.in//cloud/2024/11/19/1732023056_secretary1.jpeg"
-    }
-  ];
-
   return (
-    <div className="min-h-screen flex flex-col">
-      <PageSEO
-        title="About Lendi Institute"
-        description="Learn about Lendi Institute of Engineering and Technology and our Electrical & Electronics Engineering department."
-        keywords="Lendi Institute, engineering college, Vizianagaram, Andhra Pradesh, EEE department, electrical engineering"
+    <div className="flex flex-col min-h-screen bg-gray-50">
+      <PageSEO 
+        title="About"
+        description="Learn about the Design Thinking & Innovation program in the Department of Electrical & Electronic Engineering at Lendi Institute of Engineering & Technology."
+        keywords="design thinking, innovation, electrical engineering, EEE department, Lendi Institute, about us, engineering education"
       />
       
       <Navbar />
       
-      <main className="flex-1 pt-24 pb-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">About Us</h1>
-            <div className="w-20 h-1 bg-primary mx-auto rounded"></div>
+      <main className="flex-grow pt-24 pb-20">
+        {/* Hero Section */}
+        <section className="relative bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 text-white py-16 px-6">
+          <div className="absolute inset-0 bg-black/20"></div>
+          <div className="relative max-w-6xl mx-auto text-center">
+            <span className="inline-block py-1 px-3 bg-blue-100 text-blue-600 rounded-lg text-sm font-medium mb-4">
+              About Us
+            </span>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+              Design Thinking & Innovation
+            </h1>
+            <p className="text-xl text-blue-100 max-w-3xl mx-auto">
+              Empowering the next generation of engineers through creative problem-solving, 
+              human-centered design, and innovative thinking methodologies.
+            </p>
           </div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-            {/* About College Section */}
-            <div className="glass-card p-8 rounded-lg space-y-6">
-              <div className="flex items-center gap-3 mb-6">
-                <School className="w-8 h-8 text-primary" />
-                <h2 className="text-2xl font-bold text-primary">About College</h2>
-              </div>
-              
-              <div className="space-y-4">
-                <p className="text-muted-foreground">
-                  Lendi Institute of Engineering and Technology is a premier institution dedicated to academic excellence, 
-                  innovation, and holistic student development. Located in Vizianagaram, Andhra Pradesh, we strive to 
-                  be at the forefront of engineering education.
-                </p>
-                <p className="text-muted-foreground">
-                  Our state-of-the-art infrastructure, experienced faculty, and research-driven approach create a dynamic 
-                  learning environment that nurtures technical expertise and entrepreneurial spirit. We emphasize hands-on 
-                  learning and real-world applications.
-                </p>
-                <div className="pt-4">
-                  <Button onClick={() => window.open("https://lendi.edu.in/", "_blank")} className="group">
-                    Visit College Website 
-                    <ExternalLink className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
-                  </Button>
-                </div>
-              </div>
-            </div>
+        </section>
 
-            {/* About Department Section */}
-            <div className="glass-card p-8 rounded-lg space-y-6">
-              <div className="flex items-center gap-3 mb-6">
-                <GraduationCap className="w-8 h-8 text-primary" />
-                <h2 className="text-2xl font-bold text-primary">About Department</h2>
-              </div>
-              
-              <div className="space-y-4">
-                <p className="text-muted-foreground">
-                  The Department of Electrical & Electronics Engineering (EEE) at Lendi Institute is committed to 
-                  excellence in education, research, and innovation. Our program provides comprehensive training in 
-                  electrical engineering fundamentals and emerging technologies.
-                </p>
-                <p className="text-muted-foreground">
-                  Our curriculum integrates theoretical knowledge with practical applications, preparing students for 
-                  the challenges of the industry. Through our Design Thinking & Innovation program, students develop 
-                  creative problem-solving skills and human-centered design approaches.
-                </p>
-                <p className="text-muted-foreground">
-                  The department features well-equipped laboratories, experienced faculty members, and strong industry 
-                  connections. We encourage student participation in research projects, technical competitions, and 
-                  innovative ventures.
-                </p>
-              </div>
-            </div>
-          </div>
-          
-          {/* Vision & Mission Section */}
-          <div className="mt-16 animate-fade-in">
+        {/* Mission Section */}
+        <section className="py-16 px-6 bg-white">
+          <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Vision & Mission</h2>
-              <div className="w-20 h-1 bg-primary mx-auto rounded"></div>
-            </div>
-            
-            <div className="glass-card p-8 rounded-lg space-y-8">
-              {/* Vision Section */}
-              <div className="space-y-4">
-                <div className="flex items-center gap-3 mb-4">
-                  <Target className="w-7 h-7 text-primary flex-shrink-0" />
-                  <h3 className="text-2xl font-bold text-primary">Vision</h3>
-                </div>
-                <p className="text-muted-foreground pl-10">
-                  To be a center of excellence in imparting knowledge, skills and ethical values, while fostering 
-                  innovation, sustainability and globally competent to make exemplary contributions to the field 
-                  of Electrical and Electronics Engineering.
-                </p>
-              </div>
-              
-              <Separator className="my-6" />
-              
-              {/* Mission Section */}
-              <div className="space-y-4">
-                <div className="flex items-center gap-3 mb-4">
-                  <Rocket className="w-7 h-7 text-primary flex-shrink-0" />
-                  <h3 className="text-2xl font-bold text-primary">Mission</h3>
-                </div>
-                
-                <div className="pl-10 space-y-4">
-                  <div className="p-4 bg-secondary/50 rounded-lg border border-border/30">
-                    <p className="text-muted-foreground">
-                      To impart technical education using state-of-the-art infrastructure, laboratories and 
-                      instructional methods ensuring students acquire comprehensive knowledge and skills.
-                    </p>
-                  </div>
-                  
-                  <div className="p-4 bg-secondary/50 rounded-lg border border-border/30">
-                    <p className="text-muted-foreground">
-                      To foster industry-oriented learning by facilitating internships, industrial visits, 
-                      collaborative projects with industries.
-                    </p>
-                  </div>
-                  
-                  <div className="p-4 bg-secondary/50 rounded-lg border border-border/30">
-                    <p className="text-muted-foreground">
-                      To create a congenial environment for higher education, employment and entrepreneurship 
-                      by delivering quality education, enhancing professional skills and promoting research and innovation.
-                    </p>
-                  </div>
-                  
-                  <div className="p-4 bg-secondary/50 rounded-lg border border-border/30">
-                    <p className="text-muted-foreground">
-                      To promote societal commitment and ethical leadership by instilling moral values and 
-                      encouraging responsible engineering practices among students.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Our Management Section */}
-          <div className="mt-16">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Management</h2>
-              <div className="w-20 h-1 bg-primary mx-auto rounded"></div>
+              <h2 className="text-3xl md:text-4xl font-bold text-blue-900 mb-4">Our Mission</h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                To cultivate innovative thinking and practical problem-solving skills in electrical engineering students
+              </p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {managementMembers.map((member, index) => (
-                <div key={index} className="glass-card p-6 rounded-lg text-center hover:shadow-lg transition-all duration-300 hover:scale-105">
-                  <div className="mb-6">
-                    <img 
-                      src={member.image} 
-                      alt={member.name}
-                      className="w-32 h-32 rounded-full mx-auto object-cover border-4 border-primary/20"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.src = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face";
-                      }}
-                    />
+              <div className="text-center p-6 bg-blue-50 rounded-lg">
+                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Lightbulb className="w-8 h-8 text-blue-600" />
+                </div>
+                <h3 className="text-xl font-semibold text-blue-900 mb-2">Innovation</h3>
+                <p className="text-gray-600">Foster creative thinking and breakthrough solutions to engineering challenges</p>
+              </div>
+              
+              <div className="text-center p-6 bg-orange-50 rounded-lg">
+                <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Users className="w-8 h-8 text-orange-600" />
+                </div>
+                <h3 className="text-xl font-semibold text-blue-900 mb-2">Collaboration</h3>
+                <p className="text-gray-600">Build strong teamwork skills and collaborative problem-solving approaches</p>
+              </div>
+              
+              <div className="text-center p-6 bg-green-50 rounded-lg">
+                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Target className="w-8 h-8 text-green-600" />
+                </div>
+                <h3 className="text-xl font-semibold text-blue-900 mb-2">Impact</h3>
+                <p className="text-gray-600">Create meaningful solutions that address real-world problems and challenges</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Methodology Section */}
+        <section className="py-16 px-6 bg-gray-50">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-blue-900 mb-4">Design Thinking Process</h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                Our structured approach to innovation follows proven design thinking methodologies
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+              {[
+                { step: "1", title: "Empathize", description: "Understand user needs and challenges", color: "bg-blue-500" },
+                { step: "2", title: "Define", description: "Frame the problem clearly", color: "bg-orange-500" },
+                { step: "3", title: "Ideate", description: "Generate creative solutions", color: "bg-green-500" },
+                { step: "4", title: "Prototype", description: "Build and test concepts", color: "bg-purple-500" },
+                { step: "5", title: "Test", description: "Validate and iterate", color: "bg-red-500" }
+              ].map((phase) => (
+                <div key={phase.step} className="text-center">
+                  <div className={`w-16 h-16 ${phase.color} rounded-full flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl`}>
+                    {phase.step}
                   </div>
-                  <h3 className="text-xl font-bold text-primary mb-2">{member.name}</h3>
-                  <p className="text-muted-foreground font-semibold">{member.designation}</p>
+                  <h3 className="text-lg font-semibold text-blue-900 mb-2">{phase.title}</h3>
+                  <p className="text-sm text-gray-600">{phase.description}</p>
                 </div>
               ))}
             </div>
           </div>
+        </section>
 
-          {/* Principal & HOD Section */}
-          <div className="mt-16">
+        {/* Mentor Section */}
+        <section className="py-16 px-6 bg-white">
+          <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Principal & Head of Department (EEE)</h2>
-              <div className="w-20 h-1 bg-primary mx-auto rounded"></div>
+              <h2 className="text-3xl md:text-4xl font-bold text-blue-900 mb-4">
+                Meet Our Mentor
+              </h2>
+              <p className="text-lg text-gray-600">
+                Guided by experienced faculty in design thinking and innovation
+              </p>
             </div>
             
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {/* Principal */}
-              <div className="glass-card p-8 rounded-lg space-y-6">
-                <div className="flex items-center gap-3 mb-6">
-                  <Award className="w-8 h-8 text-primary" />
-                  <h3 className="text-2xl font-bold text-primary">Principal</h3>
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-8">
+                <div className="relative">
+                  <div className="aspect-square max-w-sm mx-auto overflow-hidden rounded-lg">
+                    <img 
+                      src={mentorData.image} 
+                      alt={`${mentorData.name} - ${mentorData.title}`} 
+                      className="w-full h-full object-cover" 
+                      loading="lazy"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.src = "https://lendi.edu.in//cloud/2024/12/27/1735293134_cropped-image.jpg.jpg";
+                      }} 
+                    />
+                  </div>
                 </div>
                 
-                <div className="text-center mb-6">
-                  <img 
-                    src="https://lendi.edu.in//cloud/2024/12/15/1734257026_Lendi%20col.jpg" 
-                    alt="Dr. V. V. Rama Reddy"
-                    className="w-40 h-40 rounded-lg mx-auto object-cover border-4 border-primary/20"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face";
-                    }}
-                  />
+                <div className="flex flex-col justify-center space-y-4">
+                  <div>
+                    <h3 className="text-2xl font-bold text-blue-900">{mentorData.name}</h3>
+                    <p className="text-orange-600 font-semibold text-lg">{mentorData.title}</p>
+                  </div>
+                  
+                  <p className="text-gray-600 leading-relaxed">{mentorData.bio}</p>
+                  
+                  <div className="flex items-center space-x-4 text-sm text-gray-500">
+                    <span className="flex items-center">
+                      <BookOpen className="w-4 h-4 mr-1" />
+                      Lendi Institute of Engineering & Technology
+                    </span>
+                  </div>
                 </div>
-                
-                <div className="text-center space-y-2">
-                  <h4 className="text-xl font-bold text-gray-800">Dr. V. V. Rama Reddy</h4>
-                  <p className="text-primary font-semibold">Principal</p>
-                </div>
-                
-                <p className="text-muted-foreground text-center">
-                  Dr. V. V. Rama Reddy brings extensive experience in engineering education and administration. 
-                  He is committed to fostering academic excellence and innovation at Lendi Institute, ensuring 
-                  students receive world-class education and opportunities for holistic development.
-                </p>
-              </div>
-
-              {/* HOD EEE */}
-              <div className="glass-card p-8 rounded-lg space-y-6">
-                <div className="flex items-center gap-3 mb-6">
-                  <Users className="w-8 h-8 text-primary" />
-                  <h3 className="text-2xl font-bold text-primary">Head of Department</h3>
-                </div>
-                
-                <div className="text-center mb-6">
-                  <img 
-                    src="https://lendi.edu.in//cloud/2024/12/26/1735221638_cropped-image.jpg.jpg"
-                    alt="Dr. K. Subbaramaiah"
-                    className="w-40 h-40 rounded-lg mx-auto object-cover border-4 border-primary/20"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=200&h=200&fit=crop&face";
-                    }}
-                  />
-                </div>
-                
-                <div className="text-center space-y-2">
-                  <h4 className="text-xl font-bold text-gray-800">Dr. K. Subbaramaiah</h4>
-                  <p className="text-primary font-semibold">Head of Department, EEE</p>
-                </div>
-                
-                <p className="text-muted-foreground text-center">
-                  Dr. K. Subbaramaiah leads the Electrical & Electronics Engineering department with dedication 
-                  to academic excellence and industry-relevant curriculum. He champions innovative teaching methods 
-                  and encourages students to pursue research and practical applications in electrical engineering.
-                </p>
               </div>
             </div>
           </div>
-        </div>
+        </section>
+
+        {/* Achievement Section */}
+        <section className="py-16 px-6 bg-gray-50">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-blue-900 mb-4">Program Highlights</h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                Key achievements and features of our Design Thinking & Innovation program
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="text-center p-6 bg-white rounded-lg shadow-md">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Users className="w-6 h-6 text-blue-600" />
+                </div>
+                <h3 className="text-2xl font-bold text-blue-900 mb-1">17+</h3>
+                <p className="text-gray-600">Active Teams</p>
+              </div>
+              
+              <div className="text-center p-6 bg-white rounded-lg shadow-md">
+                <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Award className="w-6 h-6 text-orange-600" />
+                </div>
+                <h3 className="text-2xl font-bold text-blue-900 mb-1">100+</h3>
+                <p className="text-gray-600">Students Engaged</p>
+              </div>
+              
+              <div className="text-center p-6 bg-white rounded-lg shadow-md">
+                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Zap className="w-6 h-6 text-green-600" />
+                </div>
+                <h3 className="text-2xl font-bold text-blue-900 mb-1">50+</h3>
+                <p className="text-gray-600">Innovative Projects</p>
+              </div>
+              
+              <div className="text-center p-6 bg-white rounded-lg shadow-md">
+                <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <BookOpen className="w-6 h-6 text-purple-600" />
+                </div>
+                <h3 className="text-2xl font-bold text-blue-900 mb-1">5</h3>
+                <p className="text-gray-600">Design Phases</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Call to Action */}
+        <section className="py-16 px-6 bg-blue-900 text-white">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              Join Our Innovation Journey
+            </h2>
+            <p className="text-xl text-blue-100 mb-8">
+              Be part of a community that transforms ideas into impactful solutions
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a 
+                href="/teams" 
+                className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 text-lg font-semibold rounded-lg transition-colors"
+              >
+                Explore Teams
+              </a>
+              
+              <a 
+                href="/smart-assessment" 
+                className="border-2 border-white text-white hover:bg-white hover:text-blue-900 px-8 py-4 text-lg font-semibold rounded-lg transition-colors"
+              >
+                Smart Assessment
+              </a>
+            </div>
+          </div>
+        </section>
       </main>
       
       <Footer />

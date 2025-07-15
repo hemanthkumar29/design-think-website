@@ -34,12 +34,12 @@ const Teams = () => {
 
   if (error) {
     return (
-      <div className="flex flex-col min-h-screen">
+      <div className="flex flex-col min-h-screen bg-gray-50">
         <Navbar />
         <main className="flex-grow pt-24 pb-20 px-6 flex items-center justify-center">
           <div className="text-center">
             <p className="text-xl text-red-600 mb-4">Error loading teams</p>
-            <p className="text-muted-foreground">{error}</p>
+            <p className="text-gray-600">{error}</p>
           </div>
         </main>
         <Footer />
@@ -49,10 +49,10 @@ const Teams = () => {
 
   if (isLoading) {
     return (
-      <div className="flex flex-col min-h-screen">
+      <div className="flex flex-col min-h-screen bg-gray-50">
         <Navbar />
         <main className="flex-grow pt-24 pb-20 px-6 flex items-center justify-center">
-          <div className="w-8 h-8 border-2 border-blue-200 border-t-blue-500 rounded-full animate-spin"></div>
+          <div className="w-8 h-8 border-2 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
         </main>
         <Footer />
       </div>
@@ -60,7 +60,7 @@ const Teams = () => {
   }
   
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-gray-50">
       <PageSEO 
         title="Teams"
         description="Explore innovative teams and their projects from the Design Thinking & Innovation program at Lendi Institute of Engineering and Technology."
@@ -75,8 +75,8 @@ const Teams = () => {
             <span className="inline-block py-1 px-3 bg-blue-50 text-blue-600 rounded-lg text-sm font-medium">
               Projects
             </span>
-            <h1 className="text-4xl md:text-5xl font-bold">Design Thinking & Innovation Teams</h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <h1 className="text-4xl md:text-5xl font-bold text-blue-900">Design Thinking & Innovation Teams</h1>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Explore the diverse projects which our teams are developing, from concept to implementation.
             </p>
           </div>
@@ -88,14 +88,14 @@ const Teams = () => {
                 <input
                   type="text"
                   placeholder="Search teams, members, or roll numbers..."
-                  className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   value={searchQuery}
                   onChange={handleSearchChange}
                 />
               </div>
               <div className="min-w-[200px]">
                 <select
-                  className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none bg-white"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none bg-white"
                   value={selectedProgress}
                   onChange={handleProgressChange}
                 >
@@ -114,14 +114,14 @@ const Teams = () => {
             <VirtualizedTeamGrid teams={filteredTeams} />
           ) : (
             <div className="text-center py-20">
-              <p className="text-xl text-muted-foreground">
+              <p className="text-xl text-gray-600">
                 No teams match your search criteria.
               </p>
             </div>
           )}
           
           {/* Team Count */}
-          <div className="mt-8 text-center text-sm text-muted-foreground">
+          <div className="mt-8 text-center text-sm text-gray-500">
             Showing {filteredTeams.length} of {teams.length} teams
           </div>
         </div>
