@@ -10,14 +10,8 @@ import { HelmetProvider } from "react-helmet-async";
 // Preload critical components immediately
 import Index from "./pages/Index";
 
-// Lazy load all other pages for better initial bundle size with prefetch
-const Teams = lazy(() => 
-  import("./pages/Teams").then(module => {
-    // Prefetch team service for faster loading
-    import("@/services/teamService");
-    return module;
-  })
-);
+// Lazy load all other pages for better initial bundle size
+const Teams = lazy(() => import("./pages/Teams"));
 const TeamDetail = lazy(() => import("./pages/TeamDetail"));
 const Presentations = lazy(() => import("./pages/Presentations"));
 const About = lazy(() => import("./pages/About"));
