@@ -10,8 +10,14 @@ import { HelmetProvider } from "react-helmet-async";
 // Preload critical components immediately
 import Index from "./pages/Index";
 
-// Lazy load all other pages for better initial bundle size
-const Teams = lazy(() => import("./pages/Teams"));
+// Lazy load all other pages for better initial bundle size with prefetch
+const Teams = lazy(() => 
+  import("./pages/Teams").then(module => {
+    // Prefetch team service for faster loading
+    import("@/services/teamService");
+    return module;
+  })
+);
 const TeamDetail = lazy(() => import("./pages/TeamDetail"));
 const Presentations = lazy(() => import("./pages/Presentations"));
 const About = lazy(() => import("./pages/About"));
@@ -26,14 +32,15 @@ const TeamDashboard = lazy(() => import("./pages/TeamDashboard"));
 import { AdminProvider } from "./context/AdminContext";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 
-// Optimized query client with better performance settings
+// Enhanced query client with better performance settings
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 10 * 60 * 1000, // 10 minutes - increased for better caching
-      gcTime: 30 * 60 * 1000, // 30 minutes - increased for better memory management
+      staleTime: 15 * 60 * 1000, // 15 minutes - increased for better caching
+      gcTime: 45 * 60 * 1000, // 45 minutes - increased for better memory management
       retry: 1, // Reduced retries for faster error handling
       refetchOnWindowFocus: false, // Prevent unnecessary refetches
+      refetchOnReconnect: false, // Prevent refetch on reconnect
     },
   },
 });

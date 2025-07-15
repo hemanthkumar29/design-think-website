@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, memo } from 'react';
+import React, { useState, useEffect, memo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import ProgressBar from './ProgressBar';
@@ -68,7 +68,11 @@ const TeamCard: React.FC<TeamCardProps> = memo(({ id, name, progress: initialPro
   }, [id]);
 
   // Optimize click handler to prevent unnecessary re-renders
-  const handleCardClick = React.useCallback(() => {
+  const handleCardClick = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    // Save current scroll position before navigation
+    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+    sessionStorage.setItem('scroll-teams-page', scrollPosition.toString());
     navigate(`/team/${id}`);
   }, [navigate, id]);
 
@@ -82,14 +86,14 @@ const TeamCard: React.FC<TeamCardProps> = memo(({ id, name, progress: initialPro
       >
         <div className="space-y-4">
           <div className="min-h-[40px] flex items-start">
-            <div className="h-5 bg-gray-200 rounded w-3/4"></div>
+            <div className="h-5 bg-gray-200 rounded w-3/4 animate-pulse"></div>
           </div>
           <div className="space-y-2">
-            <div className="h-3 bg-gray-200 rounded w-1/2"></div>
-            <div className="h-3 bg-gray-200 rounded w-full"></div>
+            <div className="h-3 bg-gray-200 rounded w-1/2 animate-pulse"></div>
+            <div className="h-3 bg-gray-200 rounded w-full animate-pulse"></div>
           </div>
-          <div className="h-2 bg-gray-200 rounded w-full"></div>
-          <div className="h-8 bg-gray-200 rounded w-full"></div>
+          <div className="h-2 bg-gray-200 rounded w-full animate-pulse"></div>
+          <div className="h-8 bg-gray-200 rounded w-full animate-pulse"></div>
         </div>
       </div>
     );
@@ -98,7 +102,7 @@ const TeamCard: React.FC<TeamCardProps> = memo(({ id, name, progress: initialPro
   return (
     <div 
       className={cn(
-        'bg-white p-6 rounded-xl shadow-md border border-gray-200 hover:shadow-lg cursor-pointer transform-gpu will-change-transform',
+        'bg-white p-6 rounded-xl shadow-md border border-gray-200 hover:shadow-lg cursor-pointer transition-all duration-200 hover:scale-[1.02]',
         className
       )}
       onClick={handleCardClick}
@@ -152,8 +156,9 @@ const TeamCard: React.FC<TeamCardProps> = memo(({ id, name, progress: initialPro
         />
         
         <Button 
-          className="w-full mt-2 opacity-90 hover:opacity-100"
+          className="w-full mt-2 opacity-90 hover:opacity-100 transition-opacity"
           size="sm"
+          onClick={(e) => e.stopPropagation()}
         >
           View Project
         </Button>

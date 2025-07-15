@@ -1,16 +1,21 @@
 
-import React, { useState, useEffect } from 'react';
-import { getTeams, subscribeToTeamsUpdates } from '@/services/teamService';
+import React, { useState, useCallback } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import PageSEO from '@/components/SEO/PageSEO';
-import TeamCard from '@/components/ui/TeamCard';
+import VirtualizedTeamGrid from '@/components/ui/VirtualizedTeamGrid';
+import { useScrollPosition } from '@/hooks/useScrollPosition';
+import { useTeamsData } from '@/hooks/useTeamsData';
+import { useTeamsFilter } from '@/hooks/useTeamsFilter';
 
 const Teams = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedProgress, setSelectedProgress] = useState<string>('all');
-  const [teams, setTeams] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  
+  // Use custom hooks for data management and scroll restoration
+  const { teams, isLoading, error } = useTeamsData();
+  const filteredTeams = useTeamsFilter({ teams, searchQuery, selectedProgress });
+  useScrollPosition({ key: 'teams-page', delay: 50 });
   
   const progressOptions = [
     { value: 'all', label: 'All Progress' },
@@ -18,51 +23,29 @@ const Teams = () => {
     { value: 'medium', label: 'Developing (31-70%)' },
     { value: 'high', label: 'Advanced (71-100%)' },
   ];
-  
-  useEffect(() => {
-    const loadTeams = async () => {
-      try {
-        const teamsData = await getTeams();
-        setTeams(teamsData);
-      } catch (error) {
-        console.error('Error loading teams:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
 
-    loadTeams();
-    
-    // Subscribe to teams data updates
-    const unsubscribe = subscribeToTeamsUpdates(() => {
-      loadTeams();
-    });
-    
-    return () => unsubscribe();
+  const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
   }, []);
-  
-  // Filter teams based on search query and progress
-  const filteredTeams = React.useMemo(() => {
-    return teams.filter(team => {
-      const matchesSearch = team.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                            team.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                            team.leader.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                            team.members.some(member => member.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
-                            team.leader.role.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                            team.members.some(member => member.role.toLowerCase().includes(searchQuery.toLowerCase()));
-      
-      let matchesProgress = true;
-      if (selectedProgress === 'low') {
-        matchesProgress = team.progress <= 30;
-      } else if (selectedProgress === 'medium') {
-        matchesProgress = team.progress > 30 && team.progress <= 70;
-      } else if (selectedProgress === 'high') {
-        matchesProgress = team.progress > 70;
-      }
-      
-      return matchesSearch && matchesProgress;
-    });
-  }, [teams, searchQuery, selectedProgress]);
+
+  const handleProgressChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedProgress(e.target.value);
+  }, []);
+
+  if (error) {
+    return (
+      <div className="flex flex-col min-h-screen">
+        <Navbar />
+        <main className="flex-grow pt-24 pb-20 px-6 flex items-center justify-center">
+          <div className="text-center">
+            <p className="text-xl text-red-600 mb-4">Error loading teams</p>
+            <p className="text-muted-foreground">{error}</p>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   if (isLoading) {
     return (
@@ -107,14 +90,14 @@ const Teams = () => {
                   placeholder="Search teams, members, or roll numbers..."
                   className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onChange={handleSearchChange}
                 />
               </div>
               <div className="min-w-[200px]">
                 <select
                   className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none bg-white"
                   value={selectedProgress}
-                  onChange={(e) => setSelectedProgress(e.target.value)}
+                  onChange={handleProgressChange}
                 >
                   {progressOptions.map(option => (
                     <option key={option.value} value={option.value}>
@@ -127,24 +110,15 @@ const Teams = () => {
           </div>
           
           {/* Teams Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredTeams.length > 0 ? (
-              filteredTeams.map(team => (
-                <TeamCard
-                  key={team.id}
-                  id={team.id}
-                  name={team.name}
-                  progress={team.progress}
-                />
-              ))
-            ) : (
-              <div className="col-span-full text-center py-20">
-                <p className="text-xl text-muted-foreground">
-                  No teams match your search criteria.
-                </p>
-              </div>
-            )}
-          </div>
+          {filteredTeams.length > 0 ? (
+            <VirtualizedTeamGrid teams={filteredTeams} />
+          ) : (
+            <div className="text-center py-20">
+              <p className="text-xl text-muted-foreground">
+                No teams match your search criteria.
+              </p>
+            </div>
+          )}
           
           {/* Team Count */}
           <div className="mt-8 text-center text-sm text-muted-foreground">
