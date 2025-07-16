@@ -101,7 +101,7 @@ const About = () => {
           {/* Vision & Mission Section */}
           <div className="mt-16 animate-fade-in">
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Vision & Mission</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">Department's Vision & Mission</h2>
               <div className="w-20 h-1 bg-primary mx-auto rounded"></div>
             </div>
             
