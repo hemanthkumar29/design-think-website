@@ -55,6 +55,7 @@ export type Database = {
           id: string
           name: string
           photo_url: string | null
+          rating: number | null
           team_id: number | null
         }
         Insert: {
@@ -62,6 +63,7 @@ export type Database = {
           id?: string
           name: string
           photo_url?: string | null
+          rating?: number | null
           team_id?: number | null
         }
         Update: {
@@ -69,6 +71,7 @@ export type Database = {
           id?: string
           name?: string
           photo_url?: string | null
+          rating?: number | null
           team_id?: number | null
         }
         Relationships: [
@@ -87,6 +90,7 @@ export type Database = {
           created_at: string | null
           id: number
           leader_username: string
+          progress: number | null
           project_title: string
           team_name: string
           updated_at: string | null
@@ -96,6 +100,7 @@ export type Database = {
           created_at?: string | null
           id?: number
           leader_username: string
+          progress?: number | null
           project_title: string
           team_name: string
           updated_at?: string | null
@@ -105,6 +110,7 @@ export type Database = {
           created_at?: string | null
           id?: number
           leader_username?: string
+          progress?: number | null
           project_title?: string
           team_name?: string
           updated_at?: string | null

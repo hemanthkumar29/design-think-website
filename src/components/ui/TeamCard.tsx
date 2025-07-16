@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import ProgressBar from './ProgressBar';
 import { Button } from '@/components/ui/button';
-import { getTeamById, subscribeToTeamsUpdates } from '@/services/teamService';
+import { getTeamById, subscribeToSupabaseUpdates } from '@/services/teamService';
 import { Award, Users } from 'lucide-react';
 import StarRating from './StarRating';
 
@@ -58,8 +58,8 @@ const TeamCard: React.FC<TeamCardProps> = memo(({ id, name, progress: initialPro
     // Load initial team data
     loadTeamData();
     
-    // Subscribe to updates
-    const unsubscribe = subscribeToTeamsUpdates(updateTeam);
+    // Subscribe to real-time updates from Supabase
+    const unsubscribe = subscribeToSupabaseUpdates(updateTeam);
     
     return () => {
       isMounted = false;

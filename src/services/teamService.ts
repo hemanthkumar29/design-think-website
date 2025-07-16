@@ -1,5 +1,7 @@
+
 import { Team, teamsData as initialTeamsData } from '@/data/teamsData';
 import { fetchAllTeams, type TeamData } from './supabaseTeamService';
+import { supabase } from '@/integrations/supabase/client';
 
 // Custom event for team data updates
 const TEAMS_UPDATED_EVENT = 'teamsDataUpdated';
@@ -19,7 +21,8 @@ const convertSupabaseTeamToLegacy = (supabaseTeam: TeamData): Team => {
     id: supabaseTeam.id,
     name: supabaseTeam.team_name,
     description: supabaseTeam.project_title,
-    longDescription: supabaseTeam.abstract || legacyTeam.longDescription
+    longDescription: supabaseTeam.abstract || legacyTeam.longDescription,
+    progress: supabaseTeam.progress || legacyTeam.progress
   };
 };
 
@@ -54,63 +57,56 @@ export const getTeams = async (): Promise<Team[]> => {
   }
 };
 
-// Update a team's progress (keeping existing functionality)
-export const updateTeamProgress = (teamId: number, newProgress: number): Team[] => {
-  // This function maintains localStorage compatibility for progress tracking
-  // In a full implementation, this would also be stored in Supabase
-  const currentTeams = initialTeamsData;
-  const updatedTeams = currentTeams.map(team => 
-    team.id === teamId ? { ...team, progress: newProgress } : team
-  );
-  
-  localStorage.setItem('teamsData', JSON.stringify(updatedTeams));
-  
-  // Clear cache to force refresh
-  teamsCache = null;
-  
-  window.dispatchEvent(new CustomEvent(TEAMS_UPDATED_EVENT));
-  
-  return updatedTeams;
+// Update a team's progress using Supabase
+export const updateTeamProgress = async (teamId: number, newProgress: number): Promise<Team[]> => {
+  try {
+    const { error } = await supabase
+      .from('teams')
+      .update({ progress: newProgress })
+      .eq('id', teamId);
+
+    if (error) {
+      console.error('Error updating team progress:', error);
+      return initialTeamsData;
+    }
+
+    // Clear cache to force refresh
+    teamsCache = null;
+    
+    // Trigger update event
+    window.dispatchEvent(new CustomEvent(TEAMS_UPDATED_EVENT));
+    
+    return await getTeams();
+  } catch (error) {
+    console.error('Error updating team progress:', error);
+    return initialTeamsData;
+  }
 };
 
-// Update a team member's rating (keeping existing functionality)
-export const updateMemberRating = (teamId: number, memberId: number, rating: number): Team[] => {
-  // This function maintains localStorage compatibility for rating tracking
-  const currentTeams = initialTeamsData;
-  
-  const updatedTeams = currentTeams.map(team => {
-    if (team.id === teamId) {
-      if (team.leader.id === memberId) {
-        return {
-          ...team,
-          leader: {
-            ...team.leader,
-            rating
-          }
-        };
-      }
-      
-      const updatedMembers = team.members.map(member => 
-        member.id === memberId ? { ...member, rating } : member
-      );
-      
-      return {
-        ...team,
-        members: updatedMembers
-      };
+// Update a team member's rating using Supabase
+export const updateMemberRating = async (teamId: number, memberId: string, rating: number): Promise<Team[]> => {
+  try {
+    const { error } = await supabase
+      .from('team_members')
+      .update({ rating })
+      .eq('id', memberId);
+
+    if (error) {
+      console.error('Error updating member rating:', error);
+      return initialTeamsData;
     }
+
+    // Clear cache to force refresh
+    teamsCache = null;
     
-    return team;
-  });
-  
-  localStorage.setItem('teamsData', JSON.stringify(updatedTeams));
-  
-  // Clear cache to force refresh
-  teamsCache = null;
-  
-  window.dispatchEvent(new CustomEvent(TEAMS_UPDATED_EVENT));
-  
-  return updatedTeams;
+    // Trigger update event
+    window.dispatchEvent(new CustomEvent(TEAMS_UPDATED_EVENT));
+    
+    return await getTeams();
+  } catch (error) {
+    console.error('Error updating member rating:', error);
+    return initialTeamsData;
+  }
 };
 
 // Get a single team by ID from cache or fetch
@@ -135,6 +131,43 @@ export const subscribeToTeamsUpdates = (callback: () => void): () => void => {
   window.addEventListener(TEAMS_UPDATED_EVENT, handler);
   
   return () => window.removeEventListener(TEAMS_UPDATED_EVENT, handler);
+};
+
+// Subscribe to real-time Supabase updates
+export const subscribeToSupabaseUpdates = (callback: () => void): () => void => {
+  const channel = supabase
+    .channel('teams-updates')
+    .on(
+      'postgres_changes',
+      {
+        event: '*',
+        schema: 'public',
+        table: 'teams'
+      },
+      () => {
+        // Clear cache when database changes
+        teamsCache = null;
+        callback();
+      }
+    )
+    .on(
+      'postgres_changes',
+      {
+        event: '*',
+        schema: 'public',
+        table: 'team_members'
+      },
+      () => {
+        // Clear cache when database changes
+        teamsCache = null;
+        callback();
+      }
+    )
+    .subscribe();
+  
+  return () => {
+    channel.unsubscribe();
+  };
 };
 
 // Trigger updates when dashboard data changes
