@@ -108,6 +108,9 @@ const AdminDashboard = () => {
       const success = await updateMemberRating(memberId, rating);
       
       if (success) {
+        // Dispatch custom event to notify other pages
+        window.dispatchEvent(new CustomEvent('adminRatingUpdated'));
+        
         toast({
           title: 'Rating updated',
           description: `Member rating has been updated to ${rating} stars`,
@@ -137,14 +140,29 @@ const AdminDashboard = () => {
     setSavingRating(prev => ({ ...prev, [leaderKey]: true }));
     
     try {
-      // Update local state
-      setLeaderRatings(prev => ({ ...prev, [teamId]: rating }));
+      // Import and use the leader rating update function
+      const { updateLeaderRatingInDB } = await import('@/services/adminRealtimeService');
+      const success = await updateLeaderRatingInDB(teamId, rating);
       
-      toast({
-        title: 'Leader rating updated',
-        description: `Team leader rating has been updated to ${rating} stars`,
-        variant: 'default',
-      });
+      if (success) {
+        // Update local state
+        setLeaderRatings(prev => ({ ...prev, [teamId]: rating }));
+        
+        // Dispatch custom event to notify other pages
+        window.dispatchEvent(new CustomEvent('adminRatingUpdated'));
+        
+        toast({
+          title: 'Leader rating updated',
+          description: `Team leader rating has been updated to ${rating} stars`,
+          variant: 'default',
+        });
+      } else {
+        toast({
+          title: 'Error',
+          description: 'Failed to update leader rating',
+          variant: 'destructive',
+        });
+      }
     } catch (error) {
       console.error('Error saving leader rating:', error);
       toast({

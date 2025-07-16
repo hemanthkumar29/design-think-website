@@ -27,7 +27,25 @@ const TeamDetail = () => {
       try {
         // Load legacy team data for display compatibility
         const teamData = await getTeamById(id);
-        setTeam(teamData);
+        
+        // Get stored ratings from localStorage
+        const memberRatings = JSON.parse(localStorage.getItem('admin_member_ratings') || '{}');
+        const leaderRatings = JSON.parse(localStorage.getItem('admin_leader_ratings') || '{}');
+        
+        // Update team data with ratings
+        const updatedTeam = {
+          ...teamData,
+          leader: {
+            ...teamData.leader,
+            rating: leaderRatings[`leader_${id}`] || 0
+          },
+          members: teamData.members.map((member, index) => ({
+            ...member,
+            rating: memberRatings[`team_${id}_member_${index + 1}`] || 0
+          }))
+        };
+        
+        setTeam(updatedTeam);
         
         // Load Supabase data for updated content
         const supabaseData = await fetchTeamData(parseInt(id));
@@ -83,9 +101,16 @@ const TeamDetail = () => {
       }
     };
 
+    const handleRatingUpdate = () => {
+      loadTeamData();
+    };
+
     window.addEventListener('dashboardDataUpdated', handleDashboardUpdate);
+    window.addEventListener('adminRatingUpdated', handleRatingUpdate);
+    
     return () => {
       window.removeEventListener('dashboardDataUpdated', handleDashboardUpdate);
+      window.removeEventListener('adminRatingUpdated', handleRatingUpdate);
     };
   }, [id]);
   

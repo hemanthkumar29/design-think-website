@@ -36,19 +36,17 @@ export const updateTeamProgressInDB = async (teamId: number, progress: number): 
   }
 };
 
-// Update member rating in Supabase
+// Update member rating (stored in localStorage for static data)
 export const updateMemberRatingInDB = async (memberId: string, rating: number): Promise<boolean> => {
   try {
-    const { error } = await supabase
-      .from('team_members')
-      .update({ rating })
-      .eq('id', memberId);
-
-    if (error) {
-      console.error('Error updating member rating:', error);
-      return false;
-    }
-
+    // Since we're using static data, store ratings in localStorage
+    const ratingsKey = 'admin_member_ratings';
+    const existingRatings = JSON.parse(localStorage.getItem(ratingsKey) || '{}');
+    
+    existingRatings[memberId] = rating;
+    localStorage.setItem(ratingsKey, JSON.stringify(existingRatings));
+    
+    console.log(`Member rating updated: ${memberId} = ${rating} stars`);
     return true;
   } catch (error) {
     console.error('Error updating member rating:', error);
@@ -56,13 +54,17 @@ export const updateMemberRatingInDB = async (memberId: string, rating: number): 
   }
 };
 
-// Update team leader rating (stored separately)
+// Update team leader rating (stored in localStorage for static data)
 export const updateLeaderRatingInDB = async (teamId: number, rating: number): Promise<boolean> => {
   try {
-    // For now, we'll store leader rating in a custom field or handle it differently
-    // Since we don't have a separate leaders table, we could add a leader_rating field to teams table
-    console.log('Leader rating update requested for team:', teamId, 'rating:', rating);
-    // This would require a database schema update to properly implement
+    // Store leader ratings in localStorage
+    const ratingsKey = 'admin_leader_ratings';
+    const existingRatings = JSON.parse(localStorage.getItem(ratingsKey) || '{}');
+    
+    existingRatings[`leader_${teamId}`] = rating;
+    localStorage.setItem(ratingsKey, JSON.stringify(existingRatings));
+    
+    console.log(`Leader rating updated: team ${teamId} = ${rating} stars`);
     return true;
   } catch (error) {
     console.error('Error updating leader rating:', error);
@@ -75,9 +77,13 @@ export const fetchTeamsForAdmin = async (): Promise<AdminTeamData[]> => {
   try {
     console.log('Fetching teams for admin...');
     
+    // Import the actual team data
+    const { teamsData } = await import('@/data/teamsData');
+    
+    // Fetch team progress from database
     const { data: teams, error: teamsError } = await supabase
       .from('teams')
-      .select('*')
+      .select('id, progress')
       .order('id');
 
     if (teamsError) {
@@ -85,45 +91,48 @@ export const fetchTeamsForAdmin = async (): Promise<AdminTeamData[]> => {
       return [];
     }
 
-    console.log('Fetched teams:', teams);
+    console.log('Fetched teams from DB:', teams);
 
-    const { data: members, error: membersError } = await supabase
-      .from('team_members')
-      .select('*');
-
-    if (membersError) {
-      console.error('Error fetching members:', membersError);
-      return [];
-    }
-
-    console.log('Fetched members:', members);
-
-    // Group members by team_id
-    const membersMap = new Map<number, Array<{ id: string; name: string; rating: number }>>();
-    members?.forEach(member => {
-      if (member.team_id) {
-        if (!membersMap.has(member.team_id)) {
-          membersMap.set(member.team_id, []);
-        }
-        membersMap.get(member.team_id)!.push({
-          id: member.id,
-          name: member.name,
-          rating: member.rating || 0
-        });
-      }
+    // Create a map of team progress from database
+    const progressMap = new Map<number, number>();
+    teams?.forEach(team => {
+      progressMap.set(team.id, team.progress || 0);
     });
 
-    const result = teams.map(team => ({
-      id: team.id,
-      team_name: team.team_name,
-      project_title: team.project_title,
-      progress: team.progress || 0,
-      leader_username: team.leader_username,
-      leader_rating: 0, // Default rating for leader
-      members: membersMap.get(team.id) || []
-    }));
+    // Get stored ratings from localStorage
+    const memberRatings = JSON.parse(localStorage.getItem('admin_member_ratings') || '{}');
+    const leaderRatings = JSON.parse(localStorage.getItem('admin_leader_ratings') || '{}');
+
+    // Map static team data to admin format
+    const result = teamsData.map(team => {
+      // Generate unique IDs for members for rating functionality
+      const membersWithIds = team.members.map((member, index) => {
+        const memberId = `team_${team.id}_member_${index + 1}`;
+        return {
+          id: memberId,
+          name: member.name,
+          rating: memberRatings[memberId] || 0 // Get stored rating or default to 0
+        };
+      });
+
+      return {
+        id: team.id,
+        team_name: team.name,
+        project_title: team.description, // Using description as project title
+        progress: progressMap.get(team.id) || team.progress || 0,
+        leader_username: team.leader.name,
+        leader_rating: leaderRatings[`leader_${team.id}`] || 0, // Get stored rating or default to 0
+        members: membersWithIds
+      };
+    });
 
     console.log('Final admin teams data:', result);
+    console.log('Total teams:', result.length);
+    
+    result.forEach(team => {
+      console.log(`Team ${team.id}: ${team.members.length} members + 1 leader = ${team.members.length + 1} total`);
+    });
+    
     return result;
   } catch (error) {
     console.error('Error fetching teams for admin:', error);
