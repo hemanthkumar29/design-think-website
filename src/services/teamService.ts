@@ -22,7 +22,7 @@ const convertSupabaseTeamToLegacy = (supabaseTeam: TeamData): Team => {
     name: supabaseTeam.team_name,
     description: supabaseTeam.project_title,
     longDescription: supabaseTeam.abstract || legacyTeam.longDescription,
-    progress: supabaseTeam.progress || legacyTeam.progress
+    progress: supabaseTeam.progress || legacyTeam.progress || 0
   };
 };
 

@@ -53,6 +53,8 @@ export default defineConfig(({ mode }) => ({
           query: ['@tanstack/react-query'],
           // Icons
           icons: ['lucide-react'],
+          // Supabase as separate chunk
+          supabase: ['@supabase/supabase-js'],
         },
         // Optimize chunk file names
         chunkFileNames: 'assets/js/[name]-[hash].js',
@@ -80,15 +82,7 @@ export default defineConfig(({ mode }) => ({
       'react-router-dom',
       '@tanstack/react-query',
       'lucide-react',
-    ],
-    // Completely exclude all Supabase packages from pre-bundling
-    exclude: [
       '@supabase/supabase-js',
-      '@supabase/postgrest-js',
-      '@supabase/realtime-js',
-      '@supabase/storage-js',
-      '@supabase/functions-js',
-      '@supabase/auth-js',
     ],
     // Force re-optimization on every build
     force: true,
@@ -111,9 +105,5 @@ export default defineConfig(({ mode }) => ({
   define: {
     global: 'globalThis',
     'process.env': '{}',
-  },
-  // SSR-related fixes
-  ssr: {
-    noExternal: ['@supabase/supabase-js'],
   },
 }));
