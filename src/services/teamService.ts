@@ -1,4 +1,3 @@
-
 import { Team, teamsData as initialTeamsData } from '@/data/teamsData';
 import { fetchAllTeams, type TeamData } from './supabaseTeamService';
 import { supabase } from '@/integrations/supabase/client';
@@ -22,7 +21,7 @@ const convertSupabaseTeamToLegacy = (supabaseTeam: TeamData): Team => {
     name: supabaseTeam.team_name,
     description: supabaseTeam.project_title,
     longDescription: supabaseTeam.abstract || legacyTeam.longDescription,
-    progress: supabaseTeam.progress || legacyTeam.progress || 0
+    progress: (supabaseTeam as any).progress || legacyTeam.progress || 0
   };
 };
 

@@ -10,7 +10,7 @@ import { useAdminRealtime } from '@/hooks/useAdminRealtime';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Award, Save, Percent, Star, ChevronDown, ChevronUp } from 'lucide-react';
+import { Award, Save, Percent, Star, ChevronDown, ChevronUp, Users, Crown } from 'lucide-react';
 import StarRating from '@/components/ui/StarRating';
 
 const AdminDashboard = () => {
@@ -208,7 +208,7 @@ const AdminDashboard = () => {
                     <TableHead>Current Progress</TableHead>
                     <TableHead>New Progress</TableHead>
                     <TableHead>Action</TableHead>
-                    <TableHead>Members</TableHead>
+                    <TableHead>Team Members</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -260,36 +260,96 @@ const AdminDashboard = () => {
                             ) : (
                               <ChevronDown size={16} />
                             )}
-                            Rate Members
+                            Rate Members ({team.members.length})
                           </Button>
                         </TableCell>
                       </TableRow>
                       {expandedTeams[team.id] && (
                         <TableRow>
                           <TableCell colSpan={7} className="bg-muted/30">
-                            <div className="py-2">
-                              <h4 className="text-sm font-medium mb-3 px-2 flex items-center gap-2">
-                                <Star className="h-4 w-4 text-yellow-500" />
-                                Team Member Ratings
-                              </h4>
-                              <div className="space-y-3">
-                                {team.members.map(member => (
-                                  <div 
-                                    key={member.id}
-                                    className="flex items-center justify-between px-2 py-1 hover:bg-muted/50 rounded-md"
-                                  >
-                                    <div className="flex items-center gap-2">
-                                      <span className="font-medium">{member.name}</span>
-                                      {savingRating[member.id] && (
-                                        <span className="text-xs text-muted-foreground">Saving...</span>
-                                      )}
+                            <div className="py-4 px-2">
+                              <div className="flex items-center gap-2 mb-4">
+                                <Users className="h-5 w-5 text-blue-500" />
+                                <h4 className="text-lg font-semibold text-foreground">
+                                  Team {team.id} Members - Performance Rating
+                                </h4>
+                              </div>
+                              
+                              <div className="grid gap-4">
+                                {/* Team Leader */}
+                                <div className="bg-background/50 rounded-lg p-4 border border-border">
+                                  <div className="flex items-center justify-between">
+                                    <div className="flex items-center gap-3">
+                                      <div className="flex items-center gap-2">
+                                        <Crown className="h-4 w-4 text-yellow-500" />
+                                        <span className="text-sm font-medium text-muted-foreground">Team Leader</span>
+                                      </div>
+                                      <div>
+                                        <span className="font-semibold text-foreground text-lg">
+                                          {team.leader_username}
+                                        </span>
+                                        {savingRating[`leader_${team.id}`] && (
+                                          <span className="text-xs text-muted-foreground ml-2">Saving...</span>
+                                        )}
+                                      </div>
                                     </div>
-                                    <StarRating 
-                                      rating={member.rating || 0}
-                                      onChange={(newRating) => handleRatingChange(member.id, newRating)}
-                                    />
+                                    <div className="flex items-center gap-2">
+                                      <span className="text-sm text-muted-foreground">Performance:</span>
+                                      <StarRating 
+                                        rating={5} // Default rating for leader, you can modify this based on your data
+                                        onChange={(newRating) => handleRatingChange(`leader_${team.id}`, newRating)}
+                                        size="md"
+                                      />
+                                    </div>
                                   </div>
-                                ))}
+                                </div>
+
+                                {/* Team Members */}
+                                {team.members.length > 0 ? (
+                                  <div className="space-y-3">
+                                    <div className="flex items-center gap-2">
+                                      <Users className="h-4 w-4 text-blue-500" />
+                                      <span className="text-sm font-medium text-muted-foreground">Team Members</span>
+                                    </div>
+                                    {team.members.map((member, index) => (
+                                      <div 
+                                        key={member.id}
+                                        className="bg-background/30 rounded-lg p-3 border border-border/50 hover:bg-background/70 transition-colors"
+                                      >
+                                        <div className="flex items-center justify-between">
+                                          <div className="flex items-center gap-3">
+                                            <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                                              <span className="text-sm font-medium text-blue-600">
+                                                {index + 1}
+                                              </span>
+                                            </div>
+                                            <div>
+                                              <span className="font-medium text-foreground">
+                                                {member.name}
+                                              </span>
+                                              {savingRating[member.id] && (
+                                                <span className="text-xs text-muted-foreground ml-2">Saving...</span>
+                                              )}
+                                            </div>
+                                          </div>
+                                          <div className="flex items-center gap-2">
+                                            <span className="text-sm text-muted-foreground">Performance:</span>
+                                            <StarRating 
+                                              rating={member.rating || 0}
+                                              onChange={(newRating) => handleRatingChange(member.id, newRating)}
+                                              size="md"
+                                            />
+                                          </div>
+                                        </div>
+                                      </div>
+                                    ))}
+                                  </div>
+                                ) : (
+                                  <div className="text-center py-8 text-muted-foreground">
+                                    <Users className="h-12 w-12 mx-auto mb-2 opacity-50" />
+                                    <p>No team members found for this team.</p>
+                                  </div>
+                                )}
                               </div>
                             </div>
                           </TableCell>
