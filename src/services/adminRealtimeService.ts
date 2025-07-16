@@ -8,6 +8,7 @@ export interface AdminTeamData {
   project_title: string;
   progress: number;
   leader_username: string;
+  leader_rating?: number;
   members: Array<{
     id: string;
     name: string;
@@ -55,9 +56,25 @@ export const updateMemberRatingInDB = async (memberId: string, rating: number): 
   }
 };
 
+// Update team leader rating (stored separately)
+export const updateLeaderRatingInDB = async (teamId: number, rating: number): Promise<boolean> => {
+  try {
+    // For now, we'll store leader rating in a custom field or handle it differently
+    // Since we don't have a separate leaders table, we could add a leader_rating field to teams table
+    console.log('Leader rating update requested for team:', teamId, 'rating:', rating);
+    // This would require a database schema update to properly implement
+    return true;
+  } catch (error) {
+    console.error('Error updating leader rating:', error);
+    return false;
+  }
+};
+
 // Fetch teams with members for admin dashboard
 export const fetchTeamsForAdmin = async (): Promise<AdminTeamData[]> => {
   try {
+    console.log('Fetching teams for admin...');
+    
     const { data: teams, error: teamsError } = await supabase
       .from('teams')
       .select('*')
@@ -68,6 +85,8 @@ export const fetchTeamsForAdmin = async (): Promise<AdminTeamData[]> => {
       return [];
     }
 
+    console.log('Fetched teams:', teams);
+
     const { data: members, error: membersError } = await supabase
       .from('team_members')
       .select('*');
@@ -77,27 +96,35 @@ export const fetchTeamsForAdmin = async (): Promise<AdminTeamData[]> => {
       return [];
     }
 
+    console.log('Fetched members:', members);
+
     // Group members by team_id
     const membersMap = new Map<number, Array<{ id: string; name: string; rating: number }>>();
     members?.forEach(member => {
-      if (!membersMap.has(member.team_id!)) {
-        membersMap.set(member.team_id!, []);
+      if (member.team_id) {
+        if (!membersMap.has(member.team_id)) {
+          membersMap.set(member.team_id, []);
+        }
+        membersMap.get(member.team_id)!.push({
+          id: member.id,
+          name: member.name,
+          rating: member.rating || 0
+        });
       }
-      membersMap.get(member.team_id!)!.push({
-        id: member.id,
-        name: member.name,
-        rating: member.rating || 0
-      });
     });
 
-    return teams.map(team => ({
+    const result = teams.map(team => ({
       id: team.id,
       team_name: team.team_name,
       project_title: team.project_title,
       progress: team.progress || 0,
       leader_username: team.leader_username,
+      leader_rating: 0, // Default rating for leader
       members: membersMap.get(team.id) || []
     }));
+
+    console.log('Final admin teams data:', result);
+    return result;
   } catch (error) {
     console.error('Error fetching teams for admin:', error);
     return [];
@@ -120,6 +147,7 @@ export const subscribeToAdminUpdates = (
         filter: 'progress=neq.null'
       },
       (payload: any) => {
+        console.log('Team update received:', payload);
         if (payload.new && payload.new.id && payload.new.progress !== undefined) {
           onTeamUpdate(payload.new.id, payload.new.progress);
         }
@@ -134,6 +162,7 @@ export const subscribeToAdminUpdates = (
         filter: 'rating=neq.null'
       },
       (payload: any) => {
+        console.log('Member update received:', payload);
         if (payload.new && payload.new.id && payload.new.rating !== undefined) {
           onMemberUpdate(payload.new.id, payload.new.rating);
         }

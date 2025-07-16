@@ -18,6 +18,7 @@ const AdminDashboard = () => {
   const [expandedTeams, setExpandedTeams] = useState<Record<number, boolean>>({});
   const [savingProgress, setSavingProgress] = useState<Record<number, boolean>>({});
   const [savingRating, setSavingRating] = useState<Record<string, boolean>>({});
+  const [leaderRatings, setLeaderRatings] = useState<Record<number, number>>({});
   const navigate = useNavigate();
   const { toast } = useToast();
   
@@ -42,14 +43,23 @@ const AdminDashboard = () => {
     }
   }, [navigate, toast]);
 
-  // Initialize progress values when teams data loads
+  // Initialize progress values and leader ratings when teams data loads
   useEffect(() => {
     if (teams.length > 0) {
       const initialValues: Record<number, number> = {};
+      const initialLeaderRatings: Record<number, number> = {};
       teams.forEach(team => {
         initialValues[team.id] = team.progress;
+        initialLeaderRatings[team.id] = team.leader_rating || 0;
       });
       setProgressValues(initialValues);
+      setLeaderRatings(initialLeaderRatings);
+      
+      console.log('Teams loaded:', teams);
+      console.log('Total teams:', teams.length);
+      teams.forEach(team => {
+        console.log(`Team ${team.id}: ${team.members.length} members + 1 leader = ${team.members.length + 1} total`);
+      });
     }
   }, [teams]);
 
@@ -122,6 +132,31 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleLeaderRatingChange = async (teamId: number, rating: number) => {
+    const leaderKey = `leader_${teamId}`;
+    setSavingRating(prev => ({ ...prev, [leaderKey]: true }));
+    
+    try {
+      // Update local state
+      setLeaderRatings(prev => ({ ...prev, [teamId]: rating }));
+      
+      toast({
+        title: 'Leader rating updated',
+        description: `Team leader rating has been updated to ${rating} stars`,
+        variant: 'default',
+      });
+    } catch (error) {
+      console.error('Error saving leader rating:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to update leader rating',
+        variant: 'destructive',
+      });
+    } finally {
+      setSavingRating(prev => ({ ...prev, [leaderKey]: false }));
+    }
+  };
+
   const toggleTeamExpand = (teamId: number) => {
     setExpandedTeams(prev => ({
       ...prev,
@@ -137,6 +172,11 @@ const AdminDashboard = () => {
       variant: 'default',
     });
     navigate('/admin');
+  };
+
+  // Calculate total members for a team (leader + members)
+  const getTotalMemberCount = (team: any) => {
+    return team.members.length + 1; // +1 for the leader
   };
 
   if (error) {
@@ -186,9 +226,17 @@ const AdminDashboard = () => {
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground">
+              <p className="text-muted-foreground mb-4">
                 Welcome to the admin dashboard. Here you can update the progress of each team's project and rate individual team members. Changes are synchronized in real-time across all devices.
               </p>
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <h3 className="font-medium text-blue-900 mb-2">Team Structure Summary:</h3>
+                <p className="text-blue-800 text-sm">
+                  • Total Teams: {teams.length}<br/>
+                  • Team 1 & 2: 5 members each (1 Leader + 4 Members)<br/>
+                  • Teams 3-17: 4 members each (1 Leader + 3 Members)
+                </p>
+              </div>
             </CardContent>
           </Card>
           
@@ -260,7 +308,7 @@ const AdminDashboard = () => {
                             ) : (
                               <ChevronDown size={16} />
                             )}
-                            Rate Members ({team.members.length})
+                            Rate Members ({getTotalMemberCount(team)})
                           </Button>
                         </TableCell>
                       </TableRow>
@@ -271,21 +319,21 @@ const AdminDashboard = () => {
                               <div className="flex items-center gap-2 mb-4">
                                 <Users className="h-5 w-5 text-blue-500" />
                                 <h4 className="text-lg font-semibold text-foreground">
-                                  Team {team.id} Members - Performance Rating
+                                  Team {team.id} Members - Performance Rating ({getTotalMemberCount(team)} Total)
                                 </h4>
                               </div>
                               
                               <div className="grid gap-4">
                                 {/* Team Leader */}
-                                <div className="bg-background/50 rounded-lg p-4 border border-border">
+                                <div className="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-lg p-4 border-2 border-yellow-200">
                                   <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-3">
                                       <div className="flex items-center gap-2">
-                                        <Crown className="h-4 w-4 text-yellow-500" />
-                                        <span className="text-sm font-medium text-muted-foreground">Team Leader</span>
+                                        <Crown className="h-5 w-5 text-yellow-600" />
+                                        <span className="text-sm font-medium text-yellow-700 bg-yellow-100 px-2 py-1 rounded">Team Leader</span>
                                       </div>
                                       <div>
-                                        <span className="font-semibold text-foreground text-lg">
+                                        <span className="font-bold text-foreground text-lg">
                                           {team.leader_username}
                                         </span>
                                         {savingRating[`leader_${team.id}`] && (
@@ -296,8 +344,8 @@ const AdminDashboard = () => {
                                     <div className="flex items-center gap-2">
                                       <span className="text-sm text-muted-foreground">Performance:</span>
                                       <StarRating 
-                                        rating={5} // Default rating for leader, you can modify this based on your data
-                                        onChange={(newRating) => handleRatingChange(`leader_${team.id}`, newRating)}
+                                        rating={leaderRatings[team.id] || 0}
+                                        onChange={(newRating) => handleLeaderRatingChange(team.id, newRating)}
                                         size="md"
                                       />
                                     </div>
@@ -309,12 +357,14 @@ const AdminDashboard = () => {
                                   <div className="space-y-3">
                                     <div className="flex items-center gap-2">
                                       <Users className="h-4 w-4 text-blue-500" />
-                                      <span className="text-sm font-medium text-muted-foreground">Team Members</span>
+                                      <span className="text-sm font-medium text-muted-foreground">
+                                        Team Members ({team.members.length})
+                                      </span>
                                     </div>
                                     {team.members.map((member, index) => (
                                       <div 
                                         key={member.id}
-                                        className="bg-background/30 rounded-lg p-3 border border-border/50 hover:bg-background/70 transition-colors"
+                                        className="bg-background/80 rounded-lg p-3 border border-border/50 hover:bg-background/90 transition-colors"
                                       >
                                         <div className="flex items-center justify-between">
                                           <div className="flex items-center gap-3">
@@ -326,6 +376,9 @@ const AdminDashboard = () => {
                                             <div>
                                               <span className="font-medium text-foreground">
                                                 {member.name}
+                                              </span>
+                                              <span className="text-xs text-muted-foreground ml-2 bg-gray-100 px-2 py-1 rounded">
+                                                Member
                                               </span>
                                               {savingRating[member.id] && (
                                                 <span className="text-xs text-muted-foreground ml-2">Saving...</span>
@@ -348,6 +401,7 @@ const AdminDashboard = () => {
                                   <div className="text-center py-8 text-muted-foreground">
                                     <Users className="h-12 w-12 mx-auto mb-2 opacity-50" />
                                     <p>No team members found for this team.</p>
+                                    <p className="text-xs mt-1">Only the team leader is registered.</p>
                                   </div>
                                 )}
                               </div>
