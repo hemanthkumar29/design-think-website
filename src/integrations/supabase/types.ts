@@ -89,6 +89,7 @@ export type Database = {
           abstract: string | null
           created_at: string | null
           id: number
+          leader_rating: number | null
           leader_username: string
           progress: number | null
           project_title: string
@@ -99,6 +100,7 @@ export type Database = {
           abstract?: string | null
           created_at?: string | null
           id?: number
+          leader_rating?: number | null
           leader_username: string
           progress?: number | null
           project_title: string
@@ -109,6 +111,7 @@ export type Database = {
           abstract?: string | null
           created_at?: string | null
           id?: number
+          leader_rating?: number | null
           leader_username?: string
           progress?: number | null
           project_title?: string

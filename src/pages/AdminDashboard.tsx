@@ -18,7 +18,6 @@ const AdminDashboard = () => {
   const [expandedTeams, setExpandedTeams] = useState<Record<number, boolean>>({});
   const [savingProgress, setSavingProgress] = useState<Record<number, boolean>>({});
   const [savingRating, setSavingRating] = useState<Record<string, boolean>>({});
-  const [leaderRatings, setLeaderRatings] = useState<Record<number, number>>({});
   const navigate = useNavigate();
   const { toast } = useToast();
   
@@ -27,7 +26,8 @@ const AdminDashboard = () => {
     isLoading, 
     error, 
     updateTeamProgress, 
-    updateMemberRating 
+    updateMemberRating,
+    updateLeaderRating
   } = useAdminRealtime();
 
   // Check if admin is authenticated
@@ -43,17 +43,14 @@ const AdminDashboard = () => {
     }
   }, [navigate, toast]);
 
-  // Initialize progress values and leader ratings when teams data loads
+  // Initialize progress values when teams data loads
   useEffect(() => {
     if (teams.length > 0) {
       const initialValues: Record<number, number> = {};
-      const initialLeaderRatings: Record<number, number> = {};
       teams.forEach(team => {
         initialValues[team.id] = team.progress;
-        initialLeaderRatings[team.id] = team.leader_rating || 0;
       });
       setProgressValues(initialValues);
-      setLeaderRatings(initialLeaderRatings);
       
       console.log('Teams loaded:', teams);
       console.log('Total teams:', teams.length);
@@ -140,14 +137,9 @@ const AdminDashboard = () => {
     setSavingRating(prev => ({ ...prev, [leaderKey]: true }));
     
     try {
-      // Import and use the leader rating update function
-      const { updateLeaderRatingInDB } = await import('@/services/adminRealtimeService');
-      const success = await updateLeaderRatingInDB(teamId, rating);
+      const success = await updateLeaderRating(teamId, rating);
       
       if (success) {
-        // Update local state
-        setLeaderRatings(prev => ({ ...prev, [teamId]: rating }));
-        
         // Dispatch custom event to notify other pages
         window.dispatchEvent(new CustomEvent('adminRatingUpdated'));
         
@@ -265,7 +257,7 @@ const AdminDashboard = () => {
           ) : (
             <div className="bg-card shadow-lg rounded-lg border border-border overflow-hidden">
               <Table>
-                <TableCaption>Teams and their project progress - Real-time synchronized</TableCaption>
+                <TableCaption>Teams and their project progress - Real-time synchronized across all devices</TableCaption>
                 <TableHeader>
                   <TableRow>
                     <TableHead>ID</TableHead>
@@ -362,7 +354,7 @@ const AdminDashboard = () => {
                                     <div className="flex items-center gap-2">
                                       <span className="text-sm text-muted-foreground">Performance:</span>
                                       <StarRating 
-                                        rating={leaderRatings[team.id] || 0}
+                                        rating={team.leader_rating || 0}
                                         onChange={(newRating) => handleLeaderRatingChange(team.id, newRating)}
                                         size="md"
                                       />

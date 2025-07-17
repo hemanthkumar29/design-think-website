@@ -36,17 +36,62 @@ export const updateTeamProgressInDB = async (teamId: number, progress: number): 
   }
 };
 
-// Update member rating (stored in localStorage for static data)
+// Update member rating in Supabase database
 export const updateMemberRatingInDB = async (memberId: string, rating: number): Promise<boolean> => {
   try {
-    // Since we're using static data, store ratings in localStorage
-    const ratingsKey = 'admin_member_ratings';
-    const existingRatings = JSON.parse(localStorage.getItem(ratingsKey) || '{}');
-    
-    existingRatings[memberId] = rating;
-    localStorage.setItem(ratingsKey, JSON.stringify(existingRatings));
-    
-    console.log(`Member rating updated: ${memberId} = ${rating} stars`);
+    // First, try to find existing member in database
+    const { data: existingMember, error: fetchError } = await supabase
+      .from('team_members')
+      .select('id')
+      .eq('id', memberId)
+      .single();
+
+    if (fetchError && fetchError.code !== 'PGRST116') {
+      console.error('Error fetching member:', fetchError);
+      return false;
+    }
+
+    if (existingMember) {
+      // Update existing member
+      const { error } = await supabase
+        .from('team_members')
+        .update({ rating })
+        .eq('id', memberId);
+
+      if (error) {
+        console.error('Error updating member rating:', error);
+        return false;
+      }
+    } else {
+      // Extract team ID and member info from memberId (format: team_X_member_Y)
+      const memberIdParts = memberId.split('_');
+      if (memberIdParts.length >= 4) {
+        const teamId = parseInt(memberIdParts[1]);
+        const memberIndex = parseInt(memberIdParts[3]) - 1;
+        
+        // Get member name from static data
+        const { teamsData } = await import('@/data/teamsData');
+        const team = teamsData.find(t => t.id === teamId);
+        if (team && team.members[memberIndex]) {
+          // Create new member record
+          const { error } = await supabase
+            .from('team_members')
+            .insert({
+              id: memberId,
+              team_id: teamId,
+              name: team.members[memberIndex].name,
+              rating: rating
+            });
+
+          if (error) {
+            console.error('Error creating member rating:', error);
+            return false;
+          }
+        }
+      }
+    }
+
+    console.log(`Member rating updated in DB: ${memberId} = ${rating} stars`);
     return true;
   } catch (error) {
     console.error('Error updating member rating:', error);
@@ -54,17 +99,20 @@ export const updateMemberRatingInDB = async (memberId: string, rating: number): 
   }
 };
 
-// Update team leader rating (stored in localStorage for static data)
+// Update team leader rating in Supabase database
 export const updateLeaderRatingInDB = async (teamId: number, rating: number): Promise<boolean> => {
   try {
-    // Store leader ratings in localStorage
-    const ratingsKey = 'admin_leader_ratings';
-    const existingRatings = JSON.parse(localStorage.getItem(ratingsKey) || '{}');
-    
-    existingRatings[`leader_${teamId}`] = rating;
-    localStorage.setItem(ratingsKey, JSON.stringify(existingRatings));
-    
-    console.log(`Leader rating updated: team ${teamId} = ${rating} stars`);
+    const { error } = await supabase
+      .from('teams')
+      .update({ leader_rating: rating })
+      .eq('id', teamId);
+
+    if (error) {
+      console.error('Error updating leader rating:', error);
+      return false;
+    }
+
+    console.log(`Leader rating updated in DB: team ${teamId} = ${rating} stars`);
     return true;
   } catch (error) {
     console.error('Error updating leader rating:', error);
@@ -80,10 +128,10 @@ export const fetchTeamsForAdmin = async (): Promise<AdminTeamData[]> => {
     // Import the actual team data
     const { teamsData } = await import('@/data/teamsData');
     
-    // Fetch team progress from database
+    // Fetch team data from database including ratings
     const { data: teams, error: teamsError } = await supabase
       .from('teams')
-      .select('id, progress')
+      .select('id, progress, leader_rating')
       .order('id');
 
     if (teamsError) {
@@ -91,37 +139,52 @@ export const fetchTeamsForAdmin = async (): Promise<AdminTeamData[]> => {
       return [];
     }
 
-    console.log('Fetched teams from DB:', teams);
+    // Fetch all team members from database
+    const { data: teamMembers, error: membersError } = await supabase
+      .from('team_members')
+      .select('*')
+      .order('team_id');
 
-    // Create a map of team progress from database
-    const progressMap = new Map<number, number>();
+    if (membersError) {
+      console.error('Error fetching team members:', membersError);
+    }
+
+    console.log('Fetched teams from DB:', teams);
+    console.log('Fetched members from DB:', teamMembers);
+
+    // Create a map of team data from database
+    const teamsMap = new Map<number, any>();
     teams?.forEach(team => {
-      progressMap.set(team.id, team.progress || 0);
+      teamsMap.set(team.id, team);
     });
 
-    // Get stored ratings from localStorage
-    const memberRatings = JSON.parse(localStorage.getItem('admin_member_ratings') || '{}');
-    const leaderRatings = JSON.parse(localStorage.getItem('admin_leader_ratings') || '{}');
+    // Create a map of member ratings from database
+    const memberRatingsMap = new Map<string, number>();
+    teamMembers?.forEach(member => {
+      memberRatingsMap.set(member.id, member.rating || 0);
+    });
 
     // Map static team data to admin format
     const result = teamsData.map(team => {
-      // Generate unique IDs for members for rating functionality
+      const dbTeam = teamsMap.get(team.id);
+      
+      // Generate unique IDs for members and get ratings from database
       const membersWithIds = team.members.map((member, index) => {
         const memberId = `team_${team.id}_member_${index + 1}`;
         return {
           id: memberId,
           name: member.name,
-          rating: memberRatings[memberId] || 0 // Get stored rating or default to 0
+          rating: memberRatingsMap.get(memberId) || 0
         };
       });
 
       return {
         id: team.id,
         team_name: team.name,
-        project_title: team.description, // Using description as project title
-        progress: progressMap.get(team.id) || team.progress || 0,
+        project_title: team.description,
+        progress: dbTeam?.progress || team.progress || 0,
         leader_username: team.leader.name,
-        leader_rating: leaderRatings[`leader_${team.id}`] || 0, // Get stored rating or default to 0
+        leader_rating: dbTeam?.leader_rating || 0,
         members: membersWithIds
       };
     });
@@ -152,23 +215,30 @@ export const subscribeToAdminUpdates = (
       {
         event: 'UPDATE',
         schema: 'public',
-        table: 'teams',
-        filter: 'progress=neq.null'
+        table: 'teams'
       },
       (payload: any) => {
         console.log('Team update received:', payload);
-        if (payload.new && payload.new.id && payload.new.progress !== undefined) {
-          onTeamUpdate(payload.new.id, payload.new.progress);
+        if (payload.new && payload.new.id) {
+          if (payload.new.progress !== undefined) {
+            onTeamUpdate(payload.new.id, payload.new.progress);
+          }
+          // Handle leader rating updates
+          if (payload.new.leader_rating !== undefined) {
+            // Trigger a custom event for leader rating updates
+            window.dispatchEvent(new CustomEvent('leaderRatingUpdated', {
+              detail: { teamId: payload.new.id, rating: payload.new.leader_rating }
+            }));
+          }
         }
       }
     )
     .on(
       'postgres_changes',
       {
-        event: 'UPDATE',
+        event: '*',
         schema: 'public',
-        table: 'team_members',
-        filter: 'rating=neq.null'
+        table: 'team_members'
       },
       (payload: any) => {
         console.log('Member update received:', payload);

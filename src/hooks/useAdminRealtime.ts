@@ -5,7 +5,8 @@ import {
   fetchTeamsForAdmin, 
   subscribeToAdminUpdates, 
   updateTeamProgressInDB, 
-  updateMemberRatingInDB 
+  updateMemberRatingInDB,
+  updateLeaderRatingInDB
 } from '@/services/adminRealtimeService';
 import { RealtimeChannel } from '@supabase/supabase-js';
 
@@ -50,6 +51,16 @@ export const useAdminRealtime = () => {
     );
   }, []);
 
+  // Handle leader rating updates
+  const handleLeaderRatingUpdate = useCallback((event: CustomEvent) => {
+    const { teamId, rating } = event.detail;
+    setTeams(prevTeams => 
+      prevTeams.map(team => 
+        team.id === teamId ? { ...team, leader_rating: rating } : team
+      )
+    );
+  }, []);
+
   // Update team progress
   const updateTeamProgress = useCallback(async (teamId: number, progress: number): Promise<boolean> => {
     const success = await updateTeamProgressInDB(teamId, progress);
@@ -68,6 +79,15 @@ export const useAdminRealtime = () => {
     return success;
   }, []);
 
+  // Update leader rating
+  const updateLeaderRating = useCallback(async (teamId: number, rating: number): Promise<boolean> => {
+    const success = await updateLeaderRatingInDB(teamId, rating);
+    if (!success) {
+      setError('Failed to update leader rating');
+    }
+    return success;
+  }, []);
+
   useEffect(() => {
     loadTeams();
 
@@ -77,10 +97,14 @@ export const useAdminRealtime = () => {
       handleMemberUpdate
     );
 
+    // Listen for leader rating updates
+    window.addEventListener('leaderRatingUpdated', handleLeaderRatingUpdate as EventListener);
+
     return () => {
       channel.unsubscribe();
+      window.removeEventListener('leaderRatingUpdated', handleLeaderRatingUpdate as EventListener);
     };
-  }, [loadTeams, handleTeamUpdate, handleMemberUpdate]);
+  }, [loadTeams, handleTeamUpdate, handleMemberUpdate, handleLeaderRatingUpdate]);
 
   return {
     teams,
@@ -88,6 +112,7 @@ export const useAdminRealtime = () => {
     error,
     updateTeamProgress,
     updateMemberRating,
+    updateLeaderRating,
     refreshTeams: loadTeams
   };
 };

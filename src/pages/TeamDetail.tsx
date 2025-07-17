@@ -13,6 +13,7 @@ import { getTeamById } from '@/services/teamService';
 import { fetchTeamData } from '@/services/supabaseTeamService';
 import StarRating from '@/components/ui/StarRating';
 import PresentationViewer from '@/components/presentations/PresentationViewer';
+import { supabase } from '@/integrations/supabase/client';
 
 const TeamDetail = () => {
   const { id } = useParams();
@@ -28,21 +29,38 @@ const TeamDetail = () => {
         // Load legacy team data for display compatibility
         const teamData = await getTeamById(id);
         
-        // Get stored ratings from localStorage
-        const memberRatings = JSON.parse(localStorage.getItem('admin_member_ratings') || '{}');
-        const leaderRatings = JSON.parse(localStorage.getItem('admin_leader_ratings') || '{}');
+        // Fetch ratings from database
+        const { data: dbTeam } = await supabase
+          .from('teams')
+          .select('leader_rating')
+          .eq('id', parseInt(id))
+          .single();
+
+        const { data: dbMembers } = await supabase
+          .from('team_members')
+          .select('*')
+          .eq('team_id', parseInt(id));
+
+        // Create member ratings map
+        const memberRatingsMap = new Map<string, number>();
+        dbMembers?.forEach(member => {
+          memberRatingsMap.set(member.id, member.rating || 0);
+        });
         
-        // Update team data with ratings
+        // Update team data with ratings from database
         const updatedTeam = {
           ...teamData,
           leader: {
             ...teamData.leader,
-            rating: leaderRatings[`leader_${id}`] || 0
+            rating: dbTeam?.leader_rating || 0
           },
-          members: teamData.members.map((member, index) => ({
-            ...member,
-            rating: memberRatings[`team_${id}_member_${index + 1}`] || 0
-          }))
+          members: teamData.members.map((member, index) => {
+            const memberId = `team_${id}_member_${index + 1}`;
+            return {
+              ...member,
+              rating: memberRatingsMap.get(memberId) || 0
+            };
+          })
         };
         
         setTeam(updatedTeam);
@@ -105,12 +123,20 @@ const TeamDetail = () => {
       loadTeamData();
     };
 
+    const handleLeaderRatingUpdate = (event: CustomEvent) => {
+      if (event.detail?.teamId === parseInt(id)) {
+        loadTeamData();
+      }
+    };
+
     window.addEventListener('dashboardDataUpdated', handleDashboardUpdate);
     window.addEventListener('adminRatingUpdated', handleRatingUpdate);
+    window.addEventListener('leaderRatingUpdated', handleLeaderRatingUpdate as EventListener);
     
     return () => {
       window.removeEventListener('dashboardDataUpdated', handleDashboardUpdate);
       window.removeEventListener('adminRatingUpdated', handleRatingUpdate);
+      window.removeEventListener('leaderRatingUpdated', handleLeaderRatingUpdate as EventListener);
     };
   }, [id]);
   

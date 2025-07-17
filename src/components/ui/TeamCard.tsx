@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { getTeamById, subscribeToSupabaseUpdates } from '@/services/teamService';
 import { Award, Users } from 'lucide-react';
 import StarRating from './StarRating';
+import { supabase } from '@/integrations/supabase/client';
 
 interface TeamCardProps {
   id: number;
@@ -30,21 +31,38 @@ const TeamCard: React.FC<TeamCardProps> = memo(({ id, name, progress: initialPro
       try {
         const teamData = await getTeamById(id);
         if (teamData && isMounted) {
-          // Get stored ratings from localStorage
-          const memberRatings = JSON.parse(localStorage.getItem('admin_member_ratings') || '{}');
-          const leaderRatings = JSON.parse(localStorage.getItem('admin_leader_ratings') || '{}');
+          // Fetch ratings from database
+          const { data: dbTeam } = await supabase
+            .from('teams')
+            .select('leader_rating')
+            .eq('id', id)
+            .single();
+
+          const { data: dbMembers } = await supabase
+            .from('team_members')
+            .select('*')
+            .eq('team_id', id);
+
+          // Create member ratings map
+          const memberRatingsMap = new Map<string, number>();
+          dbMembers?.forEach(member => {
+            memberRatingsMap.set(member.id, member.rating || 0);
+          });
           
-          // Update team data with ratings
+          // Update team data with ratings from database
           const updatedTeam = {
             ...teamData,
             leader: {
               ...teamData.leader,
-              rating: leaderRatings[`leader_${id}`] || 0
+              rating: dbTeam?.leader_rating || 0
             },
-            members: teamData.members.map((member, index) => ({
-              ...member,
-              rating: memberRatings[`team_${id}_member_${index + 1}`] || 0
-            }))
+            members: teamData.members.map((member, index) => {
+              const memberId = `team_${id}_member_${index + 1}`;
+              return {
+                ...member,
+                rating: memberRatingsMap.get(memberId) || 0
+              };
+            })
           };
           
           setTeam(updatedTeam);
@@ -64,21 +82,38 @@ const TeamCard: React.FC<TeamCardProps> = memo(({ id, name, progress: initialPro
       try {
         const updatedTeam = await getTeamById(id);
         if (updatedTeam && isMounted) {
-          // Get stored ratings from localStorage
-          const memberRatings = JSON.parse(localStorage.getItem('admin_member_ratings') || '{}');
-          const leaderRatings = JSON.parse(localStorage.getItem('admin_leader_ratings') || '{}');
+          // Fetch updated ratings from database
+          const { data: dbTeam } = await supabase
+            .from('teams')
+            .select('leader_rating')
+            .eq('id', id)
+            .single();
+
+          const { data: dbMembers } = await supabase
+            .from('team_members')
+            .select('*')
+            .eq('team_id', id);
+
+          // Create member ratings map
+          const memberRatingsMap = new Map<string, number>();
+          dbMembers?.forEach(member => {
+            memberRatingsMap.set(member.id, member.rating || 0);
+          });
           
-          // Update team data with ratings
+          // Update team data with ratings from database
           const teamWithRatings = {
             ...updatedTeam,
             leader: {
               ...updatedTeam.leader,
-              rating: leaderRatings[`leader_${id}`] || 0
+              rating: dbTeam?.leader_rating || 0
             },
-            members: updatedTeam.members.map((member, index) => ({
-              ...member,
-              rating: memberRatings[`team_${id}_member_${index + 1}`] || 0
-            }))
+            members: updatedTeam.members.map((member, index) => {
+              const memberId = `team_${id}_member_${index + 1}`;
+              return {
+                ...member,
+                rating: memberRatingsMap.get(memberId) || 0
+              };
+            })
           };
           
           setTeam(teamWithRatings);
@@ -100,12 +135,20 @@ const TeamCard: React.FC<TeamCardProps> = memo(({ id, name, progress: initialPro
       updateTeam();
     };
     
+    const handleLeaderRatingUpdate = (event: CustomEvent) => {
+      if (event.detail?.teamId === id) {
+        updateTeam();
+      }
+    };
+    
     window.addEventListener('adminRatingUpdated', handleRatingUpdate);
+    window.addEventListener('leaderRatingUpdated', handleLeaderRatingUpdate as EventListener);
     
     return () => {
       isMounted = false;
       unsubscribe();
       window.removeEventListener('adminRatingUpdated', handleRatingUpdate);
+      window.removeEventListener('leaderRatingUpdated', handleLeaderRatingUpdate as EventListener);
     };
   }, [id]);
 
