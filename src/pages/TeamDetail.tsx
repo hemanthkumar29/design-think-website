@@ -55,14 +55,17 @@ const TeamDetail = () => {
             rating: dbTeam?.leader_rating || 0
           },
           members: teamData.members.map((member, index) => {
-            // Find corresponding database member by team and index position
-            const dbMember = dbMembers?.find((dbM, dbIndex) => 
-              dbM.team_id === parseInt(id) && 
-              dbIndex < teamData.members.length && 
-              teamData.members[dbIndex].name === member.name
-            );
+            // Find corresponding database member by name first, then by position
+            const dbMember = dbMembers?.find(dbM => 
+              dbM.team_id === parseInt(id) && (
+                dbM.name === member.name || 
+                dbM.id === `team_${id}_member_${index + 1}`
+              )
+            ) || dbMembers?.[index]; // Fallback to index-based matching
+            
             return {
               ...member,
+              id: dbMember?.id || `team_${id}_member_${index + 1}`,
               rating: dbMember?.rating || 0
             };
           })

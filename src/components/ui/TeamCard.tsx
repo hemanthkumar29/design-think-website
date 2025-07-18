@@ -57,14 +57,17 @@ const TeamCard: React.FC<TeamCardProps> = memo(({ id, name, progress: initialPro
               rating: dbTeam?.leader_rating || 0
             },
           members: teamData.members.map((member, index) => {
-            // Find corresponding database member by team and index position
-            const dbMember = dbMembers?.find((dbM, dbIndex) => 
-              dbM.team_id === id && 
-              dbIndex < teamData.members.length && 
-              teamData.members[dbIndex].name === member.name
-            );
+            // Find corresponding database member by name first, then by position
+            const dbMember = dbMembers?.find(dbM => 
+              dbM.team_id === id && (
+                dbM.name === member.name || 
+                dbM.id === `team_${id}_member_${index + 1}`
+              )
+            ) || dbMembers?.[index]; // Fallback to index-based matching
+            
             return {
               ...member,
+              id: dbMember?.id || `team_${id}_member_${index + 1}`,
               rating: dbMember?.rating || 0
             };
           })
@@ -113,14 +116,17 @@ const TeamCard: React.FC<TeamCardProps> = memo(({ id, name, progress: initialPro
               rating: dbTeam?.leader_rating || 0
             },
             members: updatedTeam.members.map((member, index) => {
-              // Find corresponding database member by team and index position
-              const dbMember = dbMembers?.find((dbM, dbIndex) => 
-                dbM.team_id === id && 
-                dbIndex < updatedTeam.members.length && 
-                updatedTeam.members[dbIndex].name === member.name
-              );
+              // Find corresponding database member by name first, then by position
+              const dbMember = dbMembers?.find(dbM => 
+                dbM.team_id === id && (
+                  dbM.name === member.name || 
+                  dbM.id === `team_${id}_member_${index + 1}`
+                )
+              ) || dbMembers?.[index]; // Fallback to index-based matching
+              
               return {
                 ...member,
+                id: dbMember?.id || `team_${id}_member_${index + 1}`,
                 rating: dbMember?.rating || 0
               };
             })

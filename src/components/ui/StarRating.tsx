@@ -34,10 +34,14 @@ const StarRating: React.FC<StarRatingProps> = ({
 
   const handleClick = (index: number) => {
     if (interactive && onChange && !disabled) {
-      // If clicking the same star twice, clear the rating
-      const newRating = rating === index ? 0 : index;
-      console.log(`StarRating: Updating rating to ${newRating}`);
-      onChange(newRating);
+      try {
+        // If clicking the same star twice, clear the rating
+        const newRating = rating === index ? 0 : index;
+        console.log(`StarRating: Updating rating to ${newRating}`);
+        onChange(newRating);
+      } catch (error) {
+        console.error('StarRating: Error handling click:', error);
+      }
     }
   };
 

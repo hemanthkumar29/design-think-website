@@ -65,6 +65,7 @@ export const updateMemberRatingInDB = async (memberId: string, rating: number): 
         return false;
       }
     } else {
+      // For new members, we need to create database records
       // Extract team ID and member info from memberId (format: team_X_member_Y)
       const memberIdParts = memberId.split('_');
       if (memberIdParts.length >= 4) {
@@ -75,11 +76,10 @@ export const updateMemberRatingInDB = async (memberId: string, rating: number): 
         const { teamsData } = await import('@/data/teamsData');
         const team = teamsData.find(t => t.id === teamId);
         if (team && team.members[memberIndex]) {
-          // Create new member record
+          // Create new member record with generated ID
           const { error } = await supabase
             .from('team_members')
             .insert({
-              id: memberId,
               team_id: teamId,
               name: team.members[memberIndex].name,
               rating: rating
@@ -89,7 +89,13 @@ export const updateMemberRatingInDB = async (memberId: string, rating: number): 
             console.error('Error creating member rating:', error);
             return false;
           }
+        } else {
+          console.error(`Could not find member data for ${memberId}`);
+          return false;
         }
+      } else {
+        console.error(`Invalid member ID format: ${memberId}`);
+        return false;
       }
     }
 
@@ -176,10 +182,15 @@ export const fetchTeamsForAdmin = async (): Promise<AdminTeamData[]> => {
       const dbMembersForTeam = teamMembers?.filter(member => member.team_id === team.id) || [];
       
       // Map actual database members to display format
-      const membersWithRatings = team.members.slice(0, dbMembersForTeam.length).map((member, index) => {
-        const dbMember = dbMembersForTeam[index];
+      const membersWithRatings = team.members.map((member, index) => {
+        // Find corresponding database member by name matching for more reliable pairing
+        const dbMember = dbMembersForTeam.find(dbM => 
+          dbM.name === member.name || 
+          dbM.id === `team_${team.id}_member_${index + 1}`
+        ) || dbMembersForTeam[index]; // Fallback to index-based matching
+        
         return {
-          id: dbMember?.id || `team_${team.id}_member_${index + 1}`, // Use actual database ID
+          id: dbMember?.id || `team_${team.id}_member_${index + 1}`, // Use actual database ID if available
           name: member.name, // Use display name from teamsData
           rating: dbMember?.rating || 0
         };
