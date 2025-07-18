@@ -56,13 +56,18 @@ const TeamCard: React.FC<TeamCardProps> = memo(({ id, name, progress: initialPro
               ...teamData.leader,
               rating: dbTeam?.leader_rating || 0
             },
-            members: teamData.members.map((member, index) => {
-              const memberId = `team_${id}_member_${index + 1}`;
-              return {
-                ...member,
-                rating: memberRatingsMap.get(memberId) || 0
-              };
-            })
+          members: teamData.members.map((member, index) => {
+            // Find corresponding database member by team and index position
+            const dbMember = dbMembers?.find((dbM, dbIndex) => 
+              dbM.team_id === id && 
+              dbIndex < teamData.members.length && 
+              teamData.members[dbIndex].name === member.name
+            );
+            return {
+              ...member,
+              rating: dbMember?.rating || 0
+            };
+          })
           };
           
           setTeam(updatedTeam);
@@ -108,10 +113,15 @@ const TeamCard: React.FC<TeamCardProps> = memo(({ id, name, progress: initialPro
               rating: dbTeam?.leader_rating || 0
             },
             members: updatedTeam.members.map((member, index) => {
-              const memberId = `team_${id}_member_${index + 1}`;
+              // Find corresponding database member by team and index position
+              const dbMember = dbMembers?.find((dbM, dbIndex) => 
+                dbM.team_id === id && 
+                dbIndex < updatedTeam.members.length && 
+                updatedTeam.members[dbIndex].name === member.name
+              );
               return {
                 ...member,
-                rating: memberRatingsMap.get(memberId) || 0
+                rating: dbMember?.rating || 0
               };
             })
           };

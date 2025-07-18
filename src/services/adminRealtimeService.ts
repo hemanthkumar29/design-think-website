@@ -172,15 +172,16 @@ export const fetchTeamsForAdmin = async (): Promise<AdminTeamData[]> => {
     const result = teamsData.map(team => {
       const dbTeam = teamsMap.get(team.id);
       
-      // Generate unique IDs for members and get ratings from database
-      const membersWithIds = team.members.map((member, index) => {
-        const memberId = `team_${team.id}_member_${index + 1}`;
-        const memberRating = memberRatingsMap.get(memberId) || 0;
-        console.log(`Member ID: ${memberId}, Rating: ${memberRating}`);
+      // Get actual database members for this team
+      const dbMembersForTeam = teamMembers?.filter(member => member.team_id === team.id) || [];
+      
+      // Map actual database members to display format
+      const membersWithRatings = team.members.slice(0, dbMembersForTeam.length).map((member, index) => {
+        const dbMember = dbMembersForTeam[index];
         return {
-          id: memberId,
-          name: member.name,
-          rating: memberRating
+          id: dbMember?.id || `team_${team.id}_member_${index + 1}`, // Use actual database ID
+          name: member.name, // Use display name from teamsData
+          rating: dbMember?.rating || 0
         };
       });
 
@@ -191,7 +192,7 @@ export const fetchTeamsForAdmin = async (): Promise<AdminTeamData[]> => {
         progress: dbTeam?.progress || team.progress || 0,
         leader_username: team.leader.name,
         leader_rating: dbTeam?.leader_rating || 0,
-        members: membersWithIds
+        members: membersWithRatings
       };
     });
 
