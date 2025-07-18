@@ -181,16 +181,18 @@ export const fetchTeamsForAdmin = async (): Promise<AdminTeamData[]> => {
       // Get actual database members for this team
       const dbMembersForTeam = teamMembers?.filter(member => member.team_id === team.id) || [];
       
-      // Map actual database members to display format
+      // Map actual database members to display format with strict name matching
       const membersWithRatings = team.members.map((member, index) => {
-        // Find corresponding database member by name matching for more reliable pairing
+        // Find corresponding database member by EXACT name matching only
         const dbMember = dbMembersForTeam.find(dbM => 
-          dbM.name === member.name || 
-          dbM.id === `team_${team.id}_member_${index + 1}`
-        ) || dbMembersForTeam[index]; // Fallback to index-based matching
+          dbM.name.trim().toLowerCase() === member.name.trim().toLowerCase()
+        );
+        
+        // Generate consistent ID based on position for new members
+        const consistentId = `team_${team.id}_member_${index + 1}`;
         
         return {
-          id: dbMember?.id || `team_${team.id}_member_${index + 1}`, // Use actual database ID if available
+          id: dbMember?.id || consistentId,
           name: member.name, // Use display name from teamsData
           rating: dbMember?.rating || 0
         };

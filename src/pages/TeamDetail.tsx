@@ -55,17 +55,18 @@ const TeamDetail = () => {
             rating: dbTeam?.leader_rating || 0
           },
           members: teamData.members.map((member, index) => {
-            // Find corresponding database member by name first, then by position
+            // Find corresponding database member by EXACT name matching only
             const dbMember = dbMembers?.find(dbM => 
-              dbM.team_id === parseInt(id) && (
-                dbM.name === member.name || 
-                dbM.id === `team_${id}_member_${index + 1}`
-              )
-            ) || dbMembers?.[index]; // Fallback to index-based matching
+              dbM.team_id === parseInt(id) && 
+              dbM.name.trim().toLowerCase() === member.name.trim().toLowerCase()
+            );
+            
+            // Generate consistent ID based on position
+            const consistentId = `team_${id}_member_${index + 1}`;
             
             return {
               ...member,
-              id: dbMember?.id || `team_${id}_member_${index + 1}`,
+              id: dbMember?.id || consistentId,
               rating: dbMember?.rating || 0
             };
           })
