@@ -99,6 +99,7 @@ const AdminDashboard = () => {
   };
 
   const handleRatingChange = async (memberId: string, rating: number) => {
+    console.log(`AdminDashboard: Handling rating change for ${memberId} to ${rating}`);
     setSavingRating(prev => ({ ...prev, [memberId]: true }));
     
     try {
@@ -114,9 +115,10 @@ const AdminDashboard = () => {
           variant: 'default',
         });
       } else {
+        console.error(`Failed to save rating for member ${memberId}`);
         toast({
           title: 'Error',
-          description: 'Failed to update member rating',
+          description: 'Failed to update member rating. Please check your connection and try again.',
           variant: 'destructive',
         });
       }
@@ -124,7 +126,7 @@ const AdminDashboard = () => {
       console.error('Error saving rating:', error);
       toast({
         title: 'Error',
-        description: 'Failed to update member rating',
+        description: `Failed to update member rating: ${error.message}`,
         variant: 'destructive',
       });
     } finally {
@@ -133,6 +135,7 @@ const AdminDashboard = () => {
   };
 
   const handleLeaderRatingChange = async (teamId: number, rating: number) => {
+    console.log(`AdminDashboard: Handling leader rating change for team ${teamId} to ${rating}`);
     const leaderKey = `leader_${teamId}`;
     setSavingRating(prev => ({ ...prev, [leaderKey]: true }));
     
@@ -149,9 +152,10 @@ const AdminDashboard = () => {
           variant: 'default',
         });
       } else {
+        console.error(`Failed to save leader rating for team ${teamId}`);
         toast({
           title: 'Error',
-          description: 'Failed to update leader rating',
+          description: 'Failed to update leader rating. Please check your connection and try again.',
           variant: 'destructive',
         });
       }
@@ -159,7 +163,7 @@ const AdminDashboard = () => {
       console.error('Error saving leader rating:', error);
       toast({
         title: 'Error',
-        description: 'Failed to update leader rating',
+        description: `Failed to update leader rating: ${error.message}`,
         variant: 'destructive',
       });
     } finally {

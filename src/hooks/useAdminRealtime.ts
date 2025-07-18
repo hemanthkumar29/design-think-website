@@ -72,18 +72,26 @@ export const useAdminRealtime = () => {
 
   // Update member rating
   const updateMemberRating = useCallback(async (memberId: string, rating: number): Promise<boolean> => {
+    console.log(`useAdminRealtime: Updating member ${memberId} rating to ${rating}`);
     const success = await updateMemberRatingInDB(memberId, rating);
     if (!success) {
+      console.error(`Failed to update member rating for ${memberId}`);
       setError('Failed to update member rating');
+    } else {
+      console.log(`Successfully updated member ${memberId} rating to ${rating}`);
     }
     return success;
   }, []);
 
   // Update leader rating
   const updateLeaderRating = useCallback(async (teamId: number, rating: number): Promise<boolean> => {
+    console.log(`useAdminRealtime: Updating team ${teamId} leader rating to ${rating}`);
     const success = await updateLeaderRatingInDB(teamId, rating);
     if (!success) {
+      console.error(`Failed to update leader rating for team ${teamId}`);
       setError('Failed to update leader rating');
+    } else {
+      console.log(`Successfully updated team ${teamId} leader rating to ${rating}`);
     }
     return success;
   }, []);

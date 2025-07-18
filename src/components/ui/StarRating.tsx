@@ -10,6 +10,7 @@ interface StarRatingProps {
   size?: 'sm' | 'md' | 'lg';
   className?: string;
   interactive?: boolean;
+  disabled?: boolean;
 }
 
 const StarRating: React.FC<StarRatingProps> = ({
@@ -18,7 +19,8 @@ const StarRating: React.FC<StarRatingProps> = ({
   onChange,
   size = 'md',
   className,
-  interactive = true
+  interactive = true,
+  disabled = false
 }) => {
   const [hoverRating, setHoverRating] = React.useState(0);
   
@@ -31,9 +33,11 @@ const StarRating: React.FC<StarRatingProps> = ({
   const { size: starSize, className: starSpacing } = starSizes[size];
 
   const handleClick = (index: number) => {
-    if (interactive && onChange) {
+    if (interactive && onChange && !disabled) {
       // If clicking the same star twice, clear the rating
-      onChange(rating === index ? 0 : index);
+      const newRating = rating === index ? 0 : index;
+      console.log(`StarRating: Updating rating to ${newRating}`);
+      onChange(newRating);
     }
   };
 
@@ -53,10 +57,12 @@ const StarRating: React.FC<StarRatingProps> = ({
             className={cn(
               'transition-all duration-200',
               isFilled ? 'text-yellow-500 fill-yellow-500' : 'text-gray-300',
-              interactive && 'cursor-pointer'
+              interactive && !disabled && 'cursor-pointer hover:scale-110',
+              (!interactive || disabled) && 'pointer-events-none',
+              disabled && 'opacity-50'
             )}
             onClick={() => handleClick(starValue)}
-            onMouseEnter={() => interactive && setHoverRating(starValue)}
+            onMouseEnter={() => interactive && !disabled && setHoverRating(starValue)}
           />
         );
       })}

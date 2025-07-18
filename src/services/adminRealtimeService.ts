@@ -39,6 +39,8 @@ export const updateTeamProgressInDB = async (teamId: number, progress: number): 
 // Update member rating in Supabase database
 export const updateMemberRatingInDB = async (memberId: string, rating: number): Promise<boolean> => {
   try {
+    console.log(`updateMemberRatingInDB: Updating ${memberId} to ${rating} stars`);
+    
     // First, try to find existing member in database
     const { data: existingMember, error: fetchError } = await supabase
       .from('team_members')
@@ -102,6 +104,8 @@ export const updateMemberRatingInDB = async (memberId: string, rating: number): 
 // Update team leader rating in Supabase database
 export const updateLeaderRatingInDB = async (teamId: number, rating: number): Promise<boolean> => {
   try {
+    console.log(`updateLeaderRatingInDB: Updating team ${teamId} leader to ${rating} stars`);
+    
     const { error } = await supabase
       .from('teams')
       .update({ leader_rating: rating })
@@ -171,10 +175,12 @@ export const fetchTeamsForAdmin = async (): Promise<AdminTeamData[]> => {
       // Generate unique IDs for members and get ratings from database
       const membersWithIds = team.members.map((member, index) => {
         const memberId = `team_${team.id}_member_${index + 1}`;
+        const memberRating = memberRatingsMap.get(memberId) || 0;
+        console.log(`Member ID: ${memberId}, Rating: ${memberRating}`);
         return {
           id: memberId,
           name: member.name,
-          rating: memberRatingsMap.get(memberId) || 0
+          rating: memberRating
         };
       });
 
