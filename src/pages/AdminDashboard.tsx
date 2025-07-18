@@ -1,34 +1,44 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Slider } from '@/components/ui/slider';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { useToast } from '@/components/ui/use-toast';
-import { useAdminRealtime } from '@/hooks/useAdminRealtime';
+import { useToast } from '@/hooks/use-toast';
+import { updateMemberRating, updateLeaderRating, getAllTeamsWithRatings } from '@/services/ratingService';
+import { updateTeamProgressInDB } from '@/services/adminRealtimeService';
+import { teamsData } from '@/data/teamsData';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Award, Save, Percent, Star, ChevronDown, ChevronUp, Users, Crown } from 'lucide-react';
 import StarRating from '@/components/ui/StarRating';
+import { supabase } from '@/integrations/supabase/client';
+
+interface AdminTeam {
+  id: number;
+  team_name: string;
+  project_title: string;
+  progress: number;
+  leader_username: string;
+  leader_rating: number;
+  members: Array<{
+    name: string;
+    rating: number;
+  }>;
+}
 
 const AdminDashboard = () => {
+  const [teams, setTeams] = useState<AdminTeam[]>([]);
   const [progressValues, setProgressValues] = useState<Record<number, number>>({});
   const [expandedTeams, setExpandedTeams] = useState<Record<number, boolean>>({});
   const [savingProgress, setSavingProgress] = useState<Record<number, boolean>>({});
   const [savingRating, setSavingRating] = useState<Record<string, boolean>>({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  
   const navigate = useNavigate();
   const { toast } = useToast();
-  
-  const { 
-    teams, 
-    isLoading, 
-    error, 
-    updateTeamProgress, 
-    updateMemberRating,
-    updateLeaderRating
-  } = useAdminRealtime();
 
   // Check if admin is authenticated
   useEffect(() => {
@@ -43,22 +53,99 @@ const AdminDashboard = () => {
     }
   }, [navigate, toast]);
 
-  // Initialize progress values when teams data loads
-  useEffect(() => {
-    if (teams.length > 0) {
-      const initialValues: Record<number, number> = {};
-      teams.forEach(team => {
-        initialValues[team.id] = team.progress;
-      });
-      setProgressValues(initialValues);
+  // Load teams and ratings
+  const loadTeamsData = async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
       
-      console.log('Teams loaded:', teams);
-      console.log('Total teams:', teams.length);
-      teams.forEach(team => {
-        console.log(`Team ${team.id}: ${team.members.length} members + 1 leader = ${team.members.length + 1} total`);
+      const { teams: dbTeams, members: dbMembers } = await getAllTeamsWithRatings();
+      
+      // Merge static team data with database ratings
+      const mergedTeams: AdminTeam[] = teamsData.map(staticTeam => {
+        const dbTeam = dbTeams.find(t => t.id === staticTeam.id);
+        
+        // Get members for this team from database
+        const teamMembers = dbMembers
+          .filter(member => member.team_id === staticTeam.id)
+          .map(dbMember => ({
+            name: dbMember.name,
+            rating: dbMember.rating || 0
+          }));
+        
+        // If no members in DB, create from static data with 0 ratings
+        const membersWithRatings = teamMembers.length > 0 
+          ? teamMembers 
+          : staticTeam.members.map(member => ({
+              name: member.name,
+              rating: 0
+            }));
+
+        return {
+          id: staticTeam.id,
+          team_name: staticTeam.name,
+          project_title: staticTeam.description,
+          progress: dbTeam?.progress || staticTeam.progress || 0,
+          leader_username: staticTeam.leader.name,
+          leader_rating: dbTeam?.leader_rating || 0,
+          members: membersWithRatings
+        };
       });
+
+      setTeams(mergedTeams);
+      
+      // Initialize progress values
+      const initialProgress: Record<number, number> = {};
+      mergedTeams.forEach(team => {
+        initialProgress[team.id] = team.progress;
+      });
+      setProgressValues(initialProgress);
+      
+      console.log('Teams loaded successfully:', mergedTeams.length);
+    } catch (err) {
+      console.error('Error loading teams:', err);
+      setError('Failed to load teams data');
+    } finally {
+      setIsLoading(false);
     }
-  }, [teams]);
+  };
+
+  useEffect(() => {
+    loadTeamsData();
+
+    // Set up real-time subscriptions
+    const channel = supabase
+      .channel('admin-dashboard')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'teams'
+        },
+        () => {
+          console.log('Teams updated, refreshing...');
+          loadTeamsData();
+        }
+      )
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'team_members'
+        },
+        () => {
+          console.log('Members updated, refreshing...');
+          loadTeamsData();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      channel.unsubscribe();
+    };
+  }, []);
 
   const handleProgressChange = (teamId: number, newValue: number[]) => {
     setProgressValues(prev => ({
@@ -67,11 +154,11 @@ const AdminDashboard = () => {
     }));
   };
 
-  const handleSave = async (teamId: number) => {
+  const handleSaveProgress = async (teamId: number) => {
     setSavingProgress(prev => ({ ...prev, [teamId]: true }));
     
     try {
-      const success = await updateTeamProgress(teamId, progressValues[teamId]);
+      const success = await updateTeamProgressInDB(teamId, progressValues[teamId]);
       
       if (success) {
         toast({
@@ -79,6 +166,7 @@ const AdminDashboard = () => {
           description: `Team ${teamId}'s progress has been updated to ${progressValues[teamId]}%`,
           variant: 'default',
         });
+        await loadTeamsData(); // Refresh data
       } else {
         toast({
           title: 'Error',
@@ -98,64 +186,55 @@ const AdminDashboard = () => {
     }
   };
 
-  const handleRatingChange = async (memberId: string, rating: number) => {
-    console.log(`AdminDashboard: Handling rating change for ${memberId} to ${rating}`);
-    setSavingRating(prev => ({ ...prev, [memberId]: true }));
+  const handleMemberRating = async (teamId: number, memberName: string, rating: number) => {
+    const ratingKey = `member_${teamId}_${memberName}`;
+    setSavingRating(prev => ({ ...prev, [ratingKey]: true }));
     
     try {
-      const success = await updateMemberRating(memberId, rating);
+      const success = await updateMemberRating(teamId, memberName, rating);
       
       if (success) {
-        // Dispatch custom event to notify other pages
-        window.dispatchEvent(new CustomEvent('adminRatingUpdated'));
-        
         toast({
           title: 'Rating updated',
-          description: `Member rating has been updated to ${rating} stars`,
+          description: `${memberName}'s rating has been updated to ${rating} stars`,
           variant: 'default',
         });
       } else {
-        console.error(`Failed to save rating for member ${memberId}`);
         toast({
           title: 'Error',
-          description: 'Failed to update member rating. Please check your connection and try again.',
+          description: 'Failed to update member rating. Please try again.',
           variant: 'destructive',
         });
       }
     } catch (error) {
-      console.error('Error saving rating:', error);
+      console.error('Error saving member rating:', error);
       toast({
         title: 'Error',
-        description: `Failed to update member rating: ${error.message}`,
+        description: 'Failed to update member rating',
         variant: 'destructive',
       });
     } finally {
-      setSavingRating(prev => ({ ...prev, [memberId]: false }));
+      setSavingRating(prev => ({ ...prev, [ratingKey]: false }));
     }
   };
 
-  const handleLeaderRatingChange = async (teamId: number, rating: number) => {
-    console.log(`AdminDashboard: Handling leader rating change for team ${teamId} to ${rating}`);
-    const leaderKey = `leader_${teamId}`;
-    setSavingRating(prev => ({ ...prev, [leaderKey]: true }));
+  const handleLeaderRating = async (teamId: number, rating: number) => {
+    const ratingKey = `leader_${teamId}`;
+    setSavingRating(prev => ({ ...prev, [ratingKey]: true }));
     
     try {
       const success = await updateLeaderRating(teamId, rating);
       
       if (success) {
-        // Dispatch custom event to notify other pages
-        window.dispatchEvent(new CustomEvent('adminRatingUpdated'));
-        
         toast({
           title: 'Leader rating updated',
           description: `Team leader rating has been updated to ${rating} stars`,
           variant: 'default',
         });
       } else {
-        console.error(`Failed to save leader rating for team ${teamId}`);
         toast({
           title: 'Error',
-          description: 'Failed to update leader rating. Please check your connection and try again.',
+          description: 'Failed to update leader rating. Please try again.',
           variant: 'destructive',
         });
       }
@@ -163,11 +242,11 @@ const AdminDashboard = () => {
       console.error('Error saving leader rating:', error);
       toast({
         title: 'Error',
-        description: `Failed to update leader rating: ${error.message}`,
+        description: 'Failed to update leader rating',
         variant: 'destructive',
       });
     } finally {
-      setSavingRating(prev => ({ ...prev, [leaderKey]: false }));
+      setSavingRating(prev => ({ ...prev, [ratingKey]: false }));
     }
   };
 
@@ -188,8 +267,7 @@ const AdminDashboard = () => {
     navigate('/admin');
   };
 
-  // Calculate total members for a team (leader + members)
-  const getTotalMemberCount = (team: any) => {
+  const getTotalMemberCount = (team: AdminTeam) => {
     return team.members.length + 1; // +1 for the leader
   };
 
@@ -208,7 +286,7 @@ const AdminDashboard = () => {
             <Card className="mb-8">
               <CardContent className="p-6">
                 <p className="text-red-600">Error: {error}</p>
-                <Button onClick={() => window.location.reload()} className="mt-4">
+                <Button onClick={loadTeamsData} className="mt-4">
                   Retry
                 </Button>
               </CardContent>
@@ -302,7 +380,7 @@ const AdminDashboard = () => {
                         </TableCell>
                         <TableCell>
                           <Button
-                            onClick={() => handleSave(team.id)}
+                            onClick={() => handleSaveProgress(team.id)}
                             size="sm" 
                             disabled={team.progress === (progressValues[team.id] || team.progress) || savingProgress[team.id]}
                           >
@@ -358,16 +436,17 @@ const AdminDashboard = () => {
                                     <div className="flex items-center gap-2">
                                       <span className="text-sm text-muted-foreground">Performance:</span>
                                       <StarRating 
-                                        rating={team.leader_rating || 0}
-                                        onChange={(newRating) => handleLeaderRatingChange(team.id, newRating)}
+                                        rating={team.leader_rating}
+                                        onChange={(rating) => handleLeaderRating(team.id, rating)}
                                         size="md"
+                                        isLoading={savingRating[`leader_${team.id}`]}
                                       />
                                     </div>
                                   </div>
                                 </div>
 
                                 {/* Team Members */}
-                                {team.members.length > 0 ? (
+                                {team.members.length > 0 && (
                                   <div className="space-y-3">
                                     <div className="flex items-center gap-2">
                                       <Users className="h-4 w-4 text-blue-500" />
@@ -377,7 +456,7 @@ const AdminDashboard = () => {
                                     </div>
                                     {team.members.map((member, index) => (
                                       <div 
-                                        key={member.id}
+                                        key={`${team.id}-${member.name}`}
                                         className="bg-background/80 rounded-lg p-3 border border-border/50 hover:bg-background/90 transition-colors"
                                       >
                                         <div className="flex items-center justify-between">
@@ -394,7 +473,7 @@ const AdminDashboard = () => {
                                               <span className="text-xs text-muted-foreground ml-2 bg-gray-100 px-2 py-1 rounded">
                                                 Member
                                               </span>
-                                              {savingRating[member.id] && (
+                                              {savingRating[`member_${team.id}_${member.name}`] && (
                                                 <span className="text-xs text-muted-foreground ml-2">Saving...</span>
                                               )}
                                             </div>
@@ -402,20 +481,15 @@ const AdminDashboard = () => {
                                           <div className="flex items-center gap-2">
                                             <span className="text-sm text-muted-foreground">Performance:</span>
                                             <StarRating 
-                                              rating={member.rating || 0}
-                                              onChange={(newRating) => handleRatingChange(member.id, newRating)}
+                                              rating={member.rating}
+                                              onChange={(rating) => handleMemberRating(team.id, member.name, rating)}
                                               size="md"
+                                              isLoading={savingRating[`member_${team.id}_${member.name}`]}
                                             />
                                           </div>
                                         </div>
                                       </div>
                                     ))}
-                                  </div>
-                                ) : (
-                                  <div className="text-center py-8 text-muted-foreground">
-                                    <Users className="h-12 w-12 mx-auto mb-2 opacity-50" />
-                                    <p>No team members found for this team.</p>
-                                    <p className="text-xs mt-1">Only the team leader is registered.</p>
                                   </div>
                                 )}
                               </div>
