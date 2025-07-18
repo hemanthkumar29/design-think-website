@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import ProgressBar from '@/components/ui/ProgressBar';
@@ -13,7 +12,7 @@ import { getTeamById } from '@/services/teamService';
 import { fetchTeamData } from '@/services/supabaseTeamService';
 import StarRating from '@/components/ui/StarRating';
 import PresentationViewer from '@/components/presentations/PresentationViewer';
-import { supabase } from '@/integrations/supabase/client';
+import { useTeamRatings } from '@/hooks/useTeamRatings';
 
 const TeamDetail = () => {
   const { id } = useParams();
@@ -23,52 +22,15 @@ const TeamDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [availableImages, setAvailableImages] = useState([]);
   
+  // Use the new rating hook
+  const { ratings } = useTeamRatings(id ? parseInt(id) : 0);
+  
   const loadTeamData = async () => {
     if (id) {
       try {
         // Load legacy team data for display compatibility
         const teamData = await getTeamById(id);
-        
-        // Fetch ratings from database
-        const { data: dbTeam } = await supabase
-          .from('teams')
-          .select('leader_rating')
-          .eq('id', parseInt(id))
-          .single();
-
-        const { data: dbMembers } = await supabase
-          .from('team_members')
-          .select('*')
-          .eq('team_id', parseInt(id));
-
-        // Create member ratings map
-        const memberRatingsMap = new Map<string, number>();
-        dbMembers?.forEach(member => {
-          memberRatingsMap.set(member.id, member.rating || 0);
-        });
-        
-        // Update team data with ratings from database
-        const updatedTeam = {
-          ...teamData,
-          leader: {
-            ...teamData.leader,
-            rating: dbTeam?.leader_rating || 0
-          },
-          members: teamData.members.map((member, index) => {
-            // Find corresponding database member by team and index position
-            const dbMember = dbMembers?.find((dbM, dbIndex) => 
-              dbM.team_id === parseInt(id) && 
-              dbIndex < teamData.members.length && 
-              teamData.members[dbIndex].name === member.name
-            );
-            return {
-              ...member,
-              rating: dbMember?.rating || 0
-            };
-          })
-        };
-        
-        setTeam(updatedTeam);
+        setTeam(teamData);
         
         // Load Supabase data for updated content
         const supabaseData = await fetchTeamData(parseInt(id));
@@ -114,36 +76,6 @@ const TeamDetail = () => {
   useEffect(() => {
     loadTeamData();
   }, [id, navigate]);
-
-  // Listen for dashboard updates
-  useEffect(() => {
-    const handleDashboardUpdate = (event) => {
-      if (event.detail?.teamId === `team${id}`) {
-        console.log('Dashboard updated, refreshing team data...');
-        loadTeamData();
-      }
-    };
-
-    const handleRatingUpdate = () => {
-      loadTeamData();
-    };
-
-    const handleLeaderRatingUpdate = (event: CustomEvent) => {
-      if (event.detail?.teamId === parseInt(id)) {
-        loadTeamData();
-      }
-    };
-
-    window.addEventListener('dashboardDataUpdated', handleDashboardUpdate);
-    window.addEventListener('adminRatingUpdated', handleRatingUpdate);
-    window.addEventListener('leaderRatingUpdated', handleLeaderRatingUpdate as EventListener);
-    
-    return () => {
-      window.removeEventListener('dashboardDataUpdated', handleDashboardUpdate);
-      window.removeEventListener('adminRatingUpdated', handleRatingUpdate);
-      window.removeEventListener('leaderRatingUpdated', handleLeaderRatingUpdate as EventListener);
-    };
-  }, [id]);
   
   if (isLoading) {
     return (
@@ -258,9 +190,9 @@ const TeamDetail = () => {
                     </div>
                     <h3 className="text-white font-bold text-xl">{team.leader.name}</h3>
                     <p className="text-white/80">{team.leader.role}</p>
-                    {team.leader.rating > 0 && (
+                    {ratings && ratings.leaderRating > 0 && (
                       <div className="mt-1">
-                        <StarRating rating={team.leader.rating} size="md" interactive={false} />
+                        <StarRating rating={ratings.leaderRating} size="md" interactive={false} />
                       </div>
                     )}
                   </div>
@@ -344,15 +276,15 @@ const TeamDetail = () => {
                 <div className="p-4">
                   <h3 className="font-bold text-lg">{team.leader.name}</h3>
                   <p className="text-sm text-muted-foreground">{team.leader.role}</p>
-                  {team.leader.rating > 0 && (
+                  {ratings && ratings.leaderRating > 0 && (
                     <div className="mt-2">
-                      <StarRating rating={team.leader.rating} size="sm" interactive={false} />
+                      <StarRating rating={ratings.leaderRating} size="sm" interactive={false} />
                     </div>
                   )}
                 </div>
               </div>
               
-              {team.members.map((member) => (
+              {ratings && ratings.members.map((member) => (
                 <div 
                   key={member.id} 
                   className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl"
@@ -360,7 +292,7 @@ const TeamDetail = () => {
                   <div className="aspect-square overflow-hidden">
                     <Avatar className="w-full h-full">
                       <AvatarImage 
-                        src={member.image} 
+                        src={member.photo_url} 
                         alt={member.name} 
                         className="w-full h-full object-cover"
                         loading="lazy"
@@ -372,7 +304,7 @@ const TeamDetail = () => {
                   </div>
                   <div className="p-4">
                     <h3 className="font-medium text-lg">{member.name}</h3>
-                    <p className="text-sm text-muted-foreground">{member.role}</p>
+                    <p className="text-sm text-muted-foreground">Team Member</p>
                     {member.rating > 0 && (
                       <div className="mt-2">
                         <StarRating rating={member.rating} size="sm" interactive={false} />
