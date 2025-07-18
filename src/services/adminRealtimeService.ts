@@ -41,20 +41,11 @@ export const updateMemberRatingInDB = async (memberId: string, rating: number): 
   try {
     console.log(`updateMemberRatingInDB: Updating ${memberId} to ${rating} stars`);
     
-    // First, try to find existing member in database
-    const { data: existingMember, error: fetchError } = await supabase
-      .from('team_members')
-      .select('id')
-      .eq('id', memberId)
-      .single();
-
-    if (fetchError && fetchError.code !== 'PGRST116') {
-      console.error('Error fetching member:', fetchError);
-      return false;
-    }
-
-    if (existingMember) {
-      // Update existing member
+    // Check if memberId is a UUID (actual database record) or generated ID
+    const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(memberId);
+    
+    if (isUUID) {
+      // Direct update using UUID
       const { error } = await supabase
         .from('team_members')
         .update({ rating })
@@ -65,8 +56,7 @@ export const updateMemberRatingInDB = async (memberId: string, rating: number): 
         return false;
       }
     } else {
-      // For new members, we need to create database records
-      // Extract team ID and member info from memberId (format: team_X_member_Y)
+      // Handle generated ID format: team_X_member_Y
       const memberIdParts = memberId.split('_');
       if (memberIdParts.length >= 4) {
         const teamId = parseInt(memberIdParts[1]);
@@ -76,18 +66,46 @@ export const updateMemberRatingInDB = async (memberId: string, rating: number): 
         const { teamsData } = await import('@/data/teamsData');
         const team = teamsData.find(t => t.id === teamId);
         if (team && team.members[memberIndex]) {
-          // Create new member record with generated ID
-          const { error } = await supabase
+          const memberName = team.members[memberIndex].name;
+          
+          // First, try to find existing member by name and team_id
+          const { data: existingMember, error: fetchError } = await supabase
             .from('team_members')
-            .insert({
-              team_id: teamId,
-              name: team.members[memberIndex].name,
-              rating: rating
-            });
+            .select('id')
+            .eq('team_id', teamId)
+            .eq('name', memberName)
+            .single();
 
-          if (error) {
-            console.error('Error creating member rating:', error);
+          if (fetchError && fetchError.code !== 'PGRST116') {
+            console.error('Error fetching member:', fetchError);
             return false;
+          }
+
+          if (existingMember) {
+            // Update existing member
+            const { error } = await supabase
+              .from('team_members')
+              .update({ rating })
+              .eq('id', existingMember.id);
+
+            if (error) {
+              console.error('Error updating member rating:', error);
+              return false;
+            }
+          } else {
+            // Create new member record
+            const { error } = await supabase
+              .from('team_members')
+              .insert({
+                team_id: teamId,
+                name: memberName,
+                rating: rating
+              });
+
+            if (error) {
+              console.error('Error creating member rating:', error);
+              return false;
+            }
           }
         } else {
           console.error(`Could not find member data for ${memberId}`);
